@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Configurador de Cocinas 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Tailwind CSS (CDN) para la interfaz -->
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<!-- Import Map: Three.js y sus addons (OrbitControls) como módulos ES -->
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<style>
+  body { font-family: 'Manrope', system-ui, sans-serif; }
+  #viewport canvas { display: block; outline: none; touch-action: none; }
+  input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+</style>
+</head>
+<body class="h-screen w-screen overflow-hidden bg-slate-100 text-slate-800 flex flex-col md:flex-row">
+
+<!-- ============ BARRA LATERAL (320px) ============ -->
+<aside class="w-full md:w-80 shrink-0 max-h-[48vh] md:max-h-none overflow-y-auto bg-white border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
+  <header class="px-6 pt-6 pb-4 border-b border-slate-100">
+    <h1 class="text-xl font-bold leading-tight text-slate-900">Configurador de cocinas 3D</h1>
+    <p class="mt-1 text-sm text-slate-500">Define tu habitación y toca un módulo para ver su ficha.</p>
+  </header>
+
+  <!-- Formulario de medidas de la habitación -->
+  <form id="roomForm" class="px-6 py-5 border-b border-slate-100 space-y-3">
+    <h2 class="text-sm font-semibold text-slate-700">Medidas de la habitación</h2>
+    <label class="flex items-center justify-between gap-3 text-sm">Ancho (m)
+      <input id="inW" type="number" step="0.1" min="3" max="8" value="4" class="w-28 rounded-md border border-slate-300 px-3 py-1.5 text-right">
+    </label>
+    <label class="flex items-center justify-between gap-3 text-sm">Largo (m)
+      <input id="inL" type="number" step="0.1" min="2.4" max="8" value="3.2" class="w-28 rounded-md border border-slate-300 px-3 py-1.5 text-right">
+    </label>
+    <label class="flex items-center justify-between gap-3 text-sm">Alto (m)
+      <input id="inH" type="number" step="0.1" min="2.3" max="3.5" value="2.6" class="w-28 rounded-md border border-slate-300 px-3 py-1.5 text-right">
+    </label>
+    <label class="flex flex-col gap-1 text-sm">Distribución de Cocina
+      <select id="inLayout" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">
+        <option value="linear">Lineal (pared trasera)</option>
+        <option value="L">En L (trasera + lateral)</option>
+      </select>
+    </label>
+    <label id="sideRow" class="hidden flex-col gap-1 text-sm">Pared lateral de la L
+      <select id="inSide" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">
+        <option value="left">Izquierda</option>
+        <option value="right">Derecha</option>
+      </select>
+    </label>
+    <div id="angleRow" class="hidden flex-col gap-1 text-sm">
+      <div class="flex items-center justify-between gap-3">
+        <label for="inAngle">Ángulo de la esquina (°)</label>
+        <input id="inAngle" type="number" min="75" max="115" step="1" value="90" class="w-20 rounded-md border border-slate-300 px-2 py-1.5 text-right">
+      </div>
+      <input id="inAngleRange" type="range" min="75" max="115" step="1" value="90" aria-label="Ángulo de la esquina" class="w-full accent-teal-700">
+    </div>
+    <button type="submit" class="w-full rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-sm font-semibold py-2.5 transition-colors">Actualizar Habitación</button>
+    <p id="formMsg" class="text-xs text-amber-700 min-h-[1rem]" role="status"></p>
+  </form>
+
+  <!-- Añadir mueble manualmente -->
+  <section class="px-6 py-5 border-b border-slate-100 space-y-3">
+    <h2 class="text-sm font-semibold text-slate-700">Añadir Mueble</h2>
+    <label class="flex flex-col gap-1 text-sm">Tipo de mueble
+      <select id="addType" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">
+        <option value="base">Mueble bajo</option>
+        <option value="sink">Fregadero</option>
+        <option value="oven">Módulo Horno/Vitro</option>
+        <option value="wall">Módulo alto</option>
+        <option value="hood">Campana extractora</option>
+        <option value="tall">Columna despensero</option>
+        <option value="fridge">Frigorífico / Combi</option>
+        <option value="dishwasher">Lavavajillas</option>
+        <option value="washer">Lavadora</option>
+        <option value="corner">Módulo esquinero</option>
+      </select>
+    </label>
+    <label class="flex flex-col gap-1 text-sm">Pared
+      <select id="addWall" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">
+        <option value="back">Pared trasera</option>
+        <option value="side" disabled>Pared lateral (solo en L)</option>
+      </select>
+    </label>
+    <button id="btnAdd" type="button" class="w-full rounded-lg border-2 border-teal-700 text-teal-800 hover:bg-teal-50 text-sm font-semibold py-2.5 transition-colors">＋ Añadir al diseño</button>
+    <p id="addMsg" class="text-xs min-h-[1rem]" role="status"></p>
+    <p id="freeInfo" class="text-xs text-slate-500"></p>
+  </section>
+
+  <!-- Ficha del mueble seleccionado -->
+  <section class="px-6 py-5 flex-1">
+    <h2 class="text-sm font-semibold text-slate-700 mb-3">Detalles del Mueble Seleccionado</h2>
+    <div id="details"></div>
+  </section>
+
+  <!-- Resumen del presupuesto -->
+  <footer class="px-6 py-4 border-t border-slate-100 bg-slate-50 text-sm flex items-center justify-between">
+    <span id="summaryCount" class="text-slate-500"></span>
+    <span><span class="text-slate-500">Total estimado </span><strong id="summaryTotal" class="text-base"></strong></span>
+  </footer>
+</aside>
+
+<!-- ============ ÁREA 3D ============ -->
+<main id="viewport" class="relative flex-1 min-h-0 min-w-0">
+  <button id="resetView" type="button" class="absolute top-4 right-4 z-10 rounded-lg bg-white/90 hover:bg-white text-sm font-semibold px-3 py-2 shadow border border-slate-200">Vista general</button>
+  <p class="absolute bottom-3 left-4 z-10 text-xs text-slate-600 bg-white/70 rounded px-2 py-1 pointer-events-none">Arrastra para rotar · rueda para zoom · clic derecho para desplazar</p>
+</main>
+
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* =====================================================================
+   1. CONFIGURACIÓN: medidas (m), colores y catálogo de módulos
+   ===================================================================== */
+const C = {
+  sinkW: 0.8, ovenW: 0.6, baseW: 0.6, tallW: 0.6,   // anchos estándar de módulo
+  baseD: 0.6, baseH: 0.9, plinth: 0.1, top: 0.04,    // fondo, alto total, zócalo y encimera
+  wallD: 0.35, wallY: 1.45, wallHMax: 0.7, hoodY: 1.6, // módulos colgados y campana
+  corner: 0.9,                                        // largo de cada brazo del módulo esquinero
+  limits: { W: [3, 8], L: [2.4, 8], H: [2.3, 3.5], angle: [75, 115] }   // límites de la habitación
+};
+const COL = {
+  wood: 0xb07d4f, woodDark: 0x8f6338, white: 0xf7f6f2, whiteBody: 0xe2e0da,
+  counter: 0xe4e7e9, steel: 0xb8bec5, sink: 0xc3c8cd, plinth: 0x1f2326,
+  dark: 0x2a2c30, glass: 0x0c0d0f, tile: 0xe9eef0, wall: 0xf1efea
+};
+// eur = precio estimado por metro lineal de ancho
+const TYPES = {
+  base: { code: 'MB', label: 'Mueble bajo con encimera', eur: 420, info: 'Mueble bajo de almacenaje con puertas de madera y encimera de cuarzo.' },
+  sink: { code: 'FR', label: 'Módulo fregadero', eur: 640, info: 'Mueble de fregadero en acabado metálico, con cubeta de acero y grifo monomando.' },
+  oven: { code: 'HV', label: 'Módulo horno y vitrocerámica', eur: 950, info: 'Horno empotrado con placa vitrocerámica de cuatro zonas.' },
+  wall: { code: 'MA', label: 'Módulo alto colgado', eur: 260, info: 'Armario alto de pared en blanco mate con apertura por tirador.' },
+  hood: { code: 'CE', label: 'Campana extractora', eur: 480, info: 'Campana de acero con chimenea hasta el techo.' },
+  tall: { code: 'DE', label: 'Columna despensero', eur: 780, info: 'Columna de suelo a techo con dos cuerpos de almacenaje.' },
+  gap: { code: 'HL', label: 'Hueco libre', eur: 0, info: 'Espacio vacío entre muebles.' },
+  fridge: { code: 'FC', label: 'Frigorífico / Combi', eur: 1500, info: 'Frigorífico combi de columna (60 × 200 cm) con doble puerta inox y tiradores metálicos.' },
+  dishwasher: { code: 'LV', label: 'Lavavajillas', eur: 900, info: 'Lavavajillas integrado de 60 cm con frontal inox y panel de mandos superior.' },
+  washer: { code: 'LA', label: 'Lavadora', eur: 1000, info: 'Lavadora bajo encimera de 60 cm con escotilla circular de cristal.' },
+  corner: { code: 'ME', label: 'Módulo esquinero', eur: 560, info: 'Esquinero de dos brazos que une ambas paredes con encimera continua y se adapta al ángulo de la esquina.' }
+};
+// Anchos estándar (m) con los que se añaden los muebles manualmente
+const STD = { base: 0.6, sink: 0.8, oven: 0.6, tall: 0.6, fridge: 0.6, dishwasher: 0.6, washer: 0.6 };
+
+/* =====================================================================
+   2. UTILIDADES
+   ===================================================================== */
+const $ = s => document.querySelector(s);
+const eur = v => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
+const cm = v => (v * 100).toFixed(1).replace('.0', '').replace('.', ',');
+const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0, ...o });
+// Caja con sombras activadas
+const box = (w, h, d, m) => { const x = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); x.castShadow = x.receiveShadow = true; return x; };
+const place = (o, x, y, z) => { o.position.set(x, y, z); return o; };
+// Libera geometrías y materiales de un grupo
+const disposeGroup = g => g.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) o.material.dispose(); });
+
+/* =====================================================================
+   3. ESCENA, CÁMARA, RENDERER, LUCES Y CONTROLES
+   ===================================================================== */
+const viewport = $('#viewport');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;      // sombras suaves
+viewport.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xdfe6e9);
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.maxPolarAngle = Math.PI / 2 - 0.02;           // no bajar del suelo
+controls.minDistance = 1.5;
+controls.maxDistance = 25;
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+const sun = new THREE.DirectionalLight(0xfff4e5, 1.2);
+sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048);
+sun.shadow.radius = 4;
+sun.shadow.bias = -0.0004;
+sun.shadow.normalBias = 0.02;
+scene.add(sun, sun.target);
+
+// Ajusta luz direccional y sombras al tamaño de la habitación
+function fitLights(W, L, H) {
+  sun.position.set(W * 0.4, H * 2.2, L * 0.6);
+  sun.target.position.set(0, 0, -L * 0.25);
+  const s = Math.max(W, L) * 0.9, cam = sun.shadow.camera;
+  cam.left = -s; cam.right = s; cam.top = s; cam.bottom = -s; cam.near = 0.5; cam.far = 40;
+  cam.updateProjectionMatrix();
+}
+// Encuadra la cámara a la habitación
+function frameCamera(W, L, H) {
+  camera.position.set(W * 0.45, H * 0.95, L / 2 + Math.max(W, L) * 0.9);
+  controls.target.set(0, H * 0.35, -L * 0.25);
+  controls.update();
+}
+// Adaptación al tamaño del contenedor
+function resize() {
+  const w = viewport.clientWidth, h = viewport.clientHeight;
+  if (!w || !h) return;
+  renderer.setSize(w, h);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(viewport);
+window.addEventListener('resize', resize);
+
+/* =====================================================================
+   4. CONSTRUCCIÓN DE MÓDULOS (origen local: centro-base; frente hacia +z)
+   ===================================================================== */
+// Puertas frontales (n hojas) con tirador vertical
+function addDoors(g, w, d, yc, dh, n, doorMat, handleMat, hy) {
+  const gap = 0.01, dw = (w - gap * (n + 1)) / n;
+  for (let i = 0; i < n; i++) {
+    const x = -w / 2 + gap + dw / 2 + i * (dw + gap);
+    g.add(place(box(dw, dh, 0.02, doorMat), x, yc, d / 2 + 0.01));
+    const hx = (n === 1 || i === 0) ? x + dw / 2 - 0.04 : x - dw / 2 + 0.04;
+    g.add(place(box(0.012, 0.14, 0.02, handleMat), hx, hy, d / 2 + 0.03));
+  }
+}
+// Base común de los muebles bajos: zócalo + cuerpo + encimera
+function baseUnit(s, carcassColor) {
+  const g = new THREE.Group(), bh = s.h - C.plinth - C.top;
+  g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, mat(COL.plinth)), 0, C.plinth / 2, -0.02));
+  g.add(place(box(s.w, bh, s.d, mat(carcassColor)), 0, C.plinth + bh / 2, 0));
+  g.add(place(box(s.w, C.top, s.d + 0.03, mat(COL.counter, { roughness: 0.3 })), 0, s.h - C.top / 2, 0.015));
+  return g;
+}
+const steelMat = () => mat(COL.steel, { metalness: 0.35, roughness: 0.4 });
+
+const BUILD = {
+  // Mueble bajo (madera)
+  base(s) {
+    const g = baseUnit(s, COL.woodDark), bh = s.h - C.plinth - C.top;
+    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, s.w > 0.75 ? 2 : 1, mat(COL.wood), steelMat(), s.h - C.top - 0.1);
+    return g;
+  },
+  // Fregadero (gris metálico) con cubeta y grifo
+  sink(s) {
+    const g = baseUnit(s, COL.sink), bh = s.h - C.plinth - C.top, metal = () => mat(COL.sink, { metalness: 0.35, roughness: 0.35 });
+    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, 2, metal(), steelMat(), s.h - C.top - 0.1);
+    g.add(place(box(s.w * 0.62, 0.012, s.d * 0.6, mat(0xaab1b8, { metalness: 0.4, roughness: 0.3 })), 0, s.h + 0.006, 0.02));
+    const chrome = mat(0xdde2e6, { metalness: 0.4, roughness: 0.2 });
+    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.26, 16), chrome);
+    const spout = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.16, 16), chrome);
+    stem.position.set(0, s.h + 0.13, -s.d / 2 + 0.08);
+    spout.rotation.x = Math.PI / 2; spout.position.set(0, s.h + 0.26, -s.d / 2 + 0.15);
+    stem.castShadow = spout.castShadow = true;
+    g.add(stem, spout);
+    return g;
+  },
+  // Horno + placa vitrocerámica (negro / acero)
+  oven(s) {
+    const g = baseUnit(s, COL.dark), bh = s.h - C.plinth - C.top, fz = s.d / 2;
+    const glass = () => mat(COL.glass, { roughness: 0.1, metalness: 0.2 });
+    g.add(place(box(s.w - 0.04, 0.07, 0.02, mat(COL.dark)), 0, C.plinth + bh - 0.05, fz + 0.01));        // panel de mandos
+    g.add(place(box(s.w - 0.06, bh * 0.55, 0.025, glass()), 0, C.plinth + bh * 0.47, fz + 0.012));      // puerta del horno
+    g.add(place(box(s.w * 0.7, 0.015, 0.03, steelMat()), 0, C.plinth + bh * 0.47 + bh * 0.22, fz + 0.04)); // tirador
+    g.add(place(box(s.w - 0.04, 0.11, 0.02, mat(COL.dark)), 0, 0.18, fz + 0.01));                        // cajón inferior
+    g.add(place(box(s.w * 0.92, 0.008, s.d * 0.85, glass()), 0, s.h + 0.004, 0.02));                     // vitro
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([i, j]) => {                                             // 4 zonas de cocción
+      const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.003, 28), mat(0x666b72));
+      ring.position.set(i * s.w * 0.22, s.h + 0.0095, 0.02 + j * s.d * 0.2);
+      g.add(ring);
+    });
+    return g;
+  },
+  // Módulo alto colgado (blanco)
+  wall(s) {
+    const g = new THREE.Group();
+    g.add(place(box(s.w, s.h, s.d, mat(COL.whiteBody, { roughness: 0.5 })), 0, s.h / 2, 0));
+    addDoors(g, s.w, s.d, s.h / 2, s.h - 0.02, s.w > 0.75 ? 2 : 1, mat(COL.white, { roughness: 0.5 }), steelMat(), 0.1);
+    return g;
+  },
+  // Campana con chimenea hasta el techo
+  hood(s) {
+    const g = new THREE.Group(), steel = () => mat(COL.steel, { metalness: 0.35, roughness: 0.35 });
+    g.add(place(box(s.w, 0.14, s.d, steel()), 0, 0.07, 0));
+    g.add(place(box(0.26, s.h - 0.14, 0.2, steel()), 0, 0.14 + (s.h - 0.14) / 2, -s.d / 2 + 0.1));
+    return g;
+  },
+  // Módulo esquinero de ángulo variable. Origen en el vértice de las paredes (esquina izquierda):
+  // el brazo A sigue la pared trasera (+x) y el brazo B la pared lateral, que forma el ángulo s.angle con la trasera.
+  corner(s) {
+    const g = new THREE.Group(), A = C.corner, D = C.baseD, ov = 0.03, th = s.angle;
+    const tx = Math.cos(th), tz = Math.sin(th), nx = Math.sin(th), nz = -Math.cos(th);   // tangente y normal de la pared lateral
+    const bh = s.h - C.plinth - C.top;
+    const carcass = mat(COL.woodDark), door = mat(COL.wood), steel = steelMat();
+    // Contorno de la planta (x, z) para un fondo dado; el cruce de los dos frentes está en (fondo·cot(θ/2), fondo)
+    const outline = depth => [[0, 0], [A, 0], [A, depth], [depth / Math.tan(th / 2), depth],
+      [nx * depth + tx * A, nz * depth + tz * A], [tx * A, tz * A]];
+    // Prisma vertical a partir de un contorno: la forma se dibuja en (x, -z) y se extruye hacia arriba
+    const prism = (pts, y0, h, material) => {
+      const geo = new THREE.ExtrudeGeometry(new THREE.Shape(pts.map(([x, z]) => new THREE.Vector2(x, -z))), { depth: h, bevelEnabled: false });
+      geo.rotateX(-Math.PI / 2);
+      const m = new THREE.Mesh(geo, material);
+      m.position.y = y0; m.castShadow = m.receiveShadow = true;
+      return m;
+    };
+    g.add(prism(outline(D - 0.06), 0, C.plinth, mat(COL.plinth)));                                  // zócalo
+    g.add(prism(outline(D), C.plinth, bh, carcass));                                                // cuerpo
+    g.add(prism(outline(D + ov), s.h - C.top, C.top, mat(COL.counter, { roughness: 0.3 })));        // encimera adaptable
+    // Una puerta en cada frente visible: del cruce X al final de cada brazo
+    const [, , P2, X, P3] = outline(D);
+    const addFace = (a, b, fnx, fnz) => {
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]) - 0.02;
+      if (len < 0.08) return;                                       // frente demasiado estrecho para una puerta
+      const yaw = Math.atan2(fnx, fnz), mx = (a[0] + b[0]) / 2, mz = (a[1] + b[1]) / 2;
+      const panel = place(box(len, bh - 0.02, 0.02, door), mx + fnx * 0.01, C.plinth + bh / 2, mz + fnz * 0.01);
+      panel.rotation.y = yaw; g.add(panel);
+      const k = (len / 2 - 0.04) / (len / 2 + 0.01);                // tirador cerca del extremo del cruce
+      const grip = place(box(0.012, 0.14, 0.02, steel), mx + (a[0] - mx) * k + fnx * 0.03, s.h - C.top - 0.1, mz + (a[1] - mz) * k + fnz * 0.03);
+      grip.rotation.y = yaw; g.add(grip);
+    };
+    addFace(X, P2, 0, 1);       // frente del brazo A (mira hacia +z)
+    addFace(X, P3, nx, nz);     // frente del brazo B (mira hacia el interior de la habitación)
+    return g;
+  },
+  // Frigorífico combi: columna de 60 × 200 cm con puerta de congelador arriba y de frigorífico abajo
+  fridge(s) {
+    const g = new THREE.Group(), bh = s.h - C.plinth, lowerH = bh * 0.62, upperH = bh - lowerH, fz = s.d / 2;
+    const inox = () => mat(0xc9ced3, { metalness: 0.35, roughness: 0.35 }), grip = mat(0x8d949b, { metalness: 0.5, roughness: 0.25 });
+    g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, mat(COL.plinth)), 0, C.plinth / 2, -0.02));
+    g.add(place(box(s.w, bh, s.d, mat(0x9ba1a8, { metalness: 0.2 })), 0, C.plinth + bh / 2, 0));
+    g.add(place(box(s.w - 0.02, lowerH - 0.01, 0.025, inox()), 0, C.plinth + lowerH / 2, fz + 0.0125));            // puerta del frigorífico
+    g.add(place(box(s.w - 0.02, upperH - 0.01, 0.025, inox()), 0, C.plinth + lowerH + upperH / 2, fz + 0.0125));   // puerta del congelador
+    g.add(place(box(0.02, 0.35, 0.03, grip), s.w / 2 - 0.05, C.plinth + lowerH - 0.25, fz + 0.04));                // tiradores metálicos
+    g.add(place(box(0.02, 0.3, 0.03, grip), s.w / 2 - 0.05, C.plinth + lowerH + 0.22, fz + 0.04));
+    return g;
+  },
+  // Lavavajillas integrado: frontal inox, panel de mandos superior y tirador horizontal
+  dishwasher(s) {
+    const g = baseUnit(s, 0x8f959b), bh = s.h - C.plinth - C.top, fz = s.d / 2, panelH = bh - 0.12;
+    g.add(place(box(s.w - 0.02, panelH, 0.02, mat(0xc4c9ce, { metalness: 0.35, roughness: 0.35 })), 0, C.plinth + 0.01 + panelH / 2, fz + 0.01));
+    g.add(place(box(s.w - 0.02, 0.09, 0.02, mat(COL.dark, { roughness: 0.25 })), 0, C.plinth + bh - 0.055, fz + 0.01));
+    [-0.19, -0.1, -0.01].forEach(x => g.add(place(box(0.035, 0.014, 0.006, mat(0xd8dde2, { metalness: 0.3 })), x, C.plinth + bh - 0.055, fz + 0.023)));
+    g.add(place(box(0.08, 0.03, 0.006, mat(0x2ec4b6, { roughness: 0.3 })), 0.12, C.plinth + bh - 0.055, fz + 0.023));   // pantalla
+    g.add(place(box(s.w * 0.6, 0.016, 0.03, steelMat()), 0, C.plinth + bh - 0.14, fz + 0.035));
+    return g;
+  },
+  // Lavadora bajo encimera: frente blanco, mandos y escotilla circular de cristal
+  washer(s) {
+    const g = baseUnit(s, 0xe4e4e0), bh = s.h - C.plinth - C.top, fz = s.d / 2, yc = C.plinth + bh * 0.45;
+    g.add(place(box(s.w - 0.02, bh - 0.02, 0.02, mat(0xf4f4f1, { roughness: 0.4 })), 0, C.plinth + bh / 2, fz + 0.01));
+    g.add(place(box(0.26, 0.05, 0.006, mat(COL.dark, { roughness: 0.3 })), 0.1, C.plinth + bh - 0.07, fz + 0.023));    // pantalla
+    const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.02, 24), steelMat());
+    knob.rotation.x = Math.PI / 2; knob.position.set(-s.w / 2 + 0.07, C.plinth + bh - 0.07, fz + 0.03); knob.castShadow = true;
+    g.add(knob);
+    // Escotilla: aro metálico, cristal oscuro y tambor visible (cilindros con el eje hacia el frente)
+    const ring = (r, h, m, z) => {
+      const c = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 40), m);
+      c.rotation.x = Math.PI / 2; c.position.set(0, yc, z); c.castShadow = true; g.add(c);
+    };
+    ring(0.215, 0.03, steelMat(), fz + 0.03);
+    ring(0.17, 0.034, mat(0x16222e, { roughness: 0.05, metalness: 0.3 }), fz + 0.034);
+    ring(0.12, 0.036, mat(0x2b3d4f, { roughness: 0.2 }), fz + 0.034);
+    return g;
+  },
+  // Columna despensero (suelo a techo)
+  tall(s) {
+    const g = new THREE.Group(), bh = s.h - C.plinth, lower = 0.9, upper = bh - lower, door = mat(COL.wood), steel = steelMat();
+    g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, mat(COL.plinth)), 0, C.plinth / 2, -0.02));
+    g.add(place(box(s.w, bh, s.d, mat(COL.woodDark)), 0, C.plinth + bh / 2, 0));
+    addDoors(g, s.w, s.d, C.plinth + lower / 2, lower - 0.02, 1, door, steel, C.plinth + lower - 0.12);
+    addDoors(g, s.w, s.d, C.plinth + lower + upper / 2, upper - 0.02, 1, door, steel, C.plinth + lower + 0.12);
+    return g;
+  }
+};
+
+/* =====================================================================
+   5. MODELO DE DISEÑO Y DISTRIBUCIÓN A LO LARGO DE LAS PAREDES
+   Cada pared guarda una lista ordenada de huecos. Un hueco tiene un ancho,
+   un mueble bajo opcional (lower; null = hueco libre) y un módulo alto opcional (upper). Las posiciones se
+   calculan siempre acumulando anchos desde el inicio de la pared, por lo que
+   los muebles nunca se solapan. Al eliminar un mueble su hueco se conserva vacío
+   y ningún vecino se mueve; los huecos vacíos contiguos se fusionan en uno.
+   ===================================================================== */
+const WALL_NAMES = { back: 'trasera', side: 'lateral' };
+let design = null;   // estado actual: medidas, distribución, ángulo, esquina y huecos por pared
+
+const WITH_UPPER = ['base', 'sink', 'dishwasher', 'washer'];   // muebles bajos que admiten módulo alto encima
+const upperFor = type => (WITH_UPPER.includes(type) ? 'wall' : type === 'oven' ? 'hood' : null);
+const makeSlot = (type, w) => ({ w, lower: type, upper: upperFor(type) });
+const heightOf = (type, H) => (type === 'tall' ? Math.min(2.1, H - 0.05) : type === 'fridge' ? Math.min(2, H - 0.1) : C.baseH);
+
+// Genera automáticamente una hilera: bases, fregadero, base, horno, bases (y columna al final)
+function planRun(len, specials, withTall) {
+  const fixed = specials.reduce((a, t) => a + STD[t], 0) + (withTall ? STD.tall : 0);
+  const n = Math.max(0, Math.floor((len - fixed) / STD.base + 1e-9));       // nº de muebles bajos
+  const bw = n ? STD.base + (len - fixed - n * STD.base) / n : STD.base;    // ancho ajustado
+  const left = Math.floor(n / 3), mid = specials.length > 1 && n >= 2 ? 1 : 0;
+  let types;
+  if (specials.length) types = [...Array(left).fill('base'), specials[0], ...Array(mid).fill('base'), specials[1], ...Array(n - left - mid).fill('base')];
+  else types = Array(n).fill('base');
+  if (withTall) types.push('tall');
+  return types.map(t => makeSlot(t, t === 'base' ? bw : STD[t]));
+}
+
+// Vectores de la pared lateral: tangente (tx, tz) desde la esquina y normal (nx, nz) hacia el interior.
+// th es el ángulo interior entre ambas paredes; m refleja la esquina cuando la pared lateral es la derecha.
+function cornerVectors(d) {
+  const th = d.angle * Math.PI / 180, m = d.layout === 'L' && d.side === 'right' ? -1 : 1;
+  return { th, m, tx: m * Math.cos(th), tz: Math.sin(th), nx: m * Math.sin(th), nz: -Math.cos(th) };
+}
+
+// Marco de cada pared: origen de la hilera (ox, oz), tangente, normal hacia el interior y longitud útil
+function wallFrames(d = design) {
+  const { W, L, layout, side } = d, isL = layout === 'L', A = isL ? C.corner : 0;
+  const frames = {
+    back: { ox: isL && side === 'left' ? -W / 2 + A : -W / 2, oz: -L / 2, tx: 1, tz: 0, nx: 0, nz: 1, len: W - A },
+    side: null
+  };
+  if (isL) {
+    const v = cornerVectors(d), px = side === 'left' ? -W / 2 : W / 2;
+    // La hilera lateral empieza tras el brazo del esquinero y termina donde el último módulo aún queda dentro del suelo
+    frames.side = {
+      ox: px + v.tx * A, oz: -L / 2 + v.tz * A, tx: v.tx, tz: v.tz, nx: v.nx, nz: v.nz,
+      len: (L + Math.min(0, C.baseD * Math.cos(v.th))) / v.tz - A
+    };
+  }
+  return frames;
+}
+const usedSpace = key => design.walls[key].reduce((a, s) => a + s.w, 0);
+const freeSpace = key => Math.max(0, wallFrames()[key].len - usedSpace(key));
+
+// Crea el diseño inicial según distribución, pared lateral y ángulo
+function createDesign(W, L, H, layout, side, angle) {
+  const isL = layout === 'L';
+  const d = { W, L, H, layout, side, angle: isL ? angle : 90, corner: isL, walls: { back: [], side: [] } };
+  const f = wallFrames(d);
+  d.walls.back = planRun(f.back.len, ['sink', 'oven'], !isL);
+  if (isL) d.walls.side = planRun(f.side.len, [], true);
+  return d;
+}
+
+// Convierte el diseño en una lista plana de módulos con posición, giro y dimensiones
+function layoutSpecs() {
+  const { W, L, H } = design, frames = wallFrames(), out = [];
+  const wallH = Math.min(C.wallHMax, H - C.wallY - 0.05);
+  Object.keys(design.walls).forEach(key => {
+    const f = frames[key];
+    if (!f) return;
+    let offset = 0;
+    design.walls[key].forEach(slot => {
+      const s = offset + slot.w / 2;
+      offset += slot.w;
+      const push = (part, type, d, h, y) => out.push({
+        type, part, slot, wall: key, w: slot.w, d, h, y,
+        x: f.ox + f.tx * s + f.nx * d / 2, z: f.oz + f.tz * s + f.nz * d / 2, rot: Math.atan2(f.nx, f.nz)
+      });
+      if (slot.lower) push('lower', slot.lower, C.baseD, heightOf(slot.lower, H), 0);
+      else push('gap', 'gap', C.baseD, C.baseH, 0);   // hueco libre: se dibuja como guía
+      if (slot.upper === 'hood') push('upper', 'hood', 0.5, H - C.hoodY, C.hoodY);
+      else if (slot.upper) push('upper', 'wall', C.wallD, wallH, C.wallY);
+    });
+  });
+  if (design.corner) out.push({
+    type: 'corner', part: 'corner', wall: 'corner', w: C.corner, d: C.corner, h: C.baseH, y: 0,
+    x: design.side === 'left' ? -W / 2 : W / 2, z: -L / 2, rot: 0, mirror: design.side === 'right',
+    angle: design.angle * Math.PI / 180
+  });
+  return out;
+}
+
+function setAddMsg(text, ok) {
+  const el = $('#addMsg');
+  el.textContent = text;
+  el.className = 'text-xs min-h-[1rem] ' + (ok ? 'text-teal-700' : 'text-amber-700');
+}
+
+const UPPER_TYPES = ['wall', 'hood'];       // módulos altos (montados en pared)
+const COLUMN_TYPES = ['tall', 'fridge'];    // columnas de suelo a techo
+const EPS = 0.005;                          // tolerancia (m) al comparar anchos
+
+// Fusiona los huecos totalmente vacíos contiguos en uno solo con el ancho combinado
+function mergeGaps(key) {
+  const merged = [];
+  design.walls[key].forEach(slot => {
+    const prev = merged[merged.length - 1];
+    if (!slot.lower && !slot.upper && prev && !prev.lower && !prev.upper) prev.w += slot.w;
+    else merged.push(slot);
+  });
+  design.walls[key] = merged;
+}
+
+// Parte un hueco: el primer tramo conserva el ancho w y el resto queda como hueco libre adyacente
+function splitSlot(key, slot, w) {
+  const run = design.walls[key], rest = slot.w - w;
+  slot.w = w;
+  run.splice(run.indexOf(slot) + 1, 0, { w: rest, lower: null, upper: null });
+}
+
+// ¿Puede este tipo de mueble colocarse en este hueco?
+function slotAccepts(type, slot) {
+  if (UPPER_TYPES.includes(type)) {
+    // Módulo alto: sobre hueco vacío (mín. 30 cm), electrodomésticos de encimera, muebles bajos u horno
+    return !slot.upper && (slot.lower === null ? slot.w >= 0.3 : WITH_UPPER.includes(slot.lower) || slot.lower === 'oven');
+  }
+  return slot.lower === null && slot.w >= STD[type] - EPS && !(slot.upper && COLUMN_TYPES.includes(type));
+}
+
+// Coloca el mueble en el hueco; si sobra ancho, el resto queda como nuevo hueco libre adyacente
+function occupy(type, key, slot) {
+  if (UPPER_TYPES.includes(type)) {
+    slot.upper = type;
+    if (slot.lower === null && slot.w > 0.9) splitSlot(key, slot, 0.6);
+    return 'upper';
+  }
+  slot.lower = type;
+  if (slot.w - STD[type] > EPS) splitSlot(key, slot, STD[type]);
+  return 'lower';
+}
+
+// Ocupa el hueco, reconstruye la escena y deja el mueble nuevo seleccionado
+function placeModule(type, key, slot) {
+  const before = slot.w, part = occupy(type, key, slot);
+  mergeGaps(key);
+  rebuildModules();
+  selectWhere(m => m.slot === slot && m.part === part);
+  const rest = before - slot.w;
+  setAddMsg(`Añadido: ${TYPES[type].label}${rest > EPS ? `. El resto del hueco (${cm(rest)} cm) queda libre` : ''}.`, true);
+}
+
+// Relleno inteligente: 1) hueco vacío de ancho exacto, 2) hueco vacío mayor, 3) final de la pared
+function addModule(type, key) {
+  if (type === 'corner') {
+    if (design.layout !== 'L') return setAddMsg('El módulo esquinero solo está disponible en la distribución en L.', false);
+    if (design.corner) return setAddMsg('La esquina ya tiene un módulo esquinero.', false);
+    design.corner = true;
+    rebuildModules();
+    selectWhere(m => m.part === 'corner');
+    return setAddMsg('Módulo esquinero añadido.', true);
+  }
+  if (!wallFrames()[key]) return setAddMsg('La pared lateral solo existe en la distribución en L.', false);
+  const slots = design.walls[key];
+  let slot;
+  if (UPPER_TYPES.includes(type)) {
+    // La campana prefiere el horno; el módulo alto prefiere cualquier otro hueco
+    const prefer = sl => ((type === 'hood') === (sl.lower === 'oven') ? 0 : 1);
+    slot = slots.filter(sl => slotAccepts(type, sl)).sort((a, b) => prefer(a) - prefer(b))[0];
+    if (!slot) return setAddMsg(`No quedan huecos libres sobre muebles de la pared ${WALL_NAMES[key]}.`, false);
+  } else {
+    slot = slots.find(sl => slotAccepts(type, sl) && Math.abs(sl.w - STD[type]) < EPS) || slots.find(sl => slotAccepts(type, sl));
+    if (!slot) {
+      const end = freeSpace(key);
+      if (STD[type] > end + 1e-6) return setAddMsg(`No hay hueco libre donde quepa ni espacio al final de la pared ${WALL_NAMES[key]}: quedan ${cm(end)} cm y hacen falta ${cm(STD[type])} cm.`, false);
+      slot = { w: STD[type], lower: null, upper: null };
+      slots.push(slot);
+    }
+  }
+  placeModule(type, key, slot);
+}
+
+// Botón de la ficha de un hueco: añade el tipo elegido en "Añadir Mueble" justo en ese hueco
+function addInGap(m) {
+  const type = $('#addType').value;
+  if (type === 'corner') return setAddMsg('El módulo esquinero solo se coloca en la esquina de la L.', false);
+  if (!slotAccepts(type, m.slot)) {
+    const need = UPPER_TYPES.includes(type) ? 0.3 : STD[type];
+    return setAddMsg(`${TYPES[type].label} no se puede colocar aquí: el hueco mide ${cm(m.slot.w)} cm y hacen falta ${cm(need)} cm.`, false);
+  }
+  placeModule(type, m.wall, m.slot);
+}
+
+// Elimina un mueble sin mover a ningún vecino: su hueco queda vacío (lower/upper = null) y los huecos
+// vacíos contiguos se fusionan. rebuildModules libera con dispose() las geometrías y materiales anteriores.
+function removeModule(m) {
+  if (m.part === 'corner') design.corner = false;
+  else {
+    m.slot[m.part] = null;
+    mergeGaps(m.wall);
+  }
+  rebuildModules();
+  setAddMsg(`Eliminado: ${m.name}. Su hueco queda libre y los vecinos no se mueven.`, true);
+}
+
+/* =====================================================================
+   6. HABITACIÓN: suelo, paredes, salpicadero y módulos
+   ===================================================================== */
+// Textura procedural de baldosa neutra (se repite cada 60 cm)
+function makeFloorTexture() {
+  const c = document.createElement('canvas'); c.width = c.height = 256;
+  const x = c.getContext('2d');
+  x.fillStyle = '#d2cdc5'; x.fillRect(0, 0, 256, 256);
+  for (let i = 0; i < 900; i++) { x.fillStyle = `rgba(${Math.random() < 0.5 ? '255,255,255' : '90,85,75'},0.05)`; x.fillRect(Math.random() * 256, Math.random() * 256, 3, 3); }
+  x.strokeStyle = '#b4afa6'; x.lineWidth = 4; x.strokeRect(0, 0, 256, 256);
+  const t = new THREE.CanvasTexture(c);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping; t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  return t;
+}
+const floorTex = makeFloorTexture();
+let roomGroup = null, moduleGroup = null, modules = [];
+
+// Construye suelo, paredes y salpicaderos y luego los módulos. reframe=false conserva la cámara (ajuste en vivo del ángulo)
+function applyDesign(d, reframe = true) {
+  design = d;
+  const { W, L, H } = d, v = cornerVectors(d), isL = d.layout === 'L';
+  clearSelection();
+  if (roomGroup) { disposeGroup(roomGroup); scene.remove(roomGroup); }
+  roomGroup = new THREE.Group(); scene.add(roomGroup);
+
+  const px = v.m > 0 ? -W / 2 : W / 2;      // x del vértice de la esquina trasera
+  const Ls = L / v.tz;                       // largo de la pared lateral hasta el borde frontal del suelo
+  const sx = px + v.tx * Ls;                 // x del extremo frontal de la pared lateral
+
+  // Suelo poligonal (trapecio cuando el ángulo no es 90°); las coordenadas de la forma son (x, -z)
+  floorTex.repeat.set(1 / 0.6, 1 / 0.6);
+  const outline = [[px, L / 2], [-px, L / 2], [-px, -L / 2], [sx, -L / 2]].map(([x, y]) => new THREE.Vector2(x, y));
+  const floor = new THREE.Mesh(new THREE.ShapeGeometry(new THREE.Shape(outline)), mat(0xffffff, { map: floorTex, roughness: 0.75, side: THREE.DoubleSide }));
+  floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true;
+
+  // Paredes (solo cara frontal: desaparecen al mirarlas desde fuera)
+  const back = new THREE.Mesh(new THREE.PlaneGeometry(W, H), mat(COL.wall, { roughness: 0.95 }));
+  back.position.set(0, H / 2, -L / 2); back.receiveShadow = true;
+  const yaw = Math.atan2(v.nx, v.nz), cx = px + v.tx * Ls / 2, cz = -L / 2 + v.tz * Ls / 2;
+  const side = new THREE.Mesh(new THREE.PlaneGeometry(Ls, H), mat(COL.wall, { roughness: 0.95 }));
+  side.rotation.y = yaw; side.position.set(cx, H / 2, cz); side.receiveShadow = true;
+
+  // Salpicaderos entre encimera y módulos altos
+  const splashH = C.wallY - C.baseH, splashY = (C.baseH + C.wallY) / 2;
+  roomGroup.add(floor, back, side, place(box(W, splashH, 0.02, mat(COL.tile, { roughness: 0.3 })), 0, splashY, -L / 2 + 0.01));
+  if (isL) {
+    const splash = place(box(Ls, splashH, 0.02, mat(COL.tile, { roughness: 0.3 })), cx + v.nx * 0.01, splashY, cz + v.nz * 0.01);
+    splash.rotation.y = yaw;
+    roomGroup.add(splash);
+  }
+
+  // Pared lateral solo disponible en distribución en L
+  $('#addWall option[value="side"]').disabled = !isL;
+  if (!isL) $('#addWall').value = 'back';
+
+  if (reframe) { fitLights(W, L, H); frameCamera(W, L, H); setAddMsg('', true); }
+  rebuildModules();
+}
+
+// Guía de un hueco libre: caja semitransparente con marco punteado (solo la caja participa en el clic)
+function buildGap(s) {
+  const g = new THREE.Group(), geo = new THREE.BoxGeometry(s.w - 0.01, C.baseH, s.d - 0.01);
+  const ghost = place(new THREE.Mesh(geo, mat(0x19c2b0, { transparent: true, opacity: 0.12, depthWrite: false })), 0, C.baseH / 2, 0);
+  const frame = new THREE.LineSegments(new THREE.EdgesGeometry(geo), new THREE.LineDashedMaterial({ color: 0x0f766e, dashSize: 0.06, gapSize: 0.04 }));
+  frame.computeLineDistances();
+  frame.position.y = C.baseH / 2;
+  frame.raycast = () => {};
+  g.add(ghost, frame);
+  return g;
+}
+BUILD.gap = buildGap;
+
+// Reconstruye todos los módulos desde el modelo, liberando antes los anteriores
+function rebuildModules() {
+  clearSelection();
+  if (moduleGroup) { roomGroup.remove(moduleGroup); disposeGroup(moduleGroup); }
+  moduleGroup = new THREE.Group(); roomGroup.add(moduleGroup);
+
+  modules = layoutSpecs();
+  modules.forEach((s, i) => {
+    const t = TYPES[s.type];
+    s.name = t.label; s.info = t.info;
+    s.id = `${t.code}-${String(i + 1).padStart(2, '0')}`;
+    s.price = Math.round(t.eur * s.w / 5) * 5;
+    s.group = BUILD[s.type](s);
+    s.group.position.set(s.x, s.y, s.z);
+    s.group.rotation.y = s.rot;
+    if (s.mirror) s.group.scale.x = -1;   // esquinero reflejado cuando la pared lateral es la derecha
+    s.group.traverse(o => { o.userData.module = s; });
+    moduleGroup.add(s.group);
+  });
+
+  // Presupuesto (los huecos no cuentan) y espacio libre por pared: huecos vacíos + final de la pared
+  const frames = wallFrames(), real = modules.filter(m => m.type !== 'gap'), gapCount = modules.length - real.length;
+  let overflow = false;
+  const parts = Object.keys(frames).filter(k => frames[k]).map(k => {
+    const end = frames[k].len - usedSpace(k);
+    if (end < -1e-6) { overflow = true; return `${WALL_NAMES[k]} sobrepasa ${(-end * 100).toFixed(0)} cm`; }
+    const gaps = design.walls[k].filter(sl => !sl.lower).reduce((a, sl) => a + sl.w, 0);
+    return `${WALL_NAMES[k]} ${((gaps + end) * 100).toFixed(0)} cm (huecos ${(gaps * 100).toFixed(0)}, final ${(end * 100).toFixed(0)})`;
+  });
+  $('#summaryCount').textContent = `${real.length} módulos` + (gapCount ? ` · ${gapCount} huecos` : '');
+  $('#summaryTotal').textContent = eur(real.reduce((a, m) => a + m.price, 0));
+  $('#freeInfo').textContent = 'Espacio libre: ' + parts.join(' · ');
+  if (overflow) setAddMsg('Con este ángulo los muebles de una pared no caben en el suelo: elimina alguno o cambia el ángulo.', false);
+}
+
+/* =====================================================================
+   7. INTERACTIVIDAD: Raycaster, resaltado y ficha técnica
+   ===================================================================== */
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+let selected = null, boxHelper = null, downPos = null;
+
+// Devuelve el módulo bajo el cursor (o null si hay pared/suelo/nada)
+function pick(e) {
+  const r = renderer.domElement.getBoundingClientRect();
+  ptr.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ptr, camera);
+  const hit = ray.intersectObjects(roomGroup.children, true)[0];
+  return hit ? hit.object.userData.module || null : null;
+}
+// Emisivo en todos los materiales del módulo = efecto de resaltado
+function setGlow(group, on) {
+  group.traverse(o => { if (o.material && o.material.emissive) { o.material.emissive.setHex(on ? 0x19c2b0 : 0x000000); o.material.emissiveIntensity = on ? 0.4 : 0; } });
+}
+function clearSelection() {
+  if (selected) setGlow(selected.group, false);
+  if (boxHelper) { scene.remove(boxHelper); boxHelper.dispose(); boxHelper = null; }
+  selected = null;
+  renderDetails(null);
+}
+const selectWhere = predicate => select(modules.find(predicate) || null);
+function select(m) {
+  clearSelection();
+  if (!m) return;
+  selected = m;
+  setGlow(m.group, true);
+  boxHelper = new THREE.Box3Helper(new THREE.Box3().setFromObject(m.group), 0x19c2b0);
+  boxHelper.material.depthTest = false;
+  scene.add(boxHelper);
+  renderDetails(m);
+}
+// Ficha técnica en la barra lateral
+function renderDetails(m) {
+  const el = $('#details');
+  if (!m) {
+    el.innerHTML = '<div class="rounded-lg border border-dashed border-slate-300 px-4 py-6 text-center text-sm text-slate-500">Haz clic en un módulo 3D</div>';
+    return;
+  }
+  if (m.type === 'gap') {
+    el.innerHTML = `
+      <h3 class="text-base font-semibold leading-snug">Hueco libre de ${cm(m.w)} cm</h3>
+      <p class="mt-1 text-sm text-slate-600">Pared ${WALL_NAMES[m.wall]}. Al rellenarlo no se mueve ningún mueble vecino.${m.slot.upper ? ' Tiene un módulo alto montado encima.' : ''}</p>
+      <p class="mt-3 text-sm">Se añadirá: <strong>${TYPES[$('#addType').value].label}</strong>
+        <span class="text-slate-500">(cambia el tipo en "Añadir Mueble")</span></p>
+      <button id="btnFillGap" type="button" class="mt-4 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Añadir mueble en este hueco</button>`;
+    $('#btnFillGap').addEventListener('click', () => addInGap(m));
+    return;
+  }
+  el.innerHTML = `
+    <div class="flex items-start justify-between gap-3">
+      <h3 class="text-base font-semibold leading-snug">${m.name}</h3>
+      <span class="shrink-0 rounded bg-teal-50 text-teal-800 text-xs font-medium px-2 py-0.5">${m.id}</span>
+    </div>
+    <p class="mt-1 text-sm text-slate-600">${m.info}</p>
+    <dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
+      <dt class="text-slate-500">Ancho</dt><dd class="font-medium text-right">${cm(m.w)} cm</dd>
+      <dt class="text-slate-500">Fondo</dt><dd class="font-medium text-right">${cm(m.d)} cm</dd>
+      <dt class="text-slate-500">Alto</dt><dd class="font-medium text-right">${cm(m.h)} cm</dd>
+      <dt class="text-slate-500">Altura de montaje</dt><dd class="font-medium text-right">${cm(m.y)} cm del suelo</dd>
+      ${m.type === 'corner' ? `<dt class="text-slate-500">Ángulo de la esquina</dt><dd class="font-medium text-right">${design.angle}°</dd>` : ''}
+      <dt class="text-slate-500 pt-2 border-t border-slate-100">Precio estimado</dt>
+      <dd class="font-bold text-lg text-right pt-2 border-t border-slate-100">${eur(m.price)}</dd>
+    </dl>
+    <a href="#" class="mt-5 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Ver / Comprar en Tienda</a>
+    <button id="btnDelete" type="button" class="mt-3 block w-full rounded-lg bg-red-600 hover:bg-red-700 text-white text-center font-semibold py-3 shadow-sm transition-colors">🗑️ Eliminar este mueble</button>`;
+  $('#btnDelete').addEventListener('click', () => removeModule(m));
+}
+
+const canvas = renderer.domElement;
+// Distingue clic de arrastre (rotación de cámara) para no seleccionar al orbitar
+canvas.addEventListener('pointerdown', e => { downPos = { x: e.clientX, y: e.clientY }; });
+canvas.addEventListener('pointerup', e => {
+  if (!downPos) return;
+  const moved = Math.hypot(e.clientX - downPos.x, e.clientY - downPos.y);
+  downPos = null;
+  if (moved < 5 && e.button === 0) select(pick(e));
+});
+// Cursor de mano al pasar sobre un módulo
+canvas.addEventListener('pointermove', e => { if (!downPos) canvas.style.cursor = pick(e) ? 'pointer' : 'grab'; });
+
+/* =====================================================================
+   8. FORMULARIO, AÑADIR MUEBLE Y VISTA
+   ===================================================================== */
+const layoutSelect = $('#inLayout'), angleNumber = $('#inAngle'), angleRange = $('#inAngleRange');
+const clampAngle = raw => Math.min(C.limits.angle[1], Math.max(C.limits.angle[0], Math.round(parseFloat(raw)) || 90));
+
+// Muestra u oculta los controles propios de la distribución en L (pared lateral y ángulo)
+function syncLayoutControls() {
+  const isL = layoutSelect.value === 'L';
+  ['#sideRow', '#angleRow'].forEach(id => { $(id).classList.toggle('hidden', !isL); $(id).classList.toggle('flex', isL); });
+}
+layoutSelect.addEventListener('change', syncLayoutControls);
+
+// Cambio de ángulo: sincroniza número y slider y, si la L ya está aplicada, recalcula la escena en tiempo real
+function onAngleChange(raw) {
+  const v = clampAngle(raw);
+  angleNumber.value = v; angleRange.value = v;
+  if (design && design.layout === 'L') { design.angle = v; applyDesign(design, false); }
+}
+angleRange.addEventListener('input', () => onAngleChange(angleRange.value));
+angleNumber.addEventListener('change', () => onAngleChange(angleNumber.value));
+
+$('#roomForm').addEventListener('submit', e => {
+  e.preventDefault();
+  let adjusted = false;
+  // Lee un valor, lo limita al rango permitido y lo reescribe en el input
+  const read = (id, [min, max], fallback) => {
+    let v = parseFloat($(id).value);
+    if (isNaN(v)) v = fallback;
+    const c = Math.min(max, Math.max(min, v));
+    if (c !== v) adjusted = true;
+    $(id).value = c;
+    return c;
+  };
+  const W = read('#inW', C.limits.W, 4), L = read('#inL', C.limits.L, 3.2), H = read('#inH', C.limits.H, 2.6);
+  const angle = clampAngle(angleNumber.value);
+  angleNumber.value = angle; angleRange.value = angle;
+  $('#formMsg').textContent = adjusted ? 'Algún valor se ajustó a los límites (ancho 3–8 m, largo 2,4–8 m, alto 2,3–3,5 m).' : '';
+  applyDesign(createDesign(W, L, H, layoutSelect.value, $('#inSide').value, angle));
+});
+$('#btnAdd').addEventListener('click', () => addModule($('#addType').value, $('#addWall').value));
+// Si hay un hueco seleccionado, su ficha indica el tipo que se añadirá y debe reflejar el cambio
+$('#addType').addEventListener('change', () => { if (selected && selected.type === 'gap') renderDetails(selected); });
+$('#resetView').addEventListener('click', () => frameCamera(design.W, design.L, design.H));
+
+/* =====================================================================
+   9. ARRANQUE Y BUCLE DE RENDER
+   ===================================================================== */
+resize();
+applyDesign(createDesign(4, 3.2, 2.6, 'linear', 'left', 90));
+renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
+</script>
+</body>
+</html>

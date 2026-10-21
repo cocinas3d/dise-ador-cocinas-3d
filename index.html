@@ -18,9 +18,11 @@
 </script>
 <style>
   body { font-family: 'Manrope', system-ui, sans-serif; }
-  #viewport canvas { display: block; outline: none; touch-action: none; }
+  #viewport canvas { display: block; outline: none; }   /* touch-action lo gestiona el script (táctil vs. ratón) */
   input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
-  html { scroll-padding-top: 1rem; }
+  html { scroll-padding-top: calc(var(--topbar-h, 3.5rem) + 0.5rem); }
+  /* Altura = pantalla visible (svh excluye las barras del navegador móvil) menos la cabecera */
+  #app { height: calc(100vh - var(--topbar-h, 3.5rem)); height: calc(100svh - var(--topbar-h, 3.5rem)); min-height: 520px; }
   @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
   select:focus-visible, summary:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
 
@@ -45,11 +47,23 @@
 </head>
 <body class="bg-slate-100 text-slate-800">
 
+<!-- ============ CABECERA FIJA DE NAVEGACIÓN ============ -->
+<header id="topbar" class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
+  <div class="mx-auto flex max-w-screen-2xl flex-col gap-2 px-3 py-2 md:flex-row md:items-center md:justify-between md:px-6">
+    <a href="#app" class="text-base font-bold leading-tight text-slate-900 md:text-lg">Configurador de Cocinas 3D</a>
+    <nav aria-label="Navegación principal" class="grid grid-cols-3 gap-2 md:flex md:gap-3">
+      <a href="#app" data-nav="app" class="flex min-h-[44px] items-center justify-center rounded-lg bg-slate-100 px-2 text-center text-xs font-semibold leading-tight text-slate-800 hover:bg-slate-200 sm:text-sm md:px-4">📐 Diseñador 3D</a>
+      <a href="#guias" data-nav="guias" class="flex min-h-[44px] items-center justify-center rounded-lg bg-teal-700 px-2 text-center text-xs font-semibold leading-tight text-white hover:bg-teal-800 sm:text-sm md:px-4">📚 Guías y Consejos</a>
+      <button type="button" id="navBudget" class="flex min-h-[44px] items-center justify-center rounded-lg bg-slate-100 px-2 text-center text-xs font-semibold leading-tight text-slate-800 hover:bg-slate-200 sm:text-sm md:px-4">🖨️ Presupuesto</button>
+    </nav>
+  </div>
+</header>
+
 <!-- ============ APLICACIÓN: configurador 3D a pantalla completa ============ -->
-<div id="app" class="h-screen min-h-[560px] flex flex-col md:flex-row">
+<div id="app" class="flex flex-col md:flex-row">
 
 <!-- ============ BARRA LATERAL (320px) ============ -->
-<aside class="w-full md:w-80 shrink-0 max-h-[48vh] md:max-h-none overflow-y-auto bg-white border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
+<aside class="w-full md:w-80 shrink-0 max-h-[44svh] md:max-h-none overflow-y-auto bg-white border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
   <header class="px-6 pt-6 pb-4 border-b border-slate-100">
     <h1 class="text-xl font-bold leading-tight text-slate-900">Configurador de cocinas 3D</h1>
     <p class="mt-1 text-sm text-slate-500">Define tu habitación y toca un módulo para ver su ficha.</p>
@@ -130,12 +144,15 @@
   </section>
 
   <!-- Resumen del presupuesto -->
-  <footer class="px-6 py-4 border-t border-slate-100 bg-slate-50 text-sm space-y-3">
-    <div class="flex items-center justify-between">
+  <footer id="presupuesto" class="sticky bottom-0 z-10 space-y-2 border-t border-slate-200 bg-slate-50 px-4 py-3 text-sm shadow-[0_-6px_12px_rgba(15,23,42,0.06)]">
+    <div class="flex items-center justify-between px-1">
       <span id="summaryCount" class="text-slate-500"></span>
       <span><span class="text-slate-500">Total estimado </span><strong id="summaryTotal" class="text-base"></strong></span>
     </div>
-    <button id="btnPrint" type="button" class="w-full rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-800 text-sm font-semibold py-2.5 transition-colors">🖨️ Imprimir / Guardar Presupuesto</button>
+    <div class="grid grid-cols-2 gap-2">
+      <button id="btnPrint" type="button" class="min-h-[44px] rounded-lg border border-slate-300 bg-white px-2 text-xs font-semibold leading-tight text-slate-800 transition-colors hover:bg-slate-100">🖨️ Imprimir / Guardar Presupuesto</button>
+      <a href="#guias" class="flex min-h-[44px] items-center justify-center rounded-lg bg-teal-700 px-2 text-center text-xs font-semibold leading-tight text-white transition-colors hover:bg-teal-800">📚 Guías y consejos de diseño ↓</a>
+    </div>
   </footer>
 
   <!-- Aviso legal obligatorio de Amazon Afiliados -->
@@ -145,8 +162,8 @@
 <!-- ============ ÁREA 3D ============ -->
 <main id="viewport" class="relative flex-1 min-h-0 min-w-0">
   <button id="resetView" type="button" class="absolute top-4 right-4 z-10 rounded-lg bg-white/90 hover:bg-white text-sm font-semibold px-3 py-2 shadow border border-slate-200">Vista general</button>
-  <a href="#guias" class="absolute bottom-3 right-4 z-10 rounded-lg bg-white/90 hover:bg-white text-sm font-semibold px-3 py-2 shadow border border-slate-200">Guías de diseño ↓</a>
-  <p class="absolute bottom-3 left-4 z-10 text-xs text-slate-600 bg-white/70 rounded px-2 py-1 pointer-events-none">Arrastra para rotar · haz clic en el 3D y usa la rueda para zoom · clic derecho para desplazar</p>
+  <button id="camFree" type="button" aria-pressed="false" class="hidden absolute top-4 left-4 z-10 min-h-[44px] rounded-lg bg-white/90 hover:bg-white text-sm font-semibold px-3 py-2 shadow border border-slate-200">✋ Cámara libre: no</button>
+  <p id="viewHint" class="absolute bottom-3 left-4 max-w-[calc(100%-2rem)] z-10 text-xs text-slate-600 bg-white/70 rounded px-2 py-1 pointer-events-none">Arrastra para rotar · haz clic en el 3D y usa la rueda para zoom · clic derecho para desplazar</p>
 </main>
 </div>
 
@@ -1174,6 +1191,26 @@ $('#resetView').addEventListener('click', () => frameCamera(design.W, design.L, 
 controls.enableZoom = false;
 canvas.addEventListener('pointerdown', () => { controls.enableZoom = true; });
 canvas.addEventListener('pointerleave', () => { controls.enableZoom = false; });
+canvas.addEventListener('pointercancel', () => { downPos = null; });   // el navegador tomó el gesto (scroll de página)
+
+// Pantallas táctiles: por defecto el lienzo usa touch-action: pan-y, así que un dedo en vertical desplaza la página,
+// en horizontal gira la cámara y el pellizco hace zoom. "Cámara libre" bloquea el scroll sobre el lienzo (touch-action: none)
+// para orbitar en cualquier dirección con un dedo; se desactiva sola al usar la navegación superior.
+const coarse = window.matchMedia('(pointer: coarse)').matches, camBtn = $('#camFree');
+function setCamFree(free) {
+  canvas.style.touchAction = free ? 'none' : 'pan-y';
+  camBtn.setAttribute('aria-pressed', String(free));
+  camBtn.textContent = free ? '✋ Cámara libre: sí' : '✋ Cámara libre: no';
+  $('#viewHint').textContent = free
+    ? 'Cámara libre: un dedo gira el 3D. Desactívala para deslizar la página.'
+    : 'Desliza en vertical para bajar la página · en horizontal para girar · pellizca para zoom';
+}
+if (coarse) {
+  camBtn.classList.remove('hidden');
+  setCamFree(false);
+  camBtn.addEventListener('click', () => setCamFree(canvas.style.touchAction !== 'none'));
+  document.addEventListener('leave3d', () => setCamFree(false));
+}
 
 // Rellena la hoja de impresión con los muebles del diseño, sus precios y el total
 function buildPrintSheet() {
@@ -1206,6 +1243,49 @@ $('#year').textContent = new Date().getFullYear();
 resize();
 applyDesign(createDesign(4, 3.2, 2.6, 'linear', 'left', 90));
 renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
+</script>
+<script>
+/* Navegación superior: funciona aunque falle la carga de Three.js */
+(function () {
+  var topbar = document.getElementById('topbar');
+  // La altura de la cabecera se publica como variable CSS para dimensionar la app y los saltos de scroll
+  function syncTopbar() { document.documentElement.style.setProperty('--topbar-h', topbar.offsetHeight + 'px'); }
+  syncTopbar();
+  if (window.ResizeObserver) new ResizeObserver(syncTopbar).observe(topbar);
+  else window.addEventListener('resize', syncTopbar);
+
+  // Cualquier enlace interno libera el modo "Cámara libre" para que el scroll vuelva a funcionar
+  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+    a.addEventListener('click', function () { document.dispatchEvent(new Event('leave3d')); });
+  });
+
+  // "Presupuesto": vuelve a la herramienta, destaca el bloque del total y enfoca el botón de imprimir
+  document.getElementById('navBudget').addEventListener('click', function () {
+    document.dispatchEvent(new Event('leave3d'));
+    document.getElementById('app').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var box = document.getElementById('presupuesto');
+    box.classList.add('ring-2', 'ring-teal-600', 'ring-inset');
+    setTimeout(function () { box.classList.remove('ring-2', 'ring-teal-600', 'ring-inset'); }, 1800);
+    document.getElementById('btnPrint').focus({ preventScroll: true });
+  });
+
+  // Resalta en la cabecera la sección que cruza el centro de la pantalla
+  var links = document.querySelectorAll('[data-nav]');
+  function mark(id) {
+    links.forEach(function (a) {
+      var on = a.dataset.nav === id;
+      ['ring-2', 'ring-slate-900', 'ring-offset-2'].forEach(function (c) { a.classList.toggle(c, on); });
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+  if (window.IntersectionObserver) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) mark(e.target.id); });
+    }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+    io.observe(document.getElementById('app'));
+    io.observe(document.getElementById('guias'));
+  }
+})();
 </script>
 </body>
 </html>

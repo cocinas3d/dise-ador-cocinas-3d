@@ -5,6 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Configurador de Cocinas 3D gratis: diseña tu cocina lineal o en L</title>
 <meta name="description" content="Configurador de cocinas 3D gratuito: diseña tu cocina lineal o en L, ajusta el ángulo de la esquina, añade electrodomésticos y calcula un presupuesto orientativo. Incluye guías de medidas y planificación.">
+<!--
+  GOOGLE ADSENSE
+  Sustituye ca-pub-XXXXXXXXXXXXXXXX (en la etiqueta meta y en el script) por tu ID de publicador. La encuentras en
+  AdSense > Cuenta > Información de la cuenta. Con la ID de ejemplo, AdSense rechaza la petición y no se muestra nada.
+  Importante: para visitantes del Espacio Económico Europeo y del Reino Unido, Google exige una plataforma de gestión
+  del consentimiento (CMP) certificada que se cargue antes de mostrar anuncios.
+-->
+<meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Tailwind CSS (CDN) para la interfaz -->
@@ -33,6 +42,8 @@
   .article ul { margin-top: 0.8rem; padding-left: 1.5rem; list-style: disc; line-height: 1.7; color: #334155; }
   .article li { margin-top: 0.35rem; }
   .article a { color: #0f766e; text-decoration: underline; }
+  .article a.cta { display: inline-block; margin-top: 0.9rem; padding: 0.6rem 1rem; border-radius: 0.5rem; background: #0f766e; color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none; }
+  .article a.cta:hover { background: #115e59; }
   .legal-dialog .article h3 { font-size: 1rem; margin-top: 1.25rem; }
 
   /* Vista de impresión: solo se muestra la hoja de presupuesto */
@@ -102,6 +113,7 @@
     </div>
     <button type="submit" class="w-full rounded-lg bg-slate-900 hover:bg-slate-700 text-white text-sm font-semibold py-2.5 transition-colors">Actualizar Habitación</button>
     <p id="formMsg" class="text-xs text-amber-700 min-h-[1rem]" role="status"></p>
+    <p class="text-xs text-slate-500">💾 Tu diseño se guarda automáticamente en este navegador.</p>
   </form>
 
   <!-- Añadir mueble manualmente -->
@@ -118,6 +130,7 @@
         <option value="fridge">Frigorífico / Combi</option>
         <option value="dishwasher">Lavavajillas</option>
         <option value="washer">Lavadora</option>
+        <option value="trolley">Isla / Carrito Auxiliar (60 cm)</option>
         <option value="corner">Módulo esquinero</option>
       </select>
     </label>
@@ -125,6 +138,7 @@
       <select id="addWall" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">
         <option value="back">Pared trasera</option>
         <option value="side" disabled>Pared lateral (solo en L)</option>
+        <option value="free">Exento (centro, solo carrito)</option>
       </select>
     </label>
     <label class="flex flex-col gap-1 text-sm">Posición / Hueco
@@ -173,13 +187,14 @@
     <header>
       <p class="text-sm font-semibold text-teal-700">Guías de diseño</p>
       <h2 id="guias-titulo" class="mt-1 text-3xl font-bold text-slate-900">Todo lo que necesitas para planificar tu cocina</h2>
-      <p class="mt-3 leading-relaxed text-slate-600">Tres guías prácticas con medidas, criterios de distribución y consejos de instalación para sacar el máximo partido al configurador y llegar con las ideas claras a la tienda o al instalador.</p>
+      <p class="mt-3 leading-relaxed text-slate-600">Cuatro guías prácticas con medidas, criterios de distribución y consejos de instalación para sacar el máximo partido al configurador y llegar con las ideas claras a la tienda o al instalador.</p>
     </header>
 
-    <nav aria-label="Índice de guías" class="mt-8 grid gap-3 sm:grid-cols-3">
+    <nav aria-label="Índice de guías" class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       <a href="#medidas" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">1. Medidas estándar y triángulo de trabajo</a>
       <a href="#l-vs-lineal" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">2. Cocinas en L o lineales</a>
       <a href="#electrodomesticos" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">3. Instalación de electrodomésticos integrables</a>
+      <a href="#accesorios" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">4. Accesorios de luz y orden por menos de 30 €</a>
     </nav>
 
     <div class="mt-6 divide-y divide-slate-200">
@@ -257,6 +272,17 @@
           <li>Mide el ángulo real de la esquina. En el configurador puedes simularlo entre 75° y 115° con el control "Ángulo de la esquina" antes de encargar nada.</li>
         </ul>
 
+        <h3>El truco de la isla / carrito auxiliar exento (60 cm)</h3>
+        <p>Si tu cocina es lineal o pequeña y echas en falta superficie de trabajo, un carrito auxiliar de unos 60 cm es la solución más rápida y barata: no requiere obras ni reformas, tampoco tomas de agua o electricidad, y se mueve o se guarda cuando necesitas el espacio.</p>
+        <ul>
+          <li><strong>Superficie extra:</strong> una encimera de unos 60 × 45 cm junto a la zona de cocción, o enfrente de la hilera de muebles, para cortar, mezclar o dejar ollas calientes.</li>
+          <li><strong>Almacenaje móvil:</strong> los cajones y las baldas inferiores sirven para especias, utensilios o menaje de uso diario, y se desplazan hasta donde los necesitas.</li>
+          <li><strong>Dónde colocarlo:</strong> deja 90–100 cm de paso entre el carrito y la hilera de muebles, y bloquea las ruedas mientras trabajas. En cocinas muy estrechas, aparca el carrito pegado a una pared o a una columna.</li>
+          <li><strong>En el configurador:</strong> añade "Isla / Carrito Auxiliar (60 cm)" y elige "Exento" en el selector de pared para colocarlo en el centro, o pégalo a una pared en un hueco libre de 60 cm.</li>
+        </ul>
+        <p>Si quieres ver el modelo que usamos en el configurador, puedes consultarlo en Amazon: es un carrito exento con ruedas, encimera de madera y cajones.</p>
+        <p><a class="cta" href="https://link.amazon/B08pvKdqM" target="_blank" rel="noopener noreferrer">Ver carrito auxiliar en Amazon</a></p>
+
         <h3>¿Cuál elegir?</h3>
         <p>Si dispones de una pared libre de unos 3 m o más y buscas simplicidad y presupuesto ajustado, la cocina lineal es una apuesta segura. Si tienes dos paredes contiguas libres y quieres más encimera, almacenaje y un recorrido de trabajo más corto, la cocina en L suele ser la mejor opción.</p>
       </article>
@@ -306,6 +332,42 @@
         </ul>
       </article>
 
+      <article id="accesorios" class="article py-12">
+        <h2>Accesorios de iluminación y organización por menos de 30 €</h2>
+        <p>No siempre hace falta una reforma para mejorar una cocina. Tres compras pequeñas —luz donde trabajas, orden dentro de los muebles bajos y tiradores nuevos— cambian el uso diario y el aspecto del conjunto sin obras. Los precios varían con el tiempo y las ofertas, así que comprueba siempre el precio actual en la ficha de Amazon antes de comprar.</p>
+        <p>Los enlaces de esta guía son enlaces de afiliado: si compras a través de ellos, el precio para ti no cambia y yo puedo recibir una comisión. Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.</p>
+
+        <h3>1. Luces LED bajo mueble recargables con sensor de movimiento</h3>
+        <p>La franja entre la encimera y los módulos altos suele quedar en sombra justo donde cortas y cocinas. En el configurador, los módulos altos cuelgan a 145 cm y la encimera está a 90 cm, de modo que quedan unos 55 cm de hueco que conviene iluminar. Una barra LED recargable con sensor de movimiento se coloca en la base del módulo alto sin cables ni electricista, y se enciende sola al acercarte.</p>
+        <ul>
+          <li><strong>Color de luz:</strong> entre 3000 y 4000 K (blanco cálido a neutro) resulta cómodo para preparar alimentos.</li>
+          <li><strong>Posición:</strong> en la parte delantera de la base del módulo alto, para que el haz caiga sobre la encimera y no te deslumbre.</li>
+          <li><strong>Antes de comprar:</strong> revisa en la ficha el tipo de fijación (adhesivo o imán) y la autonomía de la batería que indica el fabricante.</li>
+        </ul>
+        <p><a class="cta" href="https://link.amazon/B0j8hF8Kj" target="_blank" rel="noopener noreferrer">Ver luces LED bajo mueble en Amazon</a></p>
+
+        <h3>2. Organizador extensible de sartenes y tapas</h3>
+        <p>El interior de un mueble bajo de 60 cm es un pozo donde las sartenes y las tapas se apilan y se rayan. Con paredes de 18 mm, el ancho útil interior ronda los 56 cm, y un organizador extensible se ajusta a ese ancho y permite guardar sartenes y tapas en vertical, sin vaciar el mueble para sacar la que está debajo.</p>
+        <ul>
+          <li>Mide el ancho, el fondo y el alto interiores del mueble antes de elegir el rango de extensión.</li>
+          <li>Comprueba que la puerta cierra con el organizador instalado y que no choca con las bisagras.</li>
+          <li>Guarda las sartenes más usadas en la primera fila para llegar a ellas sin agacharte demasiado.</li>
+        </ul>
+        <p><a class="cta" href="https://link.amazon/B07VK69WQL" target="_blank" rel="noopener noreferrer">Comprar organizador de sartenes y tapas en Amazon</a></p>
+
+        <h3>3. Pack de tiradores negros mate de 128 mm</h3>
+        <p>Cambiar los tiradores es la forma más barata de modernizar unos módulos blancos: el negro mate crea contraste y combina con la placa de cristal negro, el horno oscuro y la campana. La cifra de 128 mm es la distancia entre los dos tornillos de fijación, medida de centro a centro; es una medida muy habitual y permite sustituir tiradores sin hacer agujeros nuevos si los actuales tienen esa separación.</p>
+        <ul>
+          <li>Mide la distancia entre los tornillos de tus tiradores actuales: si no son 128 mm, tendrás que rellenar y taladrar de nuevo.</li>
+          <li>Cuenta puertas y cajones para calcular cuántos tiradores necesitas.</li>
+          <li>Verifica la longitud de los tornillos incluidos según el grosor de tus puertas.</li>
+        </ul>
+        <p><a class="cta" href="https://link.amazon/B071L14MB7" target="_blank" rel="noopener noreferrer">Ver tiradores negros mate de 128 mm en Amazon</a></p>
+
+        <h3>Por dónde empezar</h3>
+        <p>Si solo vas a comprar una cosa, empieza por los tiradores: es lo que más cambia la imagen de la cocina. Después, añade luz bajo los módulos altos y, por último, el organizador para los muebles bajos de 60 cm. Puedes comprobar cómo quedarían los módulos blancos con tiradores oscuros en el configurador 3D antes de decidirte.</p>
+      </article>
+
     </div>
     <p class="pt-2"><a href="#app" class="font-semibold text-teal-700 hover:underline">↑ Volver al configurador 3D</a></p>
   </div>
@@ -334,7 +396,7 @@
   </div>
   <div class="article px-6 pb-6 text-sm">
     <h3>Titular del sitio web</h3>
-    <p>En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de que este sitio web es titularidad de [Nombre o razón social], con NIF/CIF [NIF/CIF], domicilio en [Domicilio completo] y correo electrónico de contacto [correo electrónico].</p>
+    <p>En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de que el titular de este sitio web es el editor de Configurador de Cocinas 3D. Para cualquier comunicación relacionada con el sitio puedes escribir a <a href="mailto:contacto@tu-dominio.com">contacto@tu-dominio.com</a>.</p>
     <h3>Objeto</h3>
     <p>Este sitio ofrece una herramienta gratuita de planificación de cocinas en 3D y contenidos informativos sobre diseño de cocinas. El acceso y uso del sitio atribuye la condición de usuario e implica la aceptación de este aviso.</p>
     <h3>Precios e información</h3>
@@ -355,9 +417,9 @@
   </div>
   <div class="article px-6 pb-6 text-sm">
     <h3>Responsable del tratamiento</h3>
-    <p>[Nombre o razón social], NIF/CIF [NIF/CIF], [Domicilio completo]. Contacto: [correo electrónico].</p>
+    <p>El titular de este sitio web, al que puedes contactar en <a href="mailto:contacto@tu-dominio.com">contacto@tu-dominio.com</a>.</p>
     <h3>Datos que se tratan</h3>
-    <p>El configurador funciona íntegramente en tu navegador: las medidas de la habitación y los muebles que elijas no se envían a ningún servidor ni se almacenan. El sitio no dispone de formularios de registro. Si nos escribes por correo electrónico, trataremos tu dirección y el contenido del mensaje para responderte, con base en tu consentimiento o en el interés legítimo de atender tu consulta, y los conservaremos mientras sea necesario para ello.</p>
+    <p>El configurador funciona íntegramente en tu navegador: las medidas de la habitación y los muebles que elijas no se envían a ningún servidor. Para que no pierdas tu trabajo al recargar la página, el diseño se guarda únicamente en el almacenamiento local de tu propio navegador (localStorage) y puedes borrarlo en cualquier momento desde sus ajustes. El sitio no dispone de formularios de registro. Si nos escribes por correo electrónico, trataremos tu dirección y el contenido del mensaje para responderte, con base en tu consentimiento o en el interés legítimo de atender tu consulta, y los conservaremos mientras sea necesario para ello.</p>
     <h3>Servicios de terceros</h3>
     <ul>
       <li><strong>Recursos externos:</strong> la página carga librerías y tipografías desde redes de distribución de contenidos (por ejemplo Tailwind CSS, jsDelivr y Google Fonts), que pueden recibir tu dirección IP y datos técnicos del navegador.</li>
@@ -365,7 +427,7 @@
       <li><strong>Amazon:</strong> al seguir un enlace de afiliado, Amazon trata tus datos según su propia política de privacidad.</li>
     </ul>
     <h3>Derechos</h3>
-    <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [correo electrónico]. Si consideras que no se han atendido correctamente, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
+    <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a <a href="mailto:contacto@tu-dominio.com">contacto@tu-dominio.com</a>. Si consideras que no se han atendido correctamente, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
   </div>
 </dialog>
 
@@ -378,7 +440,7 @@
     <h3>Qué son las cookies</h3>
     <p>Las cookies son pequeños archivos que un sitio web guarda en tu dispositivo para recordar información o medir su uso. Algunas son necesarias para que el sitio funcione y otras sirven para analítica o publicidad.</p>
     <h3>Cookies de este sitio</h3>
-    <p>El configurador no necesita cookies propias para funcionar. Los servicios de terceros que se incorporen (publicidad como Google AdSense, o los enlaces de afiliado de Amazon) pueden instalar sus propias cookies o identificadores. Cuando este sitio utilice cookies no necesarias, te pedirá tu consentimiento previo y podrás retirarlo en cualquier momento.</p>
+    <p>El configurador no necesita cookies propias para funcionar; solo usa el almacenamiento local del navegador (localStorage) para recordar tu último diseño, un uso técnico que no se envía a ningún servidor. Los servicios de terceros que se incorporen (publicidad como Google AdSense, o los enlaces de afiliado de Amazon) pueden instalar sus propias cookies o identificadores. Cuando este sitio utilice cookies no necesarias, te pedirá tu consentimiento previo y podrás retirarlo en cualquier momento.</p>
     <h3>Cómo gestionarlas</h3>
     <ul>
       <li>Desde el panel de configuración de cookies del sitio, cuando esté disponible.</li>
@@ -407,12 +469,12 @@
     <thead>
       <tr class="border-b-2 border-slate-800">
         <th class="py-2 pr-3">Ref.</th><th class="py-2 pr-3">Mueble</th><th class="py-2 pr-3">Ubicación</th>
-        <th class="py-2 pr-3">Medidas (ancho × fondo × alto)</th><th class="py-2 text-right">Precio est.</th>
+        <th class="py-2 pr-3">Medidas (ancho × fondo × alto)</th><th class="py-2 pr-3 text-right">Precio est.</th><th class="py-2">Enlace de compra</th>
       </tr>
     </thead>
     <tbody id="printRows"></tbody>
     <tfoot>
-      <tr class="border-t-2 border-slate-800"><td colspan="4" class="py-3 pr-3 text-right font-bold">Total estimado</td><td id="printTotal" class="py-3 text-right text-lg font-bold"></td></tr>
+      <tr class="border-t-2 border-slate-800"><td colspan="4" class="py-3 pr-3 text-right font-bold">Total estimado</td><td id="printTotal" class="py-3 pr-3 text-right text-lg font-bold"></td><td></td></tr>
     </tfoot>
   </table>
   <p class="mt-6 text-xs text-slate-600">Los precios son estimaciones orientativas para la planificación del espacio; no constituyen una oferta vinculante y pueden variar según fabricante, modelo y tienda.</p>
@@ -422,6 +484,7 @@
 <script type="module">
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
 
 /* =====================================================================
    1. CONFIGURACIÓN: medidas (m), colores y catálogo de módulos
@@ -433,28 +496,27 @@ const C = {
   corner: 0.9,                                        // largo de cada brazo del módulo esquinero
   limits: { W: [3, 8], L: [2.4, 8], H: [2.3, 3.5], angle: [75, 115] }   // límites de la habitación
 };
-const COL = {
-  wood: 0xb07d4f, woodDark: 0x8f6338, white: 0xf7f6f2, whiteBody: 0xe2e0da,
-  counter: 0xe4e7e9, steel: 0xb8bec5, sink: 0xc3c8cd, plinth: 0x1f2326,
-  dark: 0x2a2c30, glass: 0x0c0d0f, tile: 0xe9eef0, wall: 0xf1efea
-};
-// eur = precio estimado por metro lineal de ancho
-// url (opcional) = enlace de afiliado de Amazon del producto; si falta, el botón de compra usa '#'
+const COL = { plinth: 0x1f2326, dark: 0x2a2c30, tile: 0xe9eef0, wall: 0xf1efea };   // zócalo, negro base, salpicadero y paredes
+// eur = precio estimado por unidad (módulo estándar)
+// url = enlace de afiliado de Amazon del producto (la placa + horno añade url_placa y url_horno); si falta, el botón usa '#'
 const TYPES = {
-  base: { code: 'MB', label: 'Mueble bajo con encimera', eur: 420, info: 'Mueble bajo de almacenaje con puertas de madera y encimera de cuarzo.' },
-  sink: { code: 'FR', label: 'Módulo fregadero', eur: 640, info: 'Mueble de fregadero en acabado metálico, con cubeta de acero y grifo monomando.' },
-  oven: { code: 'HV', label: 'Módulo horno y vitrocerámica', eur: 950, info: 'Horno empotrado con placa vitrocerámica de cuatro zonas.' },
-  wall: { code: 'MA', label: 'Módulo alto colgado', eur: 260, info: 'Armario alto de pared en blanco mate con apertura por tirador.' },
-  hood: { code: 'CE', label: 'Campana extractora', eur: 480, info: 'Campana de acero con chimenea hasta el techo.' },
-  tall: { code: 'DE', label: 'Columna despensero', eur: 780, info: 'Columna de suelo a techo con dos cuerpos de almacenaje.' },
-  gap: { code: 'HL', label: 'Hueco libre', eur: 0, info: 'Espacio vacío entre muebles.' },
-  fridge: { code: 'FC', label: 'Frigorífico / Combi', eur: 1500, info: 'Frigorífico combi de columna (60 × 200 cm) con doble puerta inox y tiradores metálicos.' },
-  dishwasher: { code: 'LV', label: 'Lavavajillas', eur: 900, info: 'Lavavajillas integrado de 60 cm con frontal inox y panel de mandos superior.' },
-  washer: { code: 'LA', label: 'Lavadora', eur: 1000, info: 'Lavadora bajo encimera de 60 cm con escotilla circular de cristal.' },
-  corner: { code: 'ME', label: 'Módulo esquinero', eur: 560, info: 'Esquinero de dos brazos que une ambas paredes con encimera continua y se adapta al ángulo de la esquina.' }
+  base: { code: 'MB', label: 'Mueble bajo con encimera (60 cm)', eur: 420, info: 'Mueble bajo modular de 60 cm con puertas en blanco y superficie de trabajo.', url: 'https://link.amazon/B0eSa7aND' },
+  wall: { code: 'MA', label: 'Módulo alto colgado (60 cm)', eur: 260, info: 'Armario alto de pared en blanco mate con apertura superior y balda central.', url: 'https://link.amazon/B07XavuzJ' },
+  tall: { code: 'DE', label: 'Columna despensero (180 cm)', eur: 780, info: 'Armario columna despensero auxiliar de gran capacidad para almacenamiento.', url: 'https://link.amazon/B01raTlAO' },
+  trolley: { code: 'CA', label: 'Isla / Carrito Auxiliar (60 cm)', eur: 180, info: 'Carrito exento con ruedas, encimera de madera y cajones para almacenaje flexible.', url: 'https://link.amazon/B08pvKdqM' },
+  fridge: { code: 'FC', label: 'Frigorífico / Combi Inox', eur: 1500, info: 'Frigorífico combi No Frost en acabado acero inoxidable (60 × 200 cm).', url: 'https://link.amazon/B06U5SJnb' },
+  dishwasher: { code: 'LV', label: 'Lavavajillas Inox (60 cm)', eur: 900, info: 'Lavavajillas acero inoxidable antihuellas con programas de alta eficiencia.', url: 'https://link.amazon/B02C2dzGl' },
+  washer: { code: 'LA', label: 'Lavadora Inox (60 cm)', eur: 1000, info: 'Lavadora bajo encimera en acabado metálico Inox con panel digital.', url: 'https://link.amazon/B0fvMcYqA' },
+  sink: { code: 'FR', label: 'Módulo Fregadero con Escurridor', eur: 640, info: 'Fregadero de acero inoxidable con cubeta profunda y zona de escurrido.', url: 'https://link.amazon/B07Ja9Xmn' },
+  hood: { code: 'CE', label: 'Campana Extractora', eur: 350, info: 'Campana extractora inclinada en cristal negro mate con chimenea de acero.', url: 'https://link.amazon/B0dJNySoI' },
+  oven: { code: 'HV', label: 'Placa de Inducción + Horno', eur: 1100, info: 'Conjunto de placa de inducción en cristal negro y horno multifunción Inox.',
+          url_placa: 'https://link.amazon/B0aRSwUhK', url_horno: 'https://link.amazon/B09cUMybv', url: 'https://link.amazon/B09cUMybv' },
+  corner: { code: 'ME', label: 'Módulo esquinero', eur: 500, info: 'Esquinero de dos brazos que une ambas paredes con encimera continua y se adapta al ángulo de la esquina.' },
+  gap: { code: 'HL', label: 'Hueco libre', eur: 0, info: 'Espacio vacío entre muebles.' }
 };
+
 // Anchos estándar (m) con los que se añaden los muebles manualmente
-const STD = { base: 0.6, sink: 0.8, oven: 0.6, tall: 0.6, fridge: 0.6, dishwasher: 0.6, washer: 0.6 };
+const STD = { base: 0.6, sink: 0.8, oven: 0.6, tall: 0.6, trolley: 0.6, fridge: 0.6, dishwasher: 0.6, washer: 0.6 };
 
 /* =====================================================================
    2. UTILIDADES
@@ -463,7 +525,7 @@ const $ = s => document.querySelector(s);
 const esc = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');   // escapa un valor para usarlo dentro de un atributo HTML
 const eur = v => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
 const cm = v => (v * 100).toFixed(1).replace('.0', '').replace('.', ',');
-const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0, ...o });
+const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0, envMapIntensity: 0.3, ...o });
 // Caja con sombras activadas
 const box = (w, h, d, m) => { const x = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), m); x.castShadow = x.receiveShadow = true; return x; };
 const place = (o, x, y, z) => { o.position.set(x, y, z); return o; };
@@ -482,6 +544,10 @@ viewport.appendChild(renderer.domElement);
 
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xdfe6e9);
+// Entorno de interior para que el inox, el cristal y el cromo tengan reflejos realistas (solo ilumina, no se ve de fondo)
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+pmrem.dispose();
 const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
 
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -490,7 +556,7 @@ controls.maxPolarAngle = Math.PI / 2 - 0.02;           // no bajar del suelo
 controls.minDistance = 1.5;
 controls.maxDistance = 25;
 
-scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+scene.add(new THREE.AmbientLight(0xffffff, 0.45));
 const sun = new THREE.DirectionalLight(0xfff4e5, 1.2);
 sun.castShadow = true;
 sun.shadow.mapSize.set(2048, 2048);
@@ -527,6 +593,20 @@ window.addEventListener('resize', resize);
 /* =====================================================================
    4. CONSTRUCCIÓN DE MÓDULOS (origen local: centro-base; frente hacia +z)
    ===================================================================== */
+// Acabados reutilizables. Cada llamada crea un material nuevo para poder resaltar y liberar cada módulo por separado.
+const FINISH = {
+  whiteMatte: () => mat(0xf5f5f2, { roughness: 0.75 }),                                       // blanco mate de puertas
+  whiteBody: () => mat(0xe6e5e0, { roughness: 0.8 }),                                         // blanco mate de cuerpos
+  oak: () => mat(0xc79a62, { roughness: 0.55 }),                                              // roble cálido
+  inox: () => mat(0xd1d5db, { roughness: 0.25, metalness: 0.8, envMapIntensity: 1 }),        // inox antihuellas
+  brushed: () => mat(0xc3c8ce, { roughness: 0.4, metalness: 0.85, envMapIntensity: 1 }),     // inox cepillado
+  chrome: () => mat(0xe2e6ea, { roughness: 0.15, metalness: 0.9, envMapIntensity: 1.2 }),    // cromo de grifos y tiradores
+  blackMetal: () => mat(0x1b1d20, { roughness: 0.35, metalness: 0.5, envMapIntensity: 0.9 }), // negro metálico mate
+  glassBlack: () => mat(0x08090b, { roughness: 0.06, metalness: 0.3, envMapIntensity: 1.3 }), // cristal negro azabache
+  panelDark: () => mat(0x2b2e33, { roughness: 0.35, metalness: 0.4, envMapIntensity: 0.8 }), // paneles y mandos oscuros
+  plinth: () => mat(COL.plinth, { roughness: 0.7 })
+};
+
 // Puertas frontales (n hojas) con tirador vertical
 function addDoors(g, w, d, yc, dh, n, doorMat, handleMat, hy) {
   const gap = 0.01, dw = (w - gap * (n + 1)) / n;
@@ -537,65 +617,81 @@ function addDoors(g, w, d, yc, dh, n, doorMat, handleMat, hy) {
     g.add(place(box(0.012, 0.14, 0.02, handleMat), hx, hy, d / 2 + 0.03));
   }
 }
-// Base común de los muebles bajos: zócalo + cuerpo + encimera
-function baseUnit(s, carcassColor) {
+// Base común de los muebles bajos: zócalo + cuerpo + encimera de roble
+function baseUnit(s, carcass) {
   const g = new THREE.Group(), bh = s.h - C.plinth - C.top;
-  g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, mat(COL.plinth)), 0, C.plinth / 2, -0.02));
-  g.add(place(box(s.w, bh, s.d, mat(carcassColor)), 0, C.plinth + bh / 2, 0));
-  g.add(place(box(s.w, C.top, s.d + 0.03, mat(COL.counter, { roughness: 0.3 })), 0, s.h - C.top / 2, 0.015));
+  g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, FINISH.plinth()), 0, C.plinth / 2, -0.02));
+  g.add(place(box(s.w, bh, s.d, carcass), 0, C.plinth + bh / 2, 0));
+  g.add(place(box(s.w, C.top, s.d + 0.03, FINISH.oak()), 0, s.h - C.top / 2, 0.015));
   return g;
 }
-const steelMat = () => mat(COL.steel, { metalness: 0.35, roughness: 0.4 });
 
 const BUILD = {
-  // Mueble bajo (madera)
+  // Mueble bajo: blanco mate con encimera de roble y tiradores metálicos estilizados
   base(s) {
-    const g = baseUnit(s, COL.woodDark), bh = s.h - C.plinth - C.top;
-    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, s.w > 0.75 ? 2 : 1, mat(COL.wood), steelMat(), s.h - C.top - 0.1);
+    const g = baseUnit(s, FINISH.whiteBody()), bh = s.h - C.plinth - C.top;
+    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, s.w > 0.75 ? 2 : 1, FINISH.whiteMatte(), FINISH.brushed(), s.h - C.top - 0.1);
     return g;
   },
-  // Fregadero (gris metálico) con cubeta y grifo
+  // Fregadero: cubeta profunda y escurridor acanalado en acero, con grifo en forma de L
   sink(s) {
-    const g = baseUnit(s, COL.sink), bh = s.h - C.plinth - C.top, metal = () => mat(COL.sink, { metalness: 0.35, roughness: 0.35 });
-    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, 2, metal(), steelMat(), s.h - C.top - 0.1);
-    g.add(place(box(s.w * 0.62, 0.012, s.d * 0.6, mat(0xaab1b8, { metalness: 0.4, roughness: 0.3 })), 0, s.h + 0.006, 0.02));
-    const chrome = mat(0xdde2e6, { metalness: 0.4, roughness: 0.2 });
-    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.26, 16), chrome);
-    const spout = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.16, 16), chrome);
-    stem.position.set(0, s.h + 0.13, -s.d / 2 + 0.08);
-    spout.rotation.x = Math.PI / 2; spout.position.set(0, s.h + 0.26, -s.d / 2 + 0.15);
+    const g = baseUnit(s, FINISH.inox()), bh = s.h - C.plinth - C.top, top = s.h;
+    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, 2, FINISH.inox(), FINISH.brushed(), s.h - C.top - 0.1);
+    g.add(place(box(s.w - 0.06, 0.012, s.d - 0.1, FINISH.brushed()), 0, top + 0.006, 0.02));                 // plancha de acero
+    const bx = -s.w * 0.16;                                                                                    // centro de la cubeta
+    g.add(place(box(s.w * 0.4, 0.006, s.d - 0.2, mat(0x7d848b, { roughness: 0.35, metalness: 0.8, envMapIntensity: 1 })), bx, top + 0.015, 0.03));
+    const drain = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.004, 20), FINISH.blackMetal());
+    drain.position.set(bx, top + 0.019, 0.05); g.add(drain);
+    for (let i = 0; i < 6; i++) {                                                                              // acanaladuras del escurridor
+      g.add(place(box(0.008, 0.003, s.d - 0.22, mat(0x8d949b, { roughness: 0.3, metalness: 0.8, envMapIntensity: 1 })), s.w * 0.17 + (i - 2.5) * 0.04, top + 0.0135, 0.03));
+    }
+    const stem = new THREE.Mesh(new THREE.CylinderGeometry(0.014, 0.014, 0.26, 16), FINISH.chrome());     // grifo en L: columna + caño
+    const spout = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 0.16, 16), FINISH.chrome());
+    stem.position.set(bx, top + 0.13, -s.d / 2 + 0.08);
+    spout.rotation.x = Math.PI / 2; spout.position.set(bx, top + 0.26, -s.d / 2 + 0.15);
     stem.castShadow = spout.castShadow = true;
     g.add(stem, spout);
     return g;
   },
-  // Horno + placa vitrocerámica (negro / acero)
+  // Placa de inducción + horno: cristal negro azabache, frontal inox cepillado y tirador metálico
   oven(s) {
-    const g = baseUnit(s, COL.dark), bh = s.h - C.plinth - C.top, fz = s.d / 2;
-    const glass = () => mat(COL.glass, { roughness: 0.1, metalness: 0.2 });
-    g.add(place(box(s.w - 0.04, 0.07, 0.02, mat(COL.dark)), 0, C.plinth + bh - 0.05, fz + 0.01));        // panel de mandos
-    g.add(place(box(s.w - 0.06, bh * 0.55, 0.025, glass()), 0, C.plinth + bh * 0.47, fz + 0.012));      // puerta del horno
-    g.add(place(box(s.w * 0.7, 0.015, 0.03, steelMat()), 0, C.plinth + bh * 0.47 + bh * 0.22, fz + 0.04)); // tirador
-    g.add(place(box(s.w - 0.04, 0.11, 0.02, mat(COL.dark)), 0, 0.18, fz + 0.01));                        // cajón inferior
-    g.add(place(box(s.w * 0.92, 0.008, s.d * 0.85, glass()), 0, s.h + 0.004, 0.02));                     // vitro
-    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([i, j]) => {                                             // 4 zonas de cocción
-      const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.003, 28), mat(0x666b72));
-      ring.position.set(i * s.w * 0.22, s.h + 0.0095, 0.02 + j * s.d * 0.2);
+    const g = baseUnit(s, FINISH.panelDark()), bh = s.h - C.plinth - C.top, fz = s.d / 2;
+    g.add(place(box(s.w - 0.02, bh - 0.02, 0.02, FINISH.brushed()), 0, C.plinth + bh / 2, fz + 0.01));            // frontal inox cepillado
+    g.add(place(box(s.w - 0.04, 0.07, 0.006, FINISH.glassBlack()), 0, C.plinth + bh - 0.06, fz + 0.023));        // panel de mandos de cristal
+    g.add(place(box(s.w - 0.1, bh * 0.42, 0.006, FINISH.glassBlack()), 0, C.plinth + bh * 0.46, fz + 0.023));    // ventana del horno
+    g.add(place(box(s.w * 0.7, 0.016, 0.03, FINISH.chrome()), 0, C.plinth + bh * 0.67 + 0.03, fz + 0.04));       // tirador metálico
+    g.add(place(box(s.w * 0.94, 0.008, s.d * 0.86, FINISH.glassBlack()), 0, s.h + 0.004, 0.02));                 // placa de cristal
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([i, j]) => {                                                   // zonas de cocción sutiles
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.062, 0.068, 40), mat(0x5a5f67, { roughness: 0.3, metalness: 0.4, envMapIntensity: 0.8 }));
+      ring.rotation.x = -Math.PI / 2; ring.position.set(i * s.w * 0.22, s.h + 0.0085, 0.02 + j * s.d * 0.2);
       g.add(ring);
     });
     return g;
   },
-  // Módulo alto colgado (blanco)
+  // Módulo alto colgado: blanco mate con canto inferior de roble
   wall(s) {
     const g = new THREE.Group();
-    g.add(place(box(s.w, s.h, s.d, mat(COL.whiteBody, { roughness: 0.5 })), 0, s.h / 2, 0));
-    addDoors(g, s.w, s.d, s.h / 2, s.h - 0.02, s.w > 0.75 ? 2 : 1, mat(COL.white, { roughness: 0.5 }), steelMat(), 0.1);
+    g.add(place(box(s.w, s.h, s.d, FINISH.whiteBody()), 0, s.h / 2, 0));
+    addDoors(g, s.w, s.d, s.h / 2, s.h - 0.02, s.w > 0.75 ? 2 : 1, FINISH.whiteMatte(), FINISH.brushed(), 0.1);
+    g.add(place(box(s.w, 0.012, s.d + 0.02, FINISH.oak()), 0, 0.006, 0.01));
     return g;
   },
-  // Campana con chimenea hasta el techo
+  // Campana: canopy negro metálico mate, cristal negro brillante inclinado y chimenea de acero hasta el techo
   hood(s) {
-    const g = new THREE.Group(), steel = () => mat(COL.steel, { metalness: 0.35, roughness: 0.35 });
-    g.add(place(box(s.w, 0.14, s.d, steel()), 0, 0.07, 0));
-    g.add(place(box(0.26, s.h - 0.14, 0.2, steel()), 0, 0.14 + (s.h - 0.14) / 2, -s.d / 2 + 0.1));
+    const g = new THREE.Group(), w = s.w, depth = s.d, ch = 0.32, black = FINISH.blackMetal;
+    g.add(place(box(w, 0.012, depth, black()), 0, 0.006, 0));                                    // base inferior
+    g.add(place(box(w, 0.05, 0.012, black()), 0, 0.025, depth / 2 - 0.006));                    // canto frontal
+    g.add(place(box(w - 0.024, ch, 0.012, black()), 0, ch / 2, -depth / 2 + 0.006));            // trasera
+    const dz = 0.3, dy = ch - 0.05, len = Math.hypot(dz, dy);                                     // cristal: del canto frontal a la chimenea
+    const glass = place(box(w - 0.024, 0.012, len, FINISH.glassBlack()), 0, 0.05 + dy / 2, depth / 2 - dz / 2);
+    glass.rotation.x = Math.atan2(dy, dz);
+    g.add(glass);
+    // Laterales triangulares: perfil (z, y) extruido a lo ancho
+    const profile = new THREE.Shape([[-depth / 2, 0], [depth / 2, 0], [depth / 2, 0.05], [depth / 2 - dz, ch], [-depth / 2, ch]].map(([z, y]) => new THREE.Vector2(z, y)));
+    const sideGeo = new THREE.ExtrudeGeometry(profile, { depth: 0.012, bevelEnabled: false });
+    sideGeo.rotateY(-Math.PI / 2);                                                                // x de la forma -> z del mundo
+    [-w / 2 + 0.012, w / 2].forEach(x => { const side = new THREE.Mesh(sideGeo, black()); side.position.x = x; side.castShadow = true; g.add(side); });
+    g.add(place(box(0.3, s.h - ch, 0.2, FINISH.brushed()), 0, ch + (s.h - ch) / 2, -depth / 2 + 0.1)); // chimenea metálica
     return g;
   },
   // Módulo esquinero de ángulo variable. Origen en el vértice de las paredes (esquina izquierda):
@@ -603,8 +699,7 @@ const BUILD = {
   corner(s) {
     const g = new THREE.Group(), A = C.corner, D = C.baseD, ov = 0.03, th = s.angle;
     const tx = Math.cos(th), tz = Math.sin(th), nx = Math.sin(th), nz = -Math.cos(th);   // tangente y normal de la pared lateral
-    const bh = s.h - C.plinth - C.top;
-    const carcass = mat(COL.woodDark), door = mat(COL.wood), steel = steelMat();
+    const bh = s.h - C.plinth - C.top, door = FINISH.whiteMatte(), grip = FINISH.brushed();
     // Contorno de la planta (x, z) para un fondo dado; el cruce de los dos frentes está en (fondo·cot(θ/2), fondo)
     const outline = depth => [[0, 0], [A, 0], [A, depth], [depth / Math.tan(th / 2), depth],
       [nx * depth + tx * A, nz * depth + tz * A], [tx * A, tz * A]];
@@ -616,9 +711,9 @@ const BUILD = {
       m.position.y = y0; m.castShadow = m.receiveShadow = true;
       return m;
     };
-    g.add(prism(outline(D - 0.06), 0, C.plinth, mat(COL.plinth)));                                  // zócalo
-    g.add(prism(outline(D), C.plinth, bh, carcass));                                                // cuerpo
-    g.add(prism(outline(D + ov), s.h - C.top, C.top, mat(COL.counter, { roughness: 0.3 })));        // encimera adaptable
+    g.add(prism(outline(D - 0.06), 0, C.plinth, FINISH.plinth()));                 // zócalo
+    g.add(prism(outline(D), C.plinth, bh, FINISH.whiteBody()));                    // cuerpo
+    g.add(prism(outline(D + ov), s.h - C.top, C.top, FINISH.oak()));               // encimera adaptable de roble
     // Una puerta en cada frente visible: del cruce X al final de cada brazo
     const [, , P2, X, P3] = outline(D);
     const addFace = (a, b, fnx, fnz) => {
@@ -628,60 +723,81 @@ const BUILD = {
       const panel = place(box(len, bh - 0.02, 0.02, door), mx + fnx * 0.01, C.plinth + bh / 2, mz + fnz * 0.01);
       panel.rotation.y = yaw; g.add(panel);
       const k = (len / 2 - 0.04) / (len / 2 + 0.01);                // tirador cerca del extremo del cruce
-      const grip = place(box(0.012, 0.14, 0.02, steel), mx + (a[0] - mx) * k + fnx * 0.03, s.h - C.top - 0.1, mz + (a[1] - mz) * k + fnz * 0.03);
-      grip.rotation.y = yaw; g.add(grip);
+      const handle = place(box(0.012, 0.14, 0.02, grip), mx + (a[0] - mx) * k + fnx * 0.03, s.h - C.top - 0.1, mz + (a[1] - mz) * k + fnz * 0.03);
+      handle.rotation.y = yaw; g.add(handle);
     };
     addFace(X, P2, 0, 1);       // frente del brazo A (mira hacia +z)
     addFace(X, P3, nx, nz);     // frente del brazo B (mira hacia el interior de la habitación)
     return g;
   },
-  // Frigorífico combi: columna de 60 × 200 cm con puerta de congelador arriba y de frigorífico abajo
+  // Frigorífico combi: columna inox antihuellas de 60 × 200 cm con puerta de congelador arriba y de frigorífico abajo
   fridge(s) {
     const g = new THREE.Group(), bh = s.h - C.plinth, lowerH = bh * 0.62, upperH = bh - lowerH, fz = s.d / 2;
-    const inox = () => mat(0xc9ced3, { metalness: 0.35, roughness: 0.35 }), grip = mat(0x8d949b, { metalness: 0.5, roughness: 0.25 });
-    g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, mat(COL.plinth)), 0, C.plinth / 2, -0.02));
-    g.add(place(box(s.w, bh, s.d, mat(0x9ba1a8, { metalness: 0.2 })), 0, C.plinth + bh / 2, 0));
-    g.add(place(box(s.w - 0.02, lowerH - 0.01, 0.025, inox()), 0, C.plinth + lowerH / 2, fz + 0.0125));            // puerta del frigorífico
-    g.add(place(box(s.w - 0.02, upperH - 0.01, 0.025, inox()), 0, C.plinth + lowerH + upperH / 2, fz + 0.0125));   // puerta del congelador
-    g.add(place(box(0.02, 0.35, 0.03, grip), s.w / 2 - 0.05, C.plinth + lowerH - 0.25, fz + 0.04));                // tiradores metálicos
-    g.add(place(box(0.02, 0.3, 0.03, grip), s.w / 2 - 0.05, C.plinth + lowerH + 0.22, fz + 0.04));
+    g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, FINISH.plinth()), 0, C.plinth / 2, -0.02));
+    g.add(place(box(s.w, bh, s.d, FINISH.panelDark()), 0, C.plinth + bh / 2, 0));
+    g.add(place(box(s.w - 0.02, lowerH - 0.01, 0.025, FINISH.inox()), 0, C.plinth + lowerH / 2, fz + 0.0125));            // puerta del frigorífico
+    g.add(place(box(s.w - 0.02, upperH - 0.01, 0.025, FINISH.inox()), 0, C.plinth + lowerH + upperH / 2, fz + 0.0125));   // puerta del congelador
+    g.add(place(box(0.02, 0.35, 0.03, FINISH.brushed()), s.w / 2 - 0.05, C.plinth + lowerH - 0.25, fz + 0.04));           // tiradores metálicos
+    g.add(place(box(0.02, 0.3, 0.03, FINISH.brushed()), s.w / 2 - 0.05, C.plinth + lowerH + 0.22, fz + 0.04));
+    g.add(place(box(0.12, 0.05, 0.006, FINISH.glassBlack()), -0.05, C.plinth + lowerH + upperH - 0.12, fz + 0.028));      // pantalla de mandos
     return g;
   },
-  // Lavavajillas integrado: frontal inox, panel de mandos superior y tirador horizontal
+  // Lavavajillas integrado: frontal inox antihuellas, panel de mandos negro y tirador horizontal
   dishwasher(s) {
-    const g = baseUnit(s, 0x8f959b), bh = s.h - C.plinth - C.top, fz = s.d / 2, panelH = bh - 0.12;
-    g.add(place(box(s.w - 0.02, panelH, 0.02, mat(0xc4c9ce, { metalness: 0.35, roughness: 0.35 })), 0, C.plinth + 0.01 + panelH / 2, fz + 0.01));
-    g.add(place(box(s.w - 0.02, 0.09, 0.02, mat(COL.dark, { roughness: 0.25 })), 0, C.plinth + bh - 0.055, fz + 0.01));
-    [-0.19, -0.1, -0.01].forEach(x => g.add(place(box(0.035, 0.014, 0.006, mat(0xd8dde2, { metalness: 0.3 })), x, C.plinth + bh - 0.055, fz + 0.023)));
-    g.add(place(box(0.08, 0.03, 0.006, mat(0x2ec4b6, { roughness: 0.3 })), 0.12, C.plinth + bh - 0.055, fz + 0.023));   // pantalla
-    g.add(place(box(s.w * 0.6, 0.016, 0.03, steelMat()), 0, C.plinth + bh - 0.14, fz + 0.035));
+    const g = baseUnit(s, FINISH.panelDark()), bh = s.h - C.plinth - C.top, fz = s.d / 2, panelH = bh - 0.12;
+    g.add(place(box(s.w - 0.02, panelH, 0.02, FINISH.inox()), 0, C.plinth + 0.01 + panelH / 2, fz + 0.01));
+    g.add(place(box(s.w - 0.02, 0.09, 0.02, FINISH.glassBlack()), 0, C.plinth + bh - 0.055, fz + 0.01));
+    [-0.19, -0.1, -0.01].forEach(x => g.add(place(box(0.035, 0.014, 0.006, FINISH.chrome()), x, C.plinth + bh - 0.055, fz + 0.023)));
+    g.add(place(box(0.08, 0.03, 0.006, mat(0x2ec4b6, { roughness: 0.3 })), 0.12, C.plinth + bh - 0.055, fz + 0.023));    // pantalla
+    g.add(place(box(s.w * 0.6, 0.016, 0.03, FINISH.brushed()), 0, C.plinth + bh - 0.14, fz + 0.035));
     return g;
   },
-  // Lavadora bajo encimera: frente blanco, mandos y escotilla circular de cristal
+  // Lavadora bajo encimera: frente inox, mandos oscuros y escotilla circular de cristal
   washer(s) {
-    const g = baseUnit(s, 0xe4e4e0), bh = s.h - C.plinth - C.top, fz = s.d / 2, yc = C.plinth + bh * 0.45;
-    g.add(place(box(s.w - 0.02, bh - 0.02, 0.02, mat(0xf4f4f1, { roughness: 0.4 })), 0, C.plinth + bh / 2, fz + 0.01));
-    g.add(place(box(0.26, 0.05, 0.006, mat(COL.dark, { roughness: 0.3 })), 0.1, C.plinth + bh - 0.07, fz + 0.023));    // pantalla
-    const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.02, 24), steelMat());
+    const g = baseUnit(s, FINISH.panelDark()), bh = s.h - C.plinth - C.top, fz = s.d / 2, yc = C.plinth + bh * 0.45;
+    g.add(place(box(s.w - 0.02, bh - 0.02, 0.02, FINISH.inox()), 0, C.plinth + bh / 2, fz + 0.01));
+    g.add(place(box(s.w - 0.1, 0.07, 0.006, FINISH.panelDark()), 0, C.plinth + bh - 0.07, fz + 0.023));                  // panel de mandos
+    g.add(place(box(0.2, 0.04, 0.006, FINISH.glassBlack()), 0.1, C.plinth + bh - 0.07, fz + 0.028));                     // pantalla digital
+    const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.02, 24), FINISH.chrome());
     knob.rotation.x = Math.PI / 2; knob.position.set(-s.w / 2 + 0.07, C.plinth + bh - 0.07, fz + 0.03); knob.castShadow = true;
     g.add(knob);
-    // Escotilla: aro metálico, cristal oscuro y tambor visible (cilindros con el eje hacia el frente)
+    // Escotilla: aro cromado, cristal oscuro y tambor visible (cilindros con el eje hacia el frente)
     const ring = (r, h, m, z) => {
       const c = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, 40), m);
       c.rotation.x = Math.PI / 2; c.position.set(0, yc, z); c.castShadow = true; g.add(c);
     };
-    ring(0.215, 0.03, steelMat(), fz + 0.03);
-    ring(0.17, 0.034, mat(0x16222e, { roughness: 0.05, metalness: 0.3 }), fz + 0.034);
-    ring(0.12, 0.036, mat(0x2b3d4f, { roughness: 0.2 }), fz + 0.034);
+    ring(0.215, 0.03, FINISH.chrome(), fz + 0.03);
+    ring(0.17, 0.034, mat(0x16222e, { roughness: 0.05, metalness: 0.3, envMapIntensity: 1.2 }), fz + 0.034);
+    ring(0.12, 0.036, mat(0x2b3d4f, { roughness: 0.2, envMapIntensity: 0.8 }), fz + 0.034);
     return g;
   },
-  // Columna despensero (suelo a techo)
+  // Carrito / isla auxiliar con ruedas: encimera de roble, cajones blancos mate, balda de listones y 4 ruedas oscuras
+  trolley(s) {
+    const g = new THREE.Group(), w = s.w, d = s.d, h = s.h, wheel = 0.07;
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([i, j]) => {
+      const rim = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.03, 20), FINISH.panelDark());
+      rim.rotation.z = Math.PI / 2; rim.position.set(i * (w / 2 - 0.04), 0.035, j * (d / 2 - 0.04)); rim.castShadow = true;
+      g.add(rim);
+      g.add(place(box(0.02, h - wheel - 0.03, 0.02, FINISH.brushed()), i * (w / 2 - 0.025), wheel + (h - wheel - 0.03) / 2, j * (d / 2 - 0.025)));   // montantes
+    });
+    for (let i = 0; i < 4; i++) g.add(place(box(w - 0.06, 0.015, 0.085, FINISH.oak()), 0, 0.16, (i - 1.5) * 0.1));                                    // balda de listones
+    const bodyD = d - 0.05;
+    g.add(place(box(w - 0.04, 0.22, bodyD, FINISH.whiteBody()), 0, 0.71, -0.01));                                                                    // cuerpo de cajones
+    [0.765, 0.655].forEach(y => {
+      g.add(place(box(w - 0.06, 0.1, 0.02, FINISH.whiteMatte()), 0, y, -0.01 + bodyD / 2 + 0.01));                                                   // frentes
+      g.add(place(box(0.16, 0.012, 0.016, FINISH.brushed()), 0, y, -0.01 + bodyD / 2 + 0.028));                                                       // tiradores
+    });
+    g.add(place(box(w, 0.03, d, FINISH.oak()), 0, h - 0.015, 0));                                                                                    // encimera de roble
+    return g;
+  },
+  // Columna despensero: blanco mate con banda de roble entre cuerpos y tiradores metálicos
   tall(s) {
-    const g = new THREE.Group(), bh = s.h - C.plinth, lower = 0.9, upper = bh - lower, door = mat(COL.wood), steel = steelMat();
-    g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, mat(COL.plinth)), 0, C.plinth / 2, -0.02));
-    g.add(place(box(s.w, bh, s.d, mat(COL.woodDark)), 0, C.plinth + bh / 2, 0));
-    addDoors(g, s.w, s.d, C.plinth + lower / 2, lower - 0.02, 1, door, steel, C.plinth + lower - 0.12);
-    addDoors(g, s.w, s.d, C.plinth + lower + upper / 2, upper - 0.02, 1, door, steel, C.plinth + lower + 0.12);
+    const g = new THREE.Group(), bh = s.h - C.plinth, lower = 0.9, upper = bh - lower, door = FINISH.whiteMatte(), grip = FINISH.brushed();
+    g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, FINISH.plinth()), 0, C.plinth / 2, -0.02));
+    g.add(place(box(s.w, bh, s.d, FINISH.whiteBody()), 0, C.plinth + bh / 2, 0));
+    addDoors(g, s.w, s.d, C.plinth + lower / 2, lower - 0.02, 1, door, grip, C.plinth + lower - 0.12);
+    addDoors(g, s.w, s.d, C.plinth + lower + upper / 2, upper - 0.02, 1, FINISH.whiteMatte(), grip, C.plinth + lower + 0.12);
+    g.add(place(box(s.w - 0.02, 0.02, 0.026, FINISH.oak()), 0, C.plinth + lower, s.d / 2 + 0.012));
     return g;
   }
 };
@@ -700,7 +816,8 @@ let design = null;   // estado actual: medidas, distribución, ángulo, esquina 
 const WITH_UPPER = ['base', 'sink', 'dishwasher', 'washer'];   // muebles bajos que admiten módulo alto encima
 const upperFor = type => (WITH_UPPER.includes(type) ? 'wall' : type === 'oven' ? 'hood' : null);
 const makeSlot = (type, w) => ({ w, lower: type, upper: upperFor(type) });
-const heightOf = (type, H) => (type === 'tall' ? Math.min(2.1, H - 0.05) : type === 'fridge' ? Math.min(2, H - 0.1) : C.baseH);
+const heightOf = (type, H) => (type === 'tall' ? Math.min(2.1, H - 0.05) : type === 'fridge' ? Math.min(2, H - 0.1) : type === 'trolley' ? 0.85 : C.baseH);
+const depthOf = type => (type === 'trolley' ? 0.45 : C.baseD);   // el carrito es más estrecho que un mueble bajo
 
 // Genera automáticamente una hilera con medidas estándar exactas (mueble bajo = 60 cm, nunca se estiran):
 // bases, fregadero, base, horno, bases; el sobrante queda como hueco libre y, si procede, la columna cierra la pared.
@@ -748,7 +865,7 @@ const freeSpace = key => Math.max(0, wallFrames()[key].len - usedSpace(key));
 // Crea el diseño inicial según distribución, pared lateral y ángulo
 function createDesign(W, L, H, layout, side, angle) {
   const isL = layout === 'L';
-  const d = { W, L, H, layout, side, angle: isL ? angle : 90, corner: isL, walls: { back: [], side: [] } };
+  const d = { W, L, H, layout, side, angle: isL ? angle : 90, corner: isL, free: [], walls: { back: [], side: [] } };
   const f = wallFrames(d);
   d.walls.back = planRun(f.back.len, ['sink', 'oven'], !isL);
   if (isL) d.walls.side = planRun(f.side.len, [], true);
@@ -770,12 +887,18 @@ function layoutSpecs() {
         type, part, slot, wall: key, w: slot.w, d, h, y,
         x: f.ox + f.tx * s + f.nx * d / 2, z: f.oz + f.tz * s + f.nz * d / 2, rot: Math.atan2(f.nx, f.nz)
       });
-      if (slot.lower) push('lower', slot.lower, C.baseD, heightOf(slot.lower, H), 0);
+      if (slot.lower) push('lower', slot.lower, depthOf(slot.lower), heightOf(slot.lower, H), 0);
       else push('gap', 'gap', C.baseD, C.baseH, 0);   // hueco libre: se dibuja como guía
       if (slot.upper === 'hood') push('upper', 'hood', 0.5, H - C.hoodY, C.hoodY);
       else if (slot.upper) push('upper', 'wall', C.wallD, wallH, C.wallY);
     });
   });
+  // Carritos exentos: fila centrada frente a la hilera trasera, con 90 cm de paso libre
+  const fb = frames.back, n = design.free.length, startX = fb.ox + fb.len / 2 - (n * 0.7 - 0.1) / 2;
+  design.free.forEach((item, i) => out.push({
+    type: item.type, part: 'free', wall: 'free', item, w: STD[item.type], d: depthOf(item.type), h: heightOf(item.type, H), y: 0,
+    x: startX + 0.3 + i * 0.7, z: -L / 2 + C.baseD + 0.9 + depthOf(item.type) / 2, rot: 0
+  }));
   if (design.corner) out.push({
     type: 'corner', part: 'corner', wall: 'corner', w: C.corner, d: C.corner, h: C.baseH, y: 0,
     x: design.side === 'left' ? -W / 2 : W / 2, z: -L / 2, rot: 0, mirror: design.side === 'right',
@@ -855,6 +978,15 @@ function addModule(type, key, where = 'auto') {
     selectWhere(m => m.part === 'corner');
     return setAddMsg('Módulo esquinero añadido.', true);
   }
+  if (key === 'free') {
+    if (type !== 'trolley') return setAddMsg('Solo el carrito / isla auxiliar puede colocarse exento.', false);
+    if ((design.free.length + 1) * 0.7 - 0.1 > wallFrames().back.len - 0.4) return setAddMsg('No cabe otro carrito exento en el centro de la habitación.', false);
+    const item = { type: 'trolley' };
+    design.free.push(item);
+    rebuildModules();
+    selectWhere(m => m.item === item);
+    return setAddMsg(`Añadido: ${TYPES.trolley.label}, exento.`, true);
+  }
   if (!wallFrames()[key]) return setAddMsg('La pared lateral solo existe en la distribución en L.', false);
   const slots = design.walls[key], isUpper = UPPER_TYPES.includes(type);
   const append = () => {      // nuevo hueco al final de la pared, si queda espacio
@@ -923,6 +1055,7 @@ function addInGap(m, type = $('#addType').value) {
 // vacíos contiguos se fusionan. rebuildModules libera con dispose() las geometrías y materiales anteriores.
 function removeModule(m) {
   if (m.part === 'corner') design.corner = false;
+  else if (m.part === 'free') design.free = design.free.filter(it => it !== m.item);
   else {
     m.slot[m.part] = null;
     mergeGaps(m.wall);
@@ -1014,7 +1147,7 @@ function rebuildModules() {
     const t = TYPES[s.type];
     s.name = t.label; s.info = t.info; s.url = t.url;
     s.id = `${t.code}-${String(i + 1).padStart(2, '0')}`;
-    s.price = Math.round(t.eur * s.w / 5) * 5;
+    s.price = t.eur;   // precio por unidad del catálogo
     s.group = BUILD[s.type](s);
     s.group.position.set(s.x, s.y, s.z);
     s.group.rotation.y = s.rot;
@@ -1037,6 +1170,7 @@ function rebuildModules() {
   $('#freeInfo').textContent = 'Espacio libre: ' + parts.join(' · ');
   if (overflow) setAddMsg('Con este ángulo los muebles de una pared no caben en el suelo: elimina alguno o cambia el ángulo.', false);
   refreshSlotOptions();
+  saveDesign();   // guardado automático tras cualquier cambio del diseño
 }
 
 /* =====================================================================
@@ -1073,6 +1207,13 @@ function select(m) {
   boxHelper.material.depthTest = false;
   scene.add(boxHelper);
   renderDetails(m);
+}
+// Botones de compra con su enlace de afiliado (la placa y el horno tienen enlace propio)
+function buyButtons(m) {
+  const t = TYPES[m.type];
+  const link = (url, text, first) => `<a href="${esc(url || '#')}" target="_blank" rel="noopener noreferrer" class="${first ? 'mt-5' : 'mt-2'} block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">${text}</a>`;
+  if (t.url_placa && t.url_horno) return link(t.url_placa, 'Comprar placa de inducción en Amazon', true) + link(t.url_horno, 'Comprar horno en Amazon', false);
+  return link(m.url, m.url ? 'Comprar en Amazon' : 'Ver / Comprar en Tienda', true);
 }
 // Ficha técnica en la barra lateral
 function renderDetails(m) {
@@ -1121,7 +1262,7 @@ function renderDetails(m) {
       <dt class="text-slate-500 pt-2 border-t border-slate-100">Precio estimado</dt>
       <dd class="font-bold text-lg text-right pt-2 border-t border-slate-100">${eur(m.price)}</dd>
     </dl>
-    <a href="${esc(m.url || '#')}" target="_blank" rel="noopener noreferrer" class="mt-5 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Ver / Comprar en Tienda</a>
+    ${buyButtons(m)}
     <button id="btnDelete" type="button" class="mt-3 block w-full rounded-lg bg-red-600 hover:bg-red-700 text-white text-center font-semibold py-3 shadow-sm transition-colors">🗑️ Eliminar este mueble</button>`;
   $('#btnDelete').addEventListener('click', () => removeModule(m));
 }
@@ -1212,10 +1353,16 @@ if (coarse) {
   document.addEventListener('leave3d', () => setCamFree(false));
 }
 
+// Enlaces de compra de un módulo (clicables al guardar la hoja como PDF)
+function buyLinks(m) {
+  const t = TYPES[m.type];
+  const list = t.url_placa ? [['Placa', t.url_placa], ['Horno', t.url_horno]] : t.url ? [['', t.url]] : [];
+  return list.map(([label, url]) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="underline text-teal-700">${label ? label + ': ' : ''}${url.replace(/^https?:\/\//, '')}</a>`).join('<br>') || '—';
+}
 // Rellena la hoja de impresión con los muebles del diseño, sus precios y el total
 function buildPrintSheet() {
   const real = modules.filter(m => m.type !== 'gap');
-  const wall = { back: 'Pared trasera', side: 'Pared lateral', corner: 'Esquina' };
+  const wall = { back: 'Pared trasera', side: 'Pared lateral', corner: 'Esquina', free: 'Exento' };
   $('#printMeta').textContent = `Habitación ${design.W} × ${design.L} × ${design.H} m · `
     + (design.layout === 'L' ? `Cocina en L (esquina de ${design.angle}°)` : 'Cocina lineal')
     + ` · ${new Date().toLocaleDateString('es-ES')}`;
@@ -1224,8 +1371,8 @@ function buildPrintSheet() {
       <td class="py-1.5 pr-3">${m.id}</td><td class="py-1.5 pr-3">${m.name}</td>
       <td class="py-1.5 pr-3">${wall[m.wall]}${m.part === 'upper' ? ' (alto)' : ''}</td>
       <td class="py-1.5 pr-3">${cm(m.w)} × ${cm(m.d)} × ${cm(m.h)} cm</td>
-      <td class="py-1.5 text-right">${eur(m.price)}</td>
-    </tr>`).join('') : '<tr><td colspan="5" class="py-3 text-slate-600">Todavía no hay muebles en el diseño.</td></tr>';
+      <td class="py-1.5 pr-3 text-right">${eur(m.price)}</td><td class="py-1.5 text-xs">${buyLinks(m)}</td>
+    </tr>`).join('') : '<tr><td colspan="6" class="py-3 text-slate-600">Todavía no hay muebles en el diseño.</td></tr>';
   $('#printTotal').textContent = eur(real.reduce((a, m) => a + m.price, 0));
 }
 $('#btnPrint').addEventListener('click', () => { buildPrintSheet(); window.print(); });
@@ -1238,10 +1385,68 @@ document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', e =
 $('#year').textContent = new Date().getFullYear();
 
 /* =====================================================================
+   8c. GUARDADO AUTOMÁTICO EN EL NAVEGADOR (localStorage)
+   El diseño se guarda cada vez que se reconstruye la escena (medidas, ángulo,
+   añadir o eliminar muebles) y se restaura al cargar la página.
+   ===================================================================== */
+const STORE_KEY = 'cocina3d:diseno:v1';
+
+function saveDesign() {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify({ v: 1, design })); }
+  catch (e) { /* almacenamiento no disponible (modo privado o cuota llena): el diseño sigue funcionando sin guardarse */ }
+}
+
+// Lee y valida el diseño guardado; devuelve null si no existe o no es válido
+function loadDesign() {
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (!raw) return null;
+    const d = JSON.parse(raw).design;
+    const inRange = (v, [min, max]) => typeof v === 'number' && isFinite(v) && v >= min && v <= max;
+    const LOWER = ['base', 'sink', 'oven', 'tall', 'fridge', 'dishwasher', 'washer', 'trolley'], UPPER = ['wall', 'hood'];
+    if (!d || !inRange(d.W, C.limits.W) || !inRange(d.L, C.limits.L) || !inRange(d.H, C.limits.H)) return null;
+    if (!['linear', 'L'].includes(d.layout) || !['left', 'right'].includes(d.side)) return null;
+    const isL = d.layout === 'L', angle = isL ? d.angle : 90;
+    if (!inRange(angle, C.limits.angle)) return null;
+    // Limpia una pared: cada hueco conserva solo ancho, mueble bajo y módulo alto válidos
+    const cleanRun = run => {
+      if (!Array.isArray(run)) return null;
+      const ok = run.every(sl => sl && inRange(sl.w, [0.05, 8]) && (sl.lower === null || LOWER.includes(sl.lower)) && (sl.upper === null || UPPER.includes(sl.upper)));
+      return ok ? run.map(sl => ({ w: sl.w, lower: sl.lower, upper: ['tall', 'fridge', 'trolley'].includes(sl.lower) ? null : sl.upper })) : null;
+    };
+    const restored = {
+      W: d.W, L: d.L, H: d.H, layout: d.layout, side: d.side, angle, corner: isL && d.corner === true,
+      free: Array.isArray(d.free) ? d.free.filter(it => it && it.type === 'trolley').map(() => ({ type: 'trolley' })) : [],
+      walls: { back: cleanRun(d.walls.back), side: isL ? cleanRun(d.walls.side) : [] }
+    };
+    if (!restored.walls.back || !restored.walls.side) return null;
+    // La suma de anchos debe caber en cada pared
+    const frames = wallFrames(restored);
+    for (const key of ['back', 'side']) {
+      if (frames[key] && restored.walls[key].reduce((a, sl) => a + sl.w, 0) > frames[key].len + 0.01) return null;
+    }
+    return restored;
+  } catch (e) {
+    return null;
+  }
+}
+
+// Devuelve el formulario lateral al estado del diseño restaurado
+function syncForm(d) {
+  $('#inW').value = d.W; $('#inL').value = d.L; $('#inH').value = d.H;
+  layoutSelect.value = d.layout; $('#inSide').value = d.side;
+  angleNumber.value = d.angle; angleRange.value = d.angle;
+  syncLayoutControls();
+}
+
+/* =====================================================================
    9. ARRANQUE Y BUCLE DE RENDER
    ===================================================================== */
 resize();
-applyDesign(createDesign(4, 3.2, 2.6, 'linear', 'left', 90));
+const savedDesign = loadDesign();
+if (savedDesign) syncForm(savedDesign);
+applyDesign(savedDesign || createDesign(4, 3.2, 2.6, 'linear', 'left', 90));
+if (savedDesign) setAddMsg('Se ha restaurado tu último diseño guardado en este navegador.', true);
 renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
 </script>
 <script>

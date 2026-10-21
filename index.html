@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Configurador de Cocinas 3D</title>
+<title>Configurador de Cocinas 3D gratis: diseña tu cocina lineal o en L</title>
+<meta name="description" content="Configurador de cocinas 3D gratuito: diseña tu cocina lineal o en L, ajusta el ángulo de la esquina, añade electrodomésticos y calcula un presupuesto orientativo. Incluye guías de medidas y planificación.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Tailwind CSS (CDN) para la interfaz -->
@@ -19,9 +20,33 @@
   body { font-family: 'Manrope', system-ui, sans-serif; }
   #viewport canvas { display: block; outline: none; touch-action: none; }
   input:focus-visible, button:focus-visible, a:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+  html { scroll-padding-top: 1rem; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  select:focus-visible, summary:focus-visible { outline: 2px solid #0f766e; outline-offset: 2px; }
+
+  /* Tipografía de artículos y textos legales (jerarquía h2 / h3 / p / ul) */
+  .article h2 { font-size: 1.6rem; font-weight: 700; line-height: 1.3; color: #0f172a; }
+  .article h3 { margin-top: 1.75rem; font-size: 1.15rem; font-weight: 600; color: #0f172a; }
+  .article p { margin-top: 0.8rem; line-height: 1.75; color: #334155; }
+  .article ul { margin-top: 0.8rem; padding-left: 1.5rem; list-style: disc; line-height: 1.7; color: #334155; }
+  .article li { margin-top: 0.35rem; }
+  .article a { color: #0f766e; text-decoration: underline; }
+  .legal-dialog .article h3 { font-size: 1rem; margin-top: 1.25rem; }
+
+  /* Vista de impresión: solo se muestra la hoja de presupuesto */
+  #printSheet { display: none; }
+  @media print {
+    @page { margin: 16mm; }
+    body > *:not(#printSheet) { display: none !important; }
+    body { background: #fff; }
+    #printSheet { display: block; }
+  }
 </style>
 </head>
-<body class="h-screen w-screen overflow-hidden bg-slate-100 text-slate-800 flex flex-col md:flex-row">
+<body class="bg-slate-100 text-slate-800">
+
+<!-- ============ APLICACIÓN: configurador 3D a pantalla completa ============ -->
+<div id="app" class="h-screen min-h-[560px] flex flex-col md:flex-row">
 
 <!-- ============ BARRA LATERAL (320px) ============ -->
 <aside class="w-full md:w-80 shrink-0 max-h-[48vh] md:max-h-none overflow-y-auto bg-white border-b md:border-b-0 md:border-r border-slate-200 flex flex-col">
@@ -88,6 +113,11 @@
         <option value="side" disabled>Pared lateral (solo en L)</option>
       </select>
     </label>
+    <label class="flex flex-col gap-1 text-sm">Posición / Hueco
+      <select id="addSlot" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">
+        <option value="auto">Automático (mejor hueco)</option>
+      </select>
+    </label>
     <button id="btnAdd" type="button" class="w-full rounded-lg border-2 border-teal-700 text-teal-800 hover:bg-teal-50 text-sm font-semibold py-2.5 transition-colors">＋ Añadir al diseño</button>
     <p id="addMsg" class="text-xs min-h-[1rem]" role="status"></p>
     <p id="freeInfo" class="text-xs text-slate-500"></p>
@@ -100,17 +130,277 @@
   </section>
 
   <!-- Resumen del presupuesto -->
-  <footer class="px-6 py-4 border-t border-slate-100 bg-slate-50 text-sm flex items-center justify-between">
-    <span id="summaryCount" class="text-slate-500"></span>
-    <span><span class="text-slate-500">Total estimado </span><strong id="summaryTotal" class="text-base"></strong></span>
+  <footer class="px-6 py-4 border-t border-slate-100 bg-slate-50 text-sm space-y-3">
+    <div class="flex items-center justify-between">
+      <span id="summaryCount" class="text-slate-500"></span>
+      <span><span class="text-slate-500">Total estimado </span><strong id="summaryTotal" class="text-base"></strong></span>
+    </div>
+    <button id="btnPrint" type="button" class="w-full rounded-lg border border-slate-300 bg-white hover:bg-slate-100 text-slate-800 text-sm font-semibold py-2.5 transition-colors">🖨️ Imprimir / Guardar Presupuesto</button>
   </footer>
+
+  <!-- Aviso legal obligatorio de Amazon Afiliados -->
+  <p class="px-6 py-3 border-t border-slate-100 text-xs text-slate-500 text-center leading-snug">Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.</p>
 </aside>
 
 <!-- ============ ÁREA 3D ============ -->
 <main id="viewport" class="relative flex-1 min-h-0 min-w-0">
   <button id="resetView" type="button" class="absolute top-4 right-4 z-10 rounded-lg bg-white/90 hover:bg-white text-sm font-semibold px-3 py-2 shadow border border-slate-200">Vista general</button>
-  <p class="absolute bottom-3 left-4 z-10 text-xs text-slate-600 bg-white/70 rounded px-2 py-1 pointer-events-none">Arrastra para rotar · rueda para zoom · clic derecho para desplazar</p>
+  <a href="#guias" class="absolute bottom-3 right-4 z-10 rounded-lg bg-white/90 hover:bg-white text-sm font-semibold px-3 py-2 shadow border border-slate-200">Guías de diseño ↓</a>
+  <p class="absolute bottom-3 left-4 z-10 text-xs text-slate-600 bg-white/70 rounded px-2 py-1 pointer-events-none">Arrastra para rotar · haz clic en el 3D y usa la rueda para zoom · clic derecho para desplazar</p>
 </main>
+</div>
+
+<!-- ============ GUÍAS DE DISEÑO (contenido editorial) ============ -->
+<section id="guias" class="bg-white border-t border-slate-200" aria-labelledby="guias-titulo">
+  <div class="mx-auto max-w-4xl px-6 py-16">
+    <header>
+      <p class="text-sm font-semibold text-teal-700">Guías de diseño</p>
+      <h2 id="guias-titulo" class="mt-1 text-3xl font-bold text-slate-900">Todo lo que necesitas para planificar tu cocina</h2>
+      <p class="mt-3 leading-relaxed text-slate-600">Tres guías prácticas con medidas, criterios de distribución y consejos de instalación para sacar el máximo partido al configurador y llegar con las ideas claras a la tienda o al instalador.</p>
+    </header>
+
+    <nav aria-label="Índice de guías" class="mt-8 grid gap-3 sm:grid-cols-3">
+      <a href="#medidas" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">1. Medidas estándar y triángulo de trabajo</a>
+      <a href="#l-vs-lineal" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">2. Cocinas en L o lineales</a>
+      <a href="#electrodomesticos" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">3. Instalación de electrodomésticos integrables</a>
+    </nav>
+
+    <div class="mt-6 divide-y divide-slate-200">
+
+      <article id="medidas" class="article py-12">
+        <h2>Guía de medidas estándar y triángulo de trabajo en la cocina</h2>
+        <p>Antes de elegir acabados conviene fijar las medidas que hacen que una cocina sea cómoda y segura. Las cifras de esta guía son referencias habituales en el sector; ajústalas a tu altura, a la de quien más cocine y a las indicaciones de cada fabricante.</p>
+
+        <h3>Medidas estándar de los muebles</h3>
+        <ul>
+          <li><strong>Altura de la encimera:</strong> entre 85 y 95 cm; 90 cm es la más habitual. Una regla práctica es que quede 10–15 cm por debajo del codo de quien más cocina.</li>
+          <li><strong>Fondo de los muebles bajos:</strong> 60 cm, con encimeras de 60 a 65 cm de fondo.</li>
+          <li><strong>Anchos de módulo:</strong> se fabrican en múltiplos de 10 o 15 cm (30, 40, 45, 60, 80, 90, 100 y 120 cm). El módulo de 60 cm es la referencia para los electrodomésticos integrables.</li>
+          <li><strong>Zócalo:</strong> entre 10 y 15 cm de altura, retranqueado para poder acercar los pies.</li>
+          <li><strong>Muebles altos:</strong> 30–35 cm de fondo y 70–90 cm de alto, colgados a unos 140–150 cm del suelo, es decir, 50–60 cm por encima de la encimera.</li>
+          <li><strong>Pasillo de trabajo:</strong> 90 cm como mínimo; 100–120 cm resulta cómodo y 120–150 cm si cocinan dos personas a la vez.</li>
+        </ul>
+
+        <h3>El triángulo de trabajo</h3>
+        <p>Es la línea imaginaria que une los tres puntos que más se usan al cocinar: el frío (frigorífico), el lavado (fregadero) y la cocción (placa y horno). Cuanto más fluido sea el recorrido entre ellos, menos pasos y menos cruces tendrás.</p>
+        <ul>
+          <li>Cada lado del triángulo debería medir entre 1,2 y 2,7 m.</li>
+          <li>La suma de los tres lados queda bien entre unos 4 y 7,9 m: por debajo la cocina resulta apretada y por encima los desplazamientos se hacen largos.</li>
+          <li>Evita que el paso hacia otras estancias cruce el triángulo, y que una puerta del frigorífico o del horno bloquee el recorrido al abrirse.</li>
+        </ul>
+
+        <h3>Distancias entre las zonas de lavado, cocción y frío</h3>
+        <ul>
+          <li><strong>Lavado:</strong> es la zona más usada. Colócala entre la cocción y el frío, con encimera libre a ambos lados: unos 60 cm en un lado (para escurrir y apoyar) y 40–45 cm en el otro.</li>
+          <li><strong>Cocción:</strong> deja al menos 30–40 cm de encimera a cada lado de la placa para apoyar ollas calientes y no tener que cocinar pegado a una pared o a una columna.</li>
+          <li><strong>Frío:</strong> reserva junto al frigorífico una superficie de unos 40 cm o más donde dejar la compra o los alimentos que vas a usar.</li>
+          <li><strong>Campana:</strong> instálala entre 65 y 75 cm por encima de la placa, siguiendo siempre la distancia mínima que indique el fabricante (suele ser mayor con gas).</li>
+        </ul>
+
+        <h3>Cómo comprobarlo en el configurador</h3>
+        <p>Los muebles bajos del configurador son de 60 cm exactos, y el fregadero de 80 cm. Prueba a mover el fregadero, el horno y el frigorífico con las opciones de añadir y eliminar muebles, y observa cómo cambian las distancias entre las tres zonas y cuánta encimera libre queda a cada lado.</p>
+      </article>
+
+      <article id="l-vs-lineal" class="article py-12">
+        <h2>Cocinas en L vs Cocinas Lineales: ¿Cuál se adapta mejor a tu espacio?</h2>
+        <p>La distribución determina cómo te mueves, cuánta encimera tienes y qué espacio queda libre para comer o para el paso. Las dos más habituales son la cocina lineal, en una sola pared, y la cocina en L, en dos paredes contiguas.</p>
+
+        <h3>Cocina lineal</h3>
+        <p><strong>Ventajas</strong></p>
+        <ul>
+          <li>Funciona en espacios estrechos y en cocinas abiertas al salón; una pared libre de entre 2,4 y 3 m permite incluir fregadero, placa y frigorífico.</li>
+          <li>Deja el pasillo despejado y facilita añadir una mesa, una barra o una isla enfrente.</li>
+          <li>La instalación es más sencilla y económica: agua, desagüe, gas y electricidad se concentran en una sola línea.</li>
+        </ul>
+        <p><strong>Inconvenientes</strong></p>
+        <ul>
+          <li>A partir de unos 4,5 m de pared, los desplazamientos entre fregadero, placa y frigorífico se alargan y el triángulo de trabajo se aplana.</li>
+          <li>Hay menos encimera continua y menos almacenaje por metro cuadrado de suelo ocupado, por lo que suele ser necesario recurrir a columnas y muebles altos.</li>
+        </ul>
+
+        <h3>Cocina en L</h3>
+        <p><strong>Ventajas</strong></p>
+        <ul>
+          <li>Forma un triángulo de trabajo casi natural: cada brazo de la L aloja una zona y la esquina las conecta.</li>
+          <li>Ofrece más encimera y almacenaje al usar dos paredes, y libera el centro de la estancia para una mesa o una península.</li>
+          <li>Permite separar zonas: por ejemplo, la cocción en un brazo y el lavado y el frío en el otro.</li>
+        </ul>
+        <p><strong>Inconvenientes</strong></p>
+        <ul>
+          <li>La esquina es un espacio difícil de aprovechar, con acceso limitado si no se equipa bien.</li>
+          <li>Suele costar más y exige medir con cuidado: las paredes no siempre forman 90°, y un pequeño desvío cambia el encaje de los módulos y de la encimera.</li>
+          <li>No es ideal en cocinas muy estrechas, donde el brazo corto de la L deja un pasillo incómodo.</li>
+        </ul>
+
+        <h3>Consejos para aprovechar el espacio</h3>
+        <ul>
+          <li>No coloques el fregadero ni la placa pegados a la esquina: deja al menos 30–40 cm de encimera libre a cada lado.</li>
+          <li>Equipa la esquina con un carrusel, bandejas extraíbles o un cajón esquinero para no perder el fondo del mueble.</li>
+          <li>Coloca el frigorífico o la columna despensero al final de un brazo, para que no cierren la esquina ni proyecten sombra sobre la encimera.</li>
+          <li>Mide el ángulo real de la esquina. En el configurador puedes simularlo entre 75° y 115° con el control "Ángulo de la esquina" antes de encargar nada.</li>
+        </ul>
+
+        <h3>¿Cuál elegir?</h3>
+        <p>Si dispones de una pared libre de unos 3 m o más y buscas simplicidad y presupuesto ajustado, la cocina lineal es una apuesta segura. Si tienes dos paredes contiguas libres y quieres más encimera, almacenaje y un recorrido de trabajo más corto, la cocina en L suele ser la mejor opción.</p>
+      </article>
+
+      <article id="electrodomesticos" class="article py-12">
+        <h2>Cómo planificar la instalación de electrodomésticos integrables</h2>
+        <p>Un electrodoméstico integrable no se elige a última hora: sus medidas, su ventilación y sus conexiones condicionan los muebles que lo rodean. Estas pautas te ayudarán a evitar sorpresas, aunque la ficha técnica del fabricante y un instalador cualificado son siempre la referencia final.</p>
+
+        <h3>Primero el electrodoméstico, después el mueble</h3>
+        <p>Elige el modelo antes de cerrar el diseño y consulta el plano de instalación del fabricante, que indica las medidas exactas del nicho, la profundidad necesaria y la posición recomendada de las conexiones.</p>
+
+        <h3>Medidas habituales del nicho</h3>
+        <ul>
+          <li><strong>Lavavajillas y lavadora integrables:</strong> módulo de 60 cm de ancho; el alto del nicho suele rondar los 82–90 cm.</li>
+          <li><strong>Horno de columna o bajo encimera:</strong> nicho de unos 56–57 cm de ancho y 55–60 cm de alto, con una profundidad mínima cercana a 55 cm.</li>
+          <li><strong>Frigorífico integrable:</strong> nicho de unos 56 cm de ancho, con alturas que varían según el modelo (desde unos 88 cm en los pequeños hasta unos 178 cm en los combi altos).</li>
+          <li><strong>Placa:</strong> hueco en la encimera de unos 56 × 49 cm para una placa de 60 cm; usa la plantilla del fabricante.</li>
+        </ul>
+
+        <h3>Ventilación de frigoríficos y hornos</h3>
+        <ul>
+          <li>Un frigorífico integrable necesita entrada de aire por el zócalo y salida por la parte superior del nicho. Como orientación, la sección de ventilación suele rondar los 200 cm²; consulta el valor exacto del manual.</li>
+          <li>No lo coloques pegado a un horno, a una placa o a un radiador sin separación o aislamiento, ya que el calor aumenta el consumo y reduce su vida útil.</li>
+          <li>Si el frigorífico es independiente, deja unos centímetros de separación con la pared trasera y evita la incidencia directa del sol.</li>
+          <li>No selles la parte trasera del nicho del horno: necesita circulación de aire para refrigerarse.</li>
+        </ul>
+
+        <h3>Tomas de agua y desagüe</h3>
+        <ul>
+          <li>El lavavajillas y la lavadora necesitan una toma de agua con llave de paso accesible y un desagüe con sifón o conexión antirretorno al sifón del fregadero.</li>
+          <li>Colócalos cerca del fregadero para acortar las mangueras, que suelen medir entre 1,5 y 2 m, y revisa en el manual la altura máxima admitida para el desagüe.</li>
+          <li>Sitúa las tomas en el lateral del nicho o en el mueble contiguo, no detrás del aparato, para poder desplazarlo sin cortar el agua ni aplastar mangueras.</li>
+        </ul>
+
+        <h3>Electricidad</h3>
+        <ul>
+          <li>Coloca los enchufes fuera del nicho, en el lateral o en el mueble contiguo, y que sean accesibles.</li>
+          <li>Los hornos y las placas de inducción de alta potencia suelen requerir líneas eléctricas propias; consulta con un instalador autorizado y respeta el Reglamento Electrotécnico para Baja Tensión.</li>
+        </ul>
+
+        <h3>Lista de comprobación antes de comprar</h3>
+        <ul>
+          <li>Tengo las medidas exactas de cada nicho y la profundidad necesaria.</li>
+          <li>He previsto rejillas de ventilación para el frigorífico y el horno.</li>
+          <li>Las tomas de agua, el desagüe y los enchufes quedan accesibles.</li>
+          <li>Las puertas y las bisagras no chocan al abrirse con muebles ni con paredes.</li>
+        </ul>
+      </article>
+
+    </div>
+    <p class="pt-2"><a href="#app" class="font-semibold text-teal-700 hover:underline">↑ Volver al configurador 3D</a></p>
+  </div>
+</section>
+
+<!-- ============ PIE DE PÁGINA ============ -->
+<footer class="bg-slate-900 text-slate-300">
+  <div class="mx-auto max-w-4xl px-6 py-10 space-y-5">
+    <nav aria-label="Enlaces legales" class="flex flex-wrap gap-x-6 gap-y-2 text-sm font-semibold">
+      <button type="button" data-legal="aviso" class="hover:text-white hover:underline">Aviso Legal</button>
+      <button type="button" data-legal="privacidad" class="hover:text-white hover:underline">Política de Privacidad</button>
+      <button type="button" data-legal="cookies" class="hover:text-white hover:underline">Política de Cookies</button>
+      <button type="button" data-legal="contacto" class="hover:text-white hover:underline">Contacto</button>
+    </nav>
+    <p class="text-sm leading-relaxed">Los precios que muestra el configurador son estimaciones orientativas pensadas para planificar el espacio y comparar opciones. No constituyen una oferta ni un presupuesto vinculante y pueden variar según el fabricante, el modelo, la tienda y la fecha de compra.</p>
+    <p class="text-sm leading-relaxed">Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.</p>
+    <p class="text-xs text-slate-400">© <span id="year"></span> Configurador de Cocinas 3D. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<!-- ============ AVISOS LEGALES (ventanas modales; completa los datos entre corchetes) ============ -->
+<dialog id="legal-aviso" class="legal-dialog w-[min(92vw,42rem)] max-h-[85vh] overflow-y-auto rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/60" aria-labelledby="t-aviso">
+  <div class="sticky top-0 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
+    <h2 id="t-aviso" class="text-lg font-bold text-slate-900">Aviso Legal</h2>
+    <button type="button" data-close class="rounded-md border border-slate-300 px-3 py-1 text-sm font-semibold hover:bg-slate-100">Cerrar</button>
+  </div>
+  <div class="article px-6 pb-6 text-sm">
+    <h3>Titular del sitio web</h3>
+    <p>En cumplimiento de la Ley 34/2002 de Servicios de la Sociedad de la Información y de Comercio Electrónico, se informa de que este sitio web es titularidad de [Nombre o razón social], con NIF/CIF [NIF/CIF], domicilio en [Domicilio completo] y correo electrónico de contacto [correo electrónico].</p>
+    <h3>Objeto</h3>
+    <p>Este sitio ofrece una herramienta gratuita de planificación de cocinas en 3D y contenidos informativos sobre diseño de cocinas. El acceso y uso del sitio atribuye la condición de usuario e implica la aceptación de este aviso.</p>
+    <h3>Precios e información</h3>
+    <p>Los precios, medidas y recomendaciones son orientativos y se ofrecen únicamente para facilitar la planificación. No constituyen una oferta vinculante. Antes de comprar o instalar, verifica las medidas y los precios con el fabricante, la tienda y un profesional cualificado.</p>
+    <h3>Enlaces y afiliación</h3>
+    <p>El sitio puede incluir enlaces a tiendas de terceros, entre ellas Amazon. Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables. El titular no es responsable del contenido, las condiciones ni el servicio de los sitios enlazados.</p>
+    <h3>Propiedad intelectual</h3>
+    <p>Los textos, el diseño y el código de este sitio están protegidos por la normativa de propiedad intelectual. Queda prohibida su reproducción total o parcial sin autorización, salvo cita con indicación de la fuente.</p>
+    <h3>Responsabilidad y legislación aplicable</h3>
+    <p>El titular no garantiza la ausencia de errores ni la disponibilidad continua del servicio y no responde de los daños derivados de su uso. Este aviso se rige por la legislación española.</p>
+  </div>
+</dialog>
+
+<dialog id="legal-privacidad" class="legal-dialog w-[min(92vw,42rem)] max-h-[85vh] overflow-y-auto rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/60" aria-labelledby="t-privacidad">
+  <div class="sticky top-0 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
+    <h2 id="t-privacidad" class="text-lg font-bold text-slate-900">Política de Privacidad</h2>
+    <button type="button" data-close class="rounded-md border border-slate-300 px-3 py-1 text-sm font-semibold hover:bg-slate-100">Cerrar</button>
+  </div>
+  <div class="article px-6 pb-6 text-sm">
+    <h3>Responsable del tratamiento</h3>
+    <p>[Nombre o razón social], NIF/CIF [NIF/CIF], [Domicilio completo]. Contacto: [correo electrónico].</p>
+    <h3>Datos que se tratan</h3>
+    <p>El configurador funciona íntegramente en tu navegador: las medidas de la habitación y los muebles que elijas no se envían a ningún servidor ni se almacenan. El sitio no dispone de formularios de registro. Si nos escribes por correo electrónico, trataremos tu dirección y el contenido del mensaje para responderte, con base en tu consentimiento o en el interés legítimo de atender tu consulta, y los conservaremos mientras sea necesario para ello.</p>
+    <h3>Servicios de terceros</h3>
+    <ul>
+      <li><strong>Recursos externos:</strong> la página carga librerías y tipografías desde redes de distribución de contenidos (por ejemplo Tailwind CSS, jsDelivr y Google Fonts), que pueden recibir tu dirección IP y datos técnicos del navegador.</li>
+      <li><strong>Publicidad:</strong> si se muestran anuncios, como los de Google AdSense, el proveedor puede utilizar cookies o identificadores para servirlos y medir su rendimiento, conforme a su propia política de privacidad.</li>
+      <li><strong>Amazon:</strong> al seguir un enlace de afiliado, Amazon trata tus datos según su propia política de privacidad.</li>
+    </ul>
+    <h3>Derechos</h3>
+    <p>Puedes ejercer tus derechos de acceso, rectificación, supresión, oposición, limitación y portabilidad escribiendo a [correo electrónico]. Si consideras que no se han atendido correctamente, puedes presentar una reclamación ante la Agencia Española de Protección de Datos (www.aepd.es).</p>
+  </div>
+</dialog>
+
+<dialog id="legal-cookies" class="legal-dialog w-[min(92vw,42rem)] max-h-[85vh] overflow-y-auto rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/60" aria-labelledby="t-cookies">
+  <div class="sticky top-0 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
+    <h2 id="t-cookies" class="text-lg font-bold text-slate-900">Política de Cookies</h2>
+    <button type="button" data-close class="rounded-md border border-slate-300 px-3 py-1 text-sm font-semibold hover:bg-slate-100">Cerrar</button>
+  </div>
+  <div class="article px-6 pb-6 text-sm">
+    <h3>Qué son las cookies</h3>
+    <p>Las cookies son pequeños archivos que un sitio web guarda en tu dispositivo para recordar información o medir su uso. Algunas son necesarias para que el sitio funcione y otras sirven para analítica o publicidad.</p>
+    <h3>Cookies de este sitio</h3>
+    <p>El configurador no necesita cookies propias para funcionar. Los servicios de terceros que se incorporen (publicidad como Google AdSense, o los enlaces de afiliado de Amazon) pueden instalar sus propias cookies o identificadores. Cuando este sitio utilice cookies no necesarias, te pedirá tu consentimiento previo y podrás retirarlo en cualquier momento.</p>
+    <h3>Cómo gestionarlas</h3>
+    <ul>
+      <li>Desde el panel de configuración de cookies del sitio, cuando esté disponible.</li>
+      <li>Desde los ajustes de tu navegador, donde puedes bloquear o eliminar las cookies de cualquier sitio.</li>
+      <li>Desde la configuración de anuncios de tu cuenta de Google, si utilizas servicios de Google.</li>
+    </ul>
+  </div>
+</dialog>
+
+<dialog id="legal-contacto" class="legal-dialog w-[min(92vw,42rem)] max-h-[85vh] overflow-y-auto rounded-xl p-0 shadow-2xl backdrop:bg-slate-900/60" aria-labelledby="t-contacto">
+  <div class="sticky top-0 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
+    <h2 id="t-contacto" class="text-lg font-bold text-slate-900">Contacto</h2>
+    <button type="button" data-close class="rounded-md border border-slate-300 px-3 py-1 text-sm font-semibold hover:bg-slate-100">Cerrar</button>
+  </div>
+  <div class="article px-6 pb-6 text-sm">
+    <p>¿Tienes una duda, has detectado un error o quieres sugerir una mejora? Escríbenos a <a href="mailto:contacto@tu-dominio.com">contacto@tu-dominio.com</a> e intentaremos responderte lo antes posible.</p>
+    <p>Para consultas sobre un pedido, una devolución o la disponibilidad de un producto, dirígete directamente a la tienda donde lo hayas comprado.</p>
+  </div>
+</dialog>
+
+<!-- ============ HOJA DE PRESUPUESTO (solo visible al imprimir) ============ -->
+<div id="printSheet" class="p-8 text-sm text-slate-900">
+  <h1 class="text-2xl font-bold">Presupuesto estimado de cocina</h1>
+  <p id="printMeta" class="mt-1 text-slate-600"></p>
+  <table class="mt-6 w-full border-collapse text-left">
+    <thead>
+      <tr class="border-b-2 border-slate-800">
+        <th class="py-2 pr-3">Ref.</th><th class="py-2 pr-3">Mueble</th><th class="py-2 pr-3">Ubicación</th>
+        <th class="py-2 pr-3">Medidas (ancho × fondo × alto)</th><th class="py-2 text-right">Precio est.</th>
+      </tr>
+    </thead>
+    <tbody id="printRows"></tbody>
+    <tfoot>
+      <tr class="border-t-2 border-slate-800"><td colspan="4" class="py-3 pr-3 text-right font-bold">Total estimado</td><td id="printTotal" class="py-3 text-right text-lg font-bold"></td></tr>
+    </tfoot>
+  </table>
+  <p class="mt-6 text-xs text-slate-600">Los precios son estimaciones orientativas para la planificación del espacio; no constituyen una oferta vinculante y pueden variar según fabricante, modelo y tienda.</p>
+  <p class="mt-2 text-xs text-slate-600">Como afiliado de Amazon, obtengo ingresos por las compras adscritas que cumplen los requisitos aplicables.</p>
+</div>
 
 <script type="module">
 import * as THREE from 'three';
@@ -132,6 +422,7 @@ const COL = {
   dark: 0x2a2c30, glass: 0x0c0d0f, tile: 0xe9eef0, wall: 0xf1efea
 };
 // eur = precio estimado por metro lineal de ancho
+// url (opcional) = enlace de afiliado de Amazon del producto; si falta, el botón de compra usa '#'
 const TYPES = {
   base: { code: 'MB', label: 'Mueble bajo con encimera', eur: 420, info: 'Mueble bajo de almacenaje con puertas de madera y encimera de cuarzo.' },
   sink: { code: 'FR', label: 'Módulo fregadero', eur: 640, info: 'Mueble de fregadero en acabado metálico, con cubeta de acero y grifo monomando.' },
@@ -152,6 +443,7 @@ const STD = { base: 0.6, sink: 0.8, oven: 0.6, tall: 0.6, fridge: 0.6, dishwashe
    2. UTILIDADES
    ===================================================================== */
 const $ = s => document.querySelector(s);
+const esc = v => String(v).replace(/&/g, '&amp;').replace(/"/g, '&quot;');   // escapa un valor para usarlo dentro de un atributo HTML
 const eur = v => new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
 const cm = v => (v * 100).toFixed(1).replace('.0', '').replace('.', ',');
 const mat = (color, o = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.6, metalness: 0, ...o });
@@ -393,17 +685,20 @@ const upperFor = type => (WITH_UPPER.includes(type) ? 'wall' : type === 'oven' ?
 const makeSlot = (type, w) => ({ w, lower: type, upper: upperFor(type) });
 const heightOf = (type, H) => (type === 'tall' ? Math.min(2.1, H - 0.05) : type === 'fridge' ? Math.min(2, H - 0.1) : C.baseH);
 
-// Genera automáticamente una hilera: bases, fregadero, base, horno, bases (y columna al final)
+// Genera automáticamente una hilera con medidas estándar exactas (mueble bajo = 60 cm, nunca se estiran):
+// bases, fregadero, base, horno, bases; el sobrante queda como hueco libre y, si procede, la columna cierra la pared.
 function planRun(len, specials, withTall) {
   const fixed = specials.reduce((a, t) => a + STD[t], 0) + (withTall ? STD.tall : 0);
-  const n = Math.max(0, Math.floor((len - fixed) / STD.base + 1e-9));       // nº de muebles bajos
-  const bw = n ? STD.base + (len - fixed - n * STD.base) / n : STD.base;    // ancho ajustado
+  const n = Math.max(0, Math.floor((len - fixed) / STD.base + 1e-9));       // nº de muebles bajos de 60 cm
+  const leftover = len - fixed - n * STD.base;                              // espacio sobrante
   const left = Math.floor(n / 3), mid = specials.length > 1 && n >= 2 ? 1 : 0;
   let types;
   if (specials.length) types = [...Array(left).fill('base'), specials[0], ...Array(mid).fill('base'), specials[1], ...Array(n - left - mid).fill('base')];
   else types = Array(n).fill('base');
-  if (withTall) types.push('tall');
-  return types.map(t => makeSlot(t, t === 'base' ? bw : STD[t]));
+  const slots = types.map(t => makeSlot(t, STD[t]));
+  if (leftover > EPS) slots.push({ w: leftover, lower: null, upper: null });  // hueco libre visible
+  if (withTall) slots.push(makeSlot('tall', STD.tall));
+  return slots;
 }
 
 // Vectores de la pared lateral: tangente (tx, tz) desde la esquina y normal (nx, nz) hacia el interior.
@@ -523,6 +818,7 @@ function occupy(type, key, slot) {
 
 // Ocupa el hueco, reconstruye la escena y deja el mueble nuevo seleccionado
 function placeModule(type, key, slot) {
+  $('#addSlot').value = 'auto';
   const before = slot.w, part = occupy(type, key, slot);
   mergeGaps(key);
   rebuildModules();
@@ -531,8 +827,9 @@ function placeModule(type, key, slot) {
   setAddMsg(`Añadido: ${TYPES[type].label}${rest > EPS ? `. El resto del hueco (${cm(rest)} cm) queda libre` : ''}.`, true);
 }
 
-// Relleno inteligente: 1) hueco vacío de ancho exacto, 2) hueco vacío mayor, 3) final de la pared
-function addModule(type, key) {
+// Añade un mueble. where = 'auto' (relleno inteligente: hueco exacto, hueco mayor, final de la pared),
+// 'slot:N' (hueco elegido de la lista) o 'end' (al final de la pared)
+function addModule(type, key, where = 'auto') {
   if (type === 'corner') {
     if (design.layout !== 'L') return setAddMsg('El módulo esquinero solo está disponible en la distribución en L.', false);
     if (design.corner) return setAddMsg('La esquina ya tiene un módulo esquinero.', false);
@@ -542,28 +839,61 @@ function addModule(type, key) {
     return setAddMsg('Módulo esquinero añadido.', true);
   }
   if (!wallFrames()[key]) return setAddMsg('La pared lateral solo existe en la distribución en L.', false);
-  const slots = design.walls[key];
+  const slots = design.walls[key], isUpper = UPPER_TYPES.includes(type);
+  const append = () => {      // nuevo hueco al final de la pared, si queda espacio
+    const end = freeSpace(key);
+    if (STD[type] > end + 1e-6) { setAddMsg(`No hay hueco libre donde quepa ni espacio al final de la pared ${WALL_NAMES[key]}: quedan ${cm(end)} cm y hacen falta ${cm(STD[type])} cm.`, false); return null; }
+    const slot = { w: STD[type], lower: null, upper: null };
+    slots.push(slot);
+    return slot;
+  };
   let slot;
-  if (UPPER_TYPES.includes(type)) {
+  if (where.startsWith('slot:')) {
+    slot = slots[parseInt(where.slice(5), 10)];
+    if (!slot || !slotAccepts(type, slot)) return setAddMsg('El mueble no se puede colocar en el hueco elegido.', false);
+  } else if (where === 'end' && !isUpper) {
+    slot = append();
+    if (!slot) return;
+  } else if (isUpper) {
     // La campana prefiere el horno; el módulo alto prefiere cualquier otro hueco
     const prefer = sl => ((type === 'hood') === (sl.lower === 'oven') ? 0 : 1);
     slot = slots.filter(sl => slotAccepts(type, sl)).sort((a, b) => prefer(a) - prefer(b))[0];
     if (!slot) return setAddMsg(`No quedan huecos libres sobre muebles de la pared ${WALL_NAMES[key]}.`, false);
   } else {
     slot = slots.find(sl => slotAccepts(type, sl) && Math.abs(sl.w - STD[type]) < EPS) || slots.find(sl => slotAccepts(type, sl));
-    if (!slot) {
-      const end = freeSpace(key);
-      if (STD[type] > end + 1e-6) return setAddMsg(`No hay hueco libre donde quepa ni espacio al final de la pared ${WALL_NAMES[key]}: quedan ${cm(end)} cm y hacen falta ${cm(STD[type])} cm.`, false);
-      slot = { w: STD[type], lower: null, upper: null };
-      slots.push(slot);
-    }
+    if (!slot) { slot = append(); if (!slot) return; }
   }
   placeModule(type, key, slot);
 }
 
+// Rellena el desplegable "Posición / Hueco" según el tipo y la pared elegidos
+function refreshSlotOptions() {
+  const sel = $('#addSlot'), type = $('#addType').value, key = $('#addWall').value, f = wallFrames()[key];
+  const prev = sel.value, opts = [['auto', 'Automático (mejor hueco)', false]];   // [valor, texto, deshabilitada]
+  if (type !== 'corner' && f) {
+    const run = design.walls[key];
+    if (UPPER_TYPES.includes(type)) {
+      run.forEach((slot, i) => opts.push([`slot:${i}`, `Posición ${i + 1}: sobre ${slot.lower ? TYPES[slot.lower].label.toLowerCase() : 'hueco libre'} (${cm(slot.w)} cm)`, !slotAccepts(type, slot)]));
+    } else {
+      let n = 0, offset = 0;
+      run.forEach((slot, i) => {
+        if (!slot.lower) {
+          n++;
+          const c = (offset + slot.w / 2) / f.len, where = c < 1 / 3 ? 'Inicio' : c > 2 / 3 ? 'Final' : 'Centro';
+          opts.push([`slot:${i}`, `Hueco ${n} (${where}) · ${cm(slot.w)} cm`, !slotAccepts(type, slot)]);
+        }
+        offset += slot.w;
+      });
+      const end = freeSpace(key);
+      if (end > EPS) opts.push(['end', `Al final de la pared · ${cm(end)} cm`, STD[type] > end + 1e-6]);
+    }
+  }
+  sel.innerHTML = opts.map(([v, text, off]) => `<option value="${v}"${off ? ' disabled' : ''}>${text}${off ? ' (no disponible)' : ''}</option>`).join('');
+  sel.value = opts.some(o => o[0] === prev && !o[2]) ? prev : 'auto';
+}
+
 // Botón de la ficha de un hueco: añade el tipo elegido en "Añadir Mueble" justo en ese hueco
-function addInGap(m) {
-  const type = $('#addType').value;
+function addInGap(m, type = $('#addType').value) {
   if (type === 'corner') return setAddMsg('El módulo esquinero solo se coloca en la esquina de la L.', false);
   if (!slotAccepts(type, m.slot)) {
     const need = UPPER_TYPES.includes(type) ? 0.3 : STD[type];
@@ -665,7 +995,7 @@ function rebuildModules() {
   modules = layoutSpecs();
   modules.forEach((s, i) => {
     const t = TYPES[s.type];
-    s.name = t.label; s.info = t.info;
+    s.name = t.label; s.info = t.info; s.url = t.url;
     s.id = `${t.code}-${String(i + 1).padStart(2, '0')}`;
     s.price = Math.round(t.eur * s.w / 5) * 5;
     s.group = BUILD[s.type](s);
@@ -689,6 +1019,7 @@ function rebuildModules() {
   $('#summaryTotal').textContent = eur(real.reduce((a, m) => a + m.price, 0));
   $('#freeInfo').textContent = 'Espacio libre: ' + parts.join(' · ');
   if (overflow) setAddMsg('Con este ángulo los muebles de una pared no caben en el suelo: elimina alguno o cambia el ángulo.', false);
+  refreshSlotOptions();
 }
 
 /* =====================================================================
@@ -737,10 +1068,25 @@ function renderDetails(m) {
     el.innerHTML = `
       <h3 class="text-base font-semibold leading-snug">Hueco libre de ${cm(m.w)} cm</h3>
       <p class="mt-1 text-sm text-slate-600">Pared ${WALL_NAMES[m.wall]}. Al rellenarlo no se mueve ningún mueble vecino.${m.slot.upper ? ' Tiene un módulo alto montado encima.' : ''}</p>
-      <p class="mt-3 text-sm">Se añadirá: <strong>${TYPES[$('#addType').value].label}</strong>
-        <span class="text-slate-500">(cambia el tipo en "Añadir Mueble")</span></p>
-      <button id="btnFillGap" type="button" class="mt-4 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Añadir mueble en este hueco</button>`;
-    $('#btnFillGap').addEventListener('click', () => addInGap(m));
+      <label class="mt-3 flex flex-col gap-1 text-sm">Mueble a añadir en este hueco
+        <select id="gapType" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">${$('#addType').innerHTML}</select>
+      </label>
+      <p id="gapHint" class="mt-2 text-xs min-h-[1rem]"></p>
+      <button id="btnFillGap" type="button" class="mt-3 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Añadir mueble en este hueco</button>`;
+    const typeSelect = $('#gapType');
+    typeSelect.value = $('#addType').value;
+    // Indica si el mueble elegido cabe en este hueco
+    const showHint = () => {
+      const type = typeSelect.value, need = UPPER_TYPES.includes(type) ? 0.3 : STD[type] || 0, hint = $('#gapHint');
+      const ok = type !== 'corner' && slotAccepts(type, m.slot);
+      hint.textContent = type === 'corner' ? 'El módulo esquinero solo se coloca en la esquina de la L.'
+        : ok ? `Cabe en este hueco${m.slot.w - need > EPS ? `; sobrarán ${cm(m.slot.w - need)} cm libres.` : '.'}`
+        : `No cabe aquí: el hueco mide ${cm(m.slot.w)} cm y hacen falta ${cm(need)} cm.`;
+      hint.className = 'mt-2 text-xs min-h-[1rem] ' + (ok ? 'text-teal-700' : 'text-amber-700');
+    };
+    typeSelect.addEventListener('change', () => { $('#addType').value = typeSelect.value; refreshSlotOptions(); showHint(); });
+    $('#btnFillGap').addEventListener('click', () => addInGap(m, typeSelect.value));
+    showHint();
     return;
   }
   el.innerHTML = `
@@ -758,7 +1104,7 @@ function renderDetails(m) {
       <dt class="text-slate-500 pt-2 border-t border-slate-100">Precio estimado</dt>
       <dd class="font-bold text-lg text-right pt-2 border-t border-slate-100">${eur(m.price)}</dd>
     </dl>
-    <a href="#" class="mt-5 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Ver / Comprar en Tienda</a>
+    <a href="${esc(m.url || '#')}" target="_blank" rel="noopener noreferrer" class="mt-5 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Ver / Comprar en Tienda</a>
     <button id="btnDelete" type="button" class="mt-3 block w-full rounded-lg bg-red-600 hover:bg-red-700 text-white text-center font-semibold py-3 shadow-sm transition-colors">🗑️ Eliminar este mueble</button>`;
   $('#btnDelete').addEventListener('click', () => removeModule(m));
 }
@@ -815,10 +1161,44 @@ $('#roomForm').addEventListener('submit', e => {
   $('#formMsg').textContent = adjusted ? 'Algún valor se ajustó a los límites (ancho 3–8 m, largo 2,4–8 m, alto 2,3–3,5 m).' : '';
   applyDesign(createDesign(W, L, H, layoutSelect.value, $('#inSide').value, angle));
 });
-$('#btnAdd').addEventListener('click', () => addModule($('#addType').value, $('#addWall').value));
+$('#btnAdd').addEventListener('click', () => addModule($('#addType').value, $('#addWall').value, $('#addSlot').value));
+$('#addWall').addEventListener('change', refreshSlotOptions);
 // Si hay un hueco seleccionado, su ficha indica el tipo que se añadirá y debe reflejar el cambio
-$('#addType').addEventListener('change', () => { if (selected && selected.type === 'gap') renderDetails(selected); });
+$('#addType').addEventListener('change', () => { refreshSlotOptions(); if (selected && selected.type === 'gap') renderDetails(selected); });
 $('#resetView').addEventListener('click', () => frameCamera(design.W, design.L, design.H));
+
+/* =====================================================================
+   8b. SCROLL DE PÁGINA, IMPRESIÓN DEL PRESUPUESTO Y AVISOS LEGALES
+   ===================================================================== */
+// La rueda solo hace zoom tras hacer clic en el 3D; el resto del tiempo permite desplazar la página
+controls.enableZoom = false;
+canvas.addEventListener('pointerdown', () => { controls.enableZoom = true; });
+canvas.addEventListener('pointerleave', () => { controls.enableZoom = false; });
+
+// Rellena la hoja de impresión con los muebles del diseño, sus precios y el total
+function buildPrintSheet() {
+  const real = modules.filter(m => m.type !== 'gap');
+  const wall = { back: 'Pared trasera', side: 'Pared lateral', corner: 'Esquina' };
+  $('#printMeta').textContent = `Habitación ${design.W} × ${design.L} × ${design.H} m · `
+    + (design.layout === 'L' ? `Cocina en L (esquina de ${design.angle}°)` : 'Cocina lineal')
+    + ` · ${new Date().toLocaleDateString('es-ES')}`;
+  $('#printRows').innerHTML = real.length ? real.map(m => `
+    <tr class="border-b border-slate-300">
+      <td class="py-1.5 pr-3">${m.id}</td><td class="py-1.5 pr-3">${m.name}</td>
+      <td class="py-1.5 pr-3">${wall[m.wall]}${m.part === 'upper' ? ' (alto)' : ''}</td>
+      <td class="py-1.5 pr-3">${cm(m.w)} × ${cm(m.d)} × ${cm(m.h)} cm</td>
+      <td class="py-1.5 text-right">${eur(m.price)}</td>
+    </tr>`).join('') : '<tr><td colspan="5" class="py-3 text-slate-600">Todavía no hay muebles en el diseño.</td></tr>';
+  $('#printTotal').textContent = eur(real.reduce((a, m) => a + m.price, 0));
+}
+$('#btnPrint').addEventListener('click', () => { buildPrintSheet(); window.print(); });
+window.addEventListener('beforeprint', buildPrintSheet);   // también con Ctrl/Cmd + P
+
+// Ventanas modales de avisos legales
+document.querySelectorAll('[data-legal]').forEach(b => b.addEventListener('click', () => $('#legal-' + b.dataset.legal).showModal()));
+document.querySelectorAll('dialog [data-close]').forEach(b => b.addEventListener('click', () => b.closest('dialog').close()));
+document.querySelectorAll('dialog').forEach(d => d.addEventListener('click', e => { if (e.target === d) d.close(); }));
+$('#year').textContent = new Date().getFullYear();
 
 /* =====================================================================
    9. ARRANQUE Y BUCLE DE RENDER

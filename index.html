@@ -139,6 +139,90 @@
       "isPartOf": {
         "@id": "https://dise-ador-cocinas-3d.vercel.app/#app"
       }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dise-ador-cocinas-3d.vercel.app/#materiales-encimera",
+      "headline": "Guía comparativa de materiales para encimeras: Granito, Cuarzo, Porcelánico y Madera",
+      "description": "Comparativa de granito, cuarzo, porcelánico y madera según resistencia al calor, porosidad, mantenimiento y precio relativo, con consejos de elección.",
+      "url": "https://dise-ador-cocinas-3d.vercel.app/#materiales-encimera",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#materiales-encimera"
+      },
+      "inLanguage": "es-ES",
+      "author": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "publisher": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "isPartOf": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#app"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dise-ador-cocinas-3d.vercel.app/#iluminacion-cocina",
+      "headline": "Cómo planificar la iluminación de la cocina: general, de trabajo y ambiental",
+      "description": "Cómo combinar luz general, de trabajo y ambiental: lúmenes, lux, temperatura de color en kelvin, zonas de sombra bajo muebles altos y tiras LED.",
+      "url": "https://dise-ador-cocinas-3d.vercel.app/#iluminacion-cocina",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#iluminacion-cocina"
+      },
+      "inLanguage": "es-ES",
+      "author": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "publisher": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "isPartOf": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#app"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dise-ador-cocinas-3d.vercel.app/#isla-barra",
+      "headline": "Cocinas con isla o barra americana: distancias mínimas y espacio de circulación",
+      "description": "Pasillos recomendados, altura de la barra y voladizo para taburetes, tomas de corriente y extracción en islas con placa.",
+      "url": "https://dise-ador-cocinas-3d.vercel.app/#isla-barra",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#isla-barra"
+      },
+      "inLanguage": "es-ES",
+      "author": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "publisher": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "isPartOf": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#app"
+      }
+    },
+    {
+      "@type": "Article",
+      "@id": "https://dise-ador-cocinas-3d.vercel.app/#errores-frecuentes",
+      "headline": "Los 7 errores más comunes al diseñar una cocina y cómo evitarlos en 3D",
+      "description": "Siete errores frecuentes al diseñar una cocina, como puertas que chocan, poco espacio junto a la placa, mala ventilación del frigorífico y enchufes insuficientes.",
+      "url": "https://dise-ador-cocinas-3d.vercel.app/#errores-frecuentes",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#errores-frecuentes"
+      },
+      "inLanguage": "es-ES",
+      "author": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "publisher": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#autor"
+      },
+      "isPartOf": {
+        "@id": "https://dise-ador-cocinas-3d.vercel.app/#app"
+      }
     }
   ]
 }
@@ -182,6 +266,9 @@
   .article a { color: #0f766e; text-decoration: underline; }
   .article a.cta { display: inline-block; margin-top: 0.9rem; padding: 0.6rem 1rem; border-radius: 0.5rem; background: #0f766e; color: #fff; font-size: 0.9rem; font-weight: 600; text-decoration: none; }
   .article a.cta:hover { background: #115e59; }
+  .article table { width: 100%; margin-top: 0.9rem; border-collapse: collapse; font-size: 0.9rem; }
+  .article th, .article td { border: 1px solid #e2e8f0; padding: 0.5rem 0.65rem; text-align: left; vertical-align: top; color: #334155; }
+  .article th { background: #f1f5f9; color: #0f172a; font-weight: 600; }
   .legal-dialog .article h3 { font-size: 1rem; margin-top: 1.25rem; }
 
   /* Vista de impresión: solo se muestra la hoja de presupuesto */
@@ -254,6 +341,18 @@
     <p class="text-xs text-slate-500">💾 Tu diseño se guarda automáticamente en este navegador.</p>
   </form>
 
+  <!-- Acabado global de los muebles -->
+  <section class="px-6 py-4 border-b border-slate-100 space-y-2">
+    <label class="flex flex-col gap-1 text-sm font-semibold text-slate-700">Acabado global de muebles
+      <select id="globalFinish" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 font-normal">
+        <option value="blanco">Blanco Mate</option>
+        <option value="antracita">Antracita</option>
+        <option value="roble">Madera de Roble</option>
+      </select>
+    </label>
+    <p class="text-xs text-slate-500">Se aplica a muebles bajos, altos, columnas y esquinero. Puedes elegir otro acabado para un módulo desde su ficha.</p>
+  </section>
+
   <!-- Añadir mueble manualmente -->
   <section class="px-6 py-5 border-b border-slate-100 space-y-3">
     <h2 class="text-sm font-semibold text-slate-700">Añadir Mueble</h2>
@@ -287,6 +386,40 @@
     <button id="btnAdd" type="button" class="w-full rounded-lg border-2 border-teal-700 text-teal-800 hover:bg-teal-50 text-sm font-semibold py-2.5 transition-colors">＋ Añadir al diseño</button>
     <p id="addMsg" class="text-xs min-h-[1rem]" role="status"></p>
     <p id="freeInfo" class="text-xs text-slate-500"></p>
+  </section>
+
+  <!-- Pilares / columnas estructurales -->
+  <section class="px-6 py-5 border-b border-slate-100 space-y-3">
+    <h2 class="text-sm font-semibold text-slate-700">Añadir Columna / Pilar Estructural</h2>
+    <div class="grid grid-cols-2 gap-3">
+      <label class="flex flex-col gap-1 text-sm">Ancho (m)
+        <input id="pilW" type="number" min="0.2" max="1" step="0.05" value="0.4" class="w-full rounded-md border border-slate-300 px-3 py-1.5">
+      </label>
+      <label class="flex flex-col gap-1 text-sm">Fondo (m)
+        <input id="pilD" type="number" min="0.2" max="1" step="0.05" value="0.4" class="w-full rounded-md border border-slate-300 px-3 py-1.5">
+      </label>
+    </div>
+    <label class="flex flex-col gap-1 text-sm">Ubicación
+      <select id="pilAnchor" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5">
+        <option value="back-left">Esquina trasera izquierda</option>
+        <option value="back-right">Esquina trasera derecha</option>
+        <option value="front-left">Esquina delantera izquierda</option>
+        <option value="front-right">Esquina delantera derecha</option>
+        <option value="back-center">Pared trasera (centro)</option>
+        <option value="custom">Personalizada (X, Z)</option>
+      </select>
+    </label>
+    <div id="pilCustom" class="hidden grid-cols-2 gap-3">
+      <label class="flex flex-col gap-1 text-sm">X (m)
+        <input id="pilX" type="number" step="0.05" value="0" class="w-full rounded-md border border-slate-300 px-3 py-1.5">
+      </label>
+      <label class="flex flex-col gap-1 text-sm">Z (m)
+        <input id="pilZ" type="number" step="0.05" value="0" class="w-full rounded-md border border-slate-300 px-3 py-1.5">
+      </label>
+      <p class="col-span-2 text-xs text-slate-500">0 es el centro de la habitación; Z negativo se acerca a la pared trasera.</p>
+    </div>
+    <button id="btnAddPillar" type="button" class="w-full rounded-lg border-2 border-teal-700 text-teal-800 hover:bg-teal-50 text-sm font-semibold py-2.5 transition-colors">＋ Añadir pilar</button>
+    <p id="pilMsg" class="text-xs min-h-[1rem]" role="status"></p>
   </section>
 
   <!-- Ficha del mueble seleccionado -->
@@ -325,7 +458,7 @@
     <header>
       <p class="text-sm font-semibold text-teal-700">Guías de diseño</p>
       <h2 id="guias-titulo" class="mt-1 text-3xl font-bold text-slate-900">Todo lo que necesitas para planificar tu cocina</h2>
-      <p class="mt-3 leading-relaxed text-slate-600">Cuatro guías prácticas con medidas, criterios de distribución y consejos de instalación para sacar el máximo partido al configurador y llegar con las ideas claras a la tienda o al instalador.</p>
+      <p class="mt-3 leading-relaxed text-slate-600">Ocho guías prácticas con medidas, materiales, iluminación, distribución y consejos de instalación para sacar el máximo partido al configurador y llegar con las ideas claras a la tienda o al instalador.</p>
     </header>
 
     <nav aria-label="Índice de guías" class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -333,6 +466,10 @@
       <a href="#l-vs-lineal" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">2. Cocinas en L o lineales</a>
       <a href="#electrodomesticos" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">3. Instalación de electrodomésticos integrables</a>
       <a href="#accesorios" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">4. Accesorios de luz y orden por menos de 30 €</a>
+      <a href="#materiales-encimera" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">5. Materiales de encimera: granito, cuarzo, porcelánico y madera</a>
+      <a href="#iluminacion-cocina" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">6. Iluminación de la cocina: general, de trabajo y ambiental</a>
+      <a href="#isla-barra" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">7. Cocinas con isla o barra americana</a>
+      <a href="#errores-frecuentes" class="rounded-lg border border-slate-200 p-4 text-sm font-semibold text-slate-800 hover:border-teal-600 hover:bg-teal-50">8. Los 7 errores más comunes al diseñar una cocina</a>
     </nav>
 
     <div class="mt-6 divide-y divide-slate-200">
@@ -506,6 +643,184 @@
         <p>Si solo vas a comprar una cosa, empieza por los tiradores: es lo que más cambia la imagen de la cocina. Después, añade luz bajo los módulos altos y, por último, el organizador para los muebles bajos de 60 cm. Puedes comprobar cómo quedarían los módulos blancos con tiradores oscuros en el configurador 3D antes de decidirte.</p>
       </article>
 
+      <article id="materiales-encimera" class="article py-12">
+        <h2>Guía comparativa de materiales para encimeras: Granito, Cuarzo, Porcelánico y Madera</h2>
+        <p>La encimera es la superficie que más castigo recibe: calor, cortes, humedad, manchas y golpes. Elegirla bien depende menos de la moda que de cómo cocinas. Esta guía compara los cuatro materiales más habituales con criterios prácticos; los precios son relativos y orientativos, porque cada fabricante y cada acabado cambian las cifras.</p>
+
+        <h3>Qué debes valorar</h3>
+        <ul>
+          <li><strong>Resistencia al calor:</strong> si podrás apoyar una olla recién sacada del fuego sin riesgo.</li>
+          <li><strong>Porosidad:</strong> un material poroso absorbe líquidos (aceite, vino, limón) y mancha si no está sellado.</li>
+          <li><strong>Mantenimiento:</strong> sellado periódico, aceites o simple limpieza con jabón neutro.</li>
+          <li><strong>Resistencia a rayones y golpes</strong> y posibilidad de reparar los daños.</li>
+          <li><strong>Precio total:</strong> además del material, cuentan el corte, los cantos, los huecos para fregadero y placa, y la instalación.</li>
+        </ul>
+
+        <h3>Granito</h3>
+        <p>Es una piedra natural, de modo que cada pieza es distinta. Resiste muy bien el calor y los rayones. Es algo poroso, por lo que conviene sellarlo al instalarlo y revisar el sellado de forma periódica, según el tipo de piedra y el uso. Es pesado y necesita un buen soporte.</p>
+
+        <h3>Cuarzo (aglomerado de cuarzo)</h3>
+        <p>Combina cuarzo triturado con resinas. No es poroso, no necesita sellado y resiste bien las manchas, lo que lo hace muy cómodo de mantener. Su punto débil es el calor intenso: las resinas pueden marcarse o decolorarse, así que usa siempre salvamanteles. Tampoco es la mejor opción para exteriores con sol directo.</p>
+
+        <h3>Porcelánico (gran formato)</h3>
+        <p>Es un material cerámico sinterizado, prácticamente sin poros y muy resistente al calor, a los rayones y a los rayos UV. Se fabrica en láminas finas y de gran formato con pocas juntas. Se trabaja con herramientas específicas, por lo que conviene encargarlo a un instalador con experiencia, y un golpe puntual en el canto puede astillarlo.</p>
+
+        <h3>Madera</h3>
+        <p>Aporta calidez y, según la especie, suele ser la opción más económica. A cambio, tolera mal el calor, la humedad y las manchas. Se repara lijando y volviendo a aplicar aceite o barniz. Evita ponerla junto a la placa y, si la usas cerca del fregadero, que esté bien tratada y sellada.</p>
+
+        <h3>Comparativa rápida</h3>
+        <div class="overflow-x-auto">
+          <table>
+            <thead>
+              <tr><th>Material</th><th>Resistencia al calor</th><th>Porosidad</th><th>Mantenimiento</th><th>Precio relativo</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Granito</td><td>Muy alta</td><td>Media (conviene sellar)</td><td>Sellado periódico</td><td>€€ – €€€</td></tr>
+              <tr><td>Cuarzo</td><td>Media (usa salvamanteles)</td><td>Muy baja</td><td>Mínimo</td><td>€€ – €€€</td></tr>
+              <tr><td>Porcelánico</td><td>Muy alta</td><td>Prácticamente nula</td><td>Mínimo</td><td>€€ – €€€</td></tr>
+              <tr><td>Madera maciza</td><td>Baja</td><td>Alta si no se trata</td><td>Aceite o barniz periódico</td><td>€ – €€</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Cómo elegir según el uso</h3>
+        <ul>
+          <li><strong>Cocinas muy usadas, con mucha cocción:</strong> porcelánico o granito, por su resistencia al calor.</li>
+          <li><strong>Mantenimiento mínimo:</strong> cuarzo o porcelánico, que no necesitan sellado.</li>
+          <li><strong>Ambiente cálido y presupuesto ajustado:</strong> madera en las zonas secas, por ejemplo una isla o una barra, y piedra en la zona de fregadero y cocción.</li>
+          <li><strong>Mezclar materiales:</strong> es una solución habitual y permite combinar lo mejor de cada uno.</li>
+        </ul>
+
+        <h3>Pruébalo en el configurador</h3>
+        <p>En el configurador, los acabados Blanco Mate y Antracita llevan encimera de roble cálido, y con el acabado global Madera de Roble la encimera pasa a un tono claro tipo cuarzo. Cambia el selector de "Acabado global de muebles" para ver cómo combina cada opción con tus muebles.</p>
+      </article>
+
+      <article id="iluminacion-cocina" class="article py-12">
+        <h2>Cómo planificar la iluminación de la cocina: general, de trabajo y ambiental</h2>
+        <p>Una cocina bien iluminada es más segura y más agradable. El error más habitual es confiar todo a un único punto de luz en el centro del techo. Lo recomendable es combinar tres capas de luz y elegir bien la cantidad y el color.</p>
+
+        <h3>Las tres capas de luz</h3>
+        <ul>
+          <li><strong>Luz general:</strong> ilumina toda la estancia, normalmente con plafones o focos empotrados en el techo.</li>
+          <li><strong>Luz de trabajo:</strong> concentra la luz sobre la encimera, el fregadero y la placa, donde cortas, lavas y cocinas.</li>
+          <li><strong>Luz ambiental:</strong> crea ambiente con luz suave e indirecta, por ejemplo en el zócalo, sobre los muebles altos o dentro de vitrinas.</li>
+        </ul>
+
+        <h3>Lúmenes, lux y kelvin sin complicaciones</h3>
+        <ul>
+          <li><strong>Lúmenes (lm):</strong> la cantidad de luz que emite una lámpara.</li>
+          <li><strong>Lux:</strong> los lúmenes que llegan a cada metro cuadrado de una superficie.</li>
+          <li><strong>Kelvin (K):</strong> el color de la luz, de cálida a fría.</li>
+          <li><strong>IRC o CRI:</strong> la fidelidad con que se ven los colores; para cocinar conviene 80 o más, y 90 si quieres juzgar bien el color de los alimentos.</li>
+        </ul>
+        <p>Como orientación, apunta a unos 200–300 lux de luz general y unos 500 lux sobre las zonas de trabajo. Para calcular los lúmenes, multiplica los lux por la superficie: en una cocina de 10 m² con 300 lux harán falta unos 3.000 lm de luz general repartidos entre las lámparas, a los que se suma la luz de trabajo. Las pérdidas dependen de la luminaria y del color del techo.</p>
+
+        <h3>Temperatura de color</h3>
+        <ul>
+          <li><strong>2700–3000 K (cálida):</strong> acogedora, ideal para la luz ambiental.</li>
+          <li><strong>3500–4000 K (neutra):</strong> la más práctica para las zonas de trabajo.</li>
+          <li><strong>Por encima de 5000 K (fría):</strong> resulta dura en una vivienda; evítala salvo que busques un efecto muy concreto.</li>
+        </ul>
+        <p>Usa la misma temperatura en todas las luminarias de una misma zona, porque mezclar tonos se nota mucho sobre las superficies claras.</p>
+
+        <h3>Zonas de sombra bajo los muebles altos</h3>
+        <p>En el configurador, los módulos altos cuelgan a 145 cm y la encimera está a 90 cm, de modo que queda un hueco de unos 55 cm. La luz del techo queda detrás de ti mientras trabajas, y tu cuerpo proyecta sombra justo sobre la encimera.</p>
+        <ul>
+          <li>Instala una tira o barra LED bajo los muebles altos, en el tercio delantero del mueble para que la luz caiga sobre la encimera.</li>
+          <li>Elige una tira integrada en un perfil con difusor, que evita los puntos brillantes y los reflejos sobre encimeras brillantes.</li>
+          <li>Si no quieres cables, hay luces recargables con sensor; te las explicamos en la <a href="#accesorios">guía de accesorios</a>.</li>
+        </ul>
+
+        <h3>Cómo distribuir los puntos de luz</h3>
+        <ul>
+          <li>Coloca los focos sobre el pasillo, por delante de la encimera, y no encima de ella, para que tu cuerpo no tape la luz.</li>
+          <li>Como regla orientativa, separa los focos entre 90 y 120 cm y comprueba que ninguna zona de trabajo quede a oscuras.</li>
+          <li>Refuerza el fregadero y la placa; la campana suele llevar su propia luz.</li>
+          <li>Sobre una isla, prevé de dos a tres lámparas colgantes a 75–90 cm de la superficie.</li>
+          <li>Divide los interruptores por zonas e instala reguladores en la luz ambiental.</li>
+        </ul>
+
+        <h3>Seguridad</h3>
+        <p>Cerca del fregadero y de la placa, elige luminarias con protección frente a salpicaduras (por ejemplo, grado IP44) y encarga la instalación a un profesional, respetando el Reglamento Electrotécnico para Baja Tensión.</p>
+      </article>
+
+      <article id="isla-barra" class="article py-12">
+        <h2>Cocinas con isla o barra americana: distancias mínimas y espacio de circulación</h2>
+        <p>Una isla o una barra aportan encimera, almacenaje y un lugar donde sentarse, pero solo funcionan si queda espacio para circular. Antes de dibujarla, comprueba que cabe con pasillos cómodos a ambos lados.</p>
+
+        <h3>¿Cabe una isla en tu cocina?</h3>
+        <p>Suma el fondo de los muebles (60 cm), un pasillo, el fondo de la isla y otro pasillo. Con pasillos de 100 cm y una isla de 60 cm, necesitas 60 + 100 + 60 + 100 = 320 cm de lado a lado; con una isla de 90 cm, 350 cm. Además, conviene que la isla mida al menos 1,2 m de largo para ser útil.</p>
+
+        <h3>Pasillos libres recomendados</h3>
+        <ul>
+          <li><strong>90 cm</strong> es el mínimo si cocina una sola persona.</li>
+          <li><strong>100–120 cm</strong> resulta cómodo y permite abrir puertas y cajones sin bloquear el paso.</li>
+          <li><strong>120–150 cm</strong> si cocinan dos personas a la vez o si hay electrodomésticos con puertas enfrentadas, como el horno y el lavavajillas.</li>
+        </ul>
+        <p>Mide siempre entre frentes, contando los tiradores y los voladizos, no entre cuerpos de muebles.</p>
+
+        <h3>Barra, taburetes y voladizo</h3>
+        <ul>
+          <li><strong>Altura de la barra:</strong> 105–110 cm con taburetes de asiento de 65–75 cm; si la isla es a altura de encimera (90–92 cm), usa asientos más bajos.</li>
+          <li><strong>Voladizo de la encimera:</strong> unos 30 cm en barras de 105–110 cm y hasta 35–40 cm en superficies a 90 cm, para que las rodillas quepan.</li>
+          <li><strong>Espacio por persona:</strong> unos 60 cm de ancho de barra.</li>
+          <li><strong>Soporte:</strong> los voladizos grandes necesitan escuadras o un soporte según el material y el grosor; pregunta al fabricante.</li>
+        </ul>
+
+        <h3>Tomas de corriente en la isla</h3>
+        <p>Si quieres tomas en la isla, existen torres retráctiles y tomas integradas en la encimera, pero la alimentación suele pasar por el suelo, por lo que implican obra y un instalador autorizado. Evita las alargaderas con cables colgando. Sin obra, una isla móvil y una toma en la pared cercana resuelven pequeños electrodomésticos.</p>
+
+        <h3>Extracción en islas con placa</h3>
+        <ul>
+          <li>Una campana de isla se cuelga del techo a unos 65–75 cm sobre la placa (más con gas, según el fabricante) y debe ser al menos tan ancha como ella.</li>
+          <li>Las islas están expuestas a corrientes de aire, así que elige una campana potente.</li>
+          <li>Necesitas un conducto hasta el exterior; con recirculación y filtros de carbón la eficacia es menor.</li>
+          <li>Colocar el fregadero en la isla exige desagüe y pendiente, es decir, obras.</li>
+        </ul>
+
+        <h3>Si no cabe</h3>
+        <p>Prueba una península, una barra pegada a la pared o un carrito exento de 60 cm, que cuenta con la ventaja de poder moverse. Lo explicamos en la <a href="#l-vs-lineal">guía de cocinas en L y lineales</a>.</p>
+
+        <h3>En el configurador</h3>
+        <p>Añade el "Isla / Carrito Auxiliar (60 cm)" con la ubicación "Exento" y comprueba que queda un paso de 90–100 cm entre el carrito y la hilera de muebles.</p>
+      </article>
+
+      <article id="errores-frecuentes" class="article py-12">
+        <h2>Los 7 errores más comunes al diseñar una cocina y cómo evitarlos en 3D</h2>
+        <p>Casi todos los problemas de una cocina nueva se podían haber visto antes de comprar. Estos siete errores son los más frecuentes y se detectan con facilidad en un modelo 3D.</p>
+
+        <h3>1. Puertas que chocan con paredes, pilares u otras puertas</h3>
+        <p>Una puerta que no abre del todo, o que choca con la del mueble contiguo en una esquina, es un fallo clásico. Deja un separador de unos 3–5 cm junto a las paredes y los pilares. Prueba en el configurador a añadir un pilar con "Añadir Columna / Pilar Estructural" y comprueba el espacio libre alrededor.</p>
+
+        <h3>2. Poco espacio a los lados de la placa</h3>
+        <p>Sin encimera a ambos lados de la placa no hay dónde apoyar ollas calientes. Reserva al menos 30–40 cm a cada lado, como explicamos en la <a href="#medidas">guía de medidas y triángulo de trabajo</a>.</p>
+
+        <h3>3. Mala ventilación del frigorífico</h3>
+        <p>Un frigorífico encajado sin rejillas ni separación de la placa consume más y dura menos. Prevé entrada de aire por el zócalo y salida por arriba, y aléjalo del horno, como detalla la <a href="#electrodomesticos">guía de electrodomésticos integrables</a>.</p>
+
+        <h3>4. Enchufes insuficientes</h3>
+        <p>Los pequeños electrodomésticos se multiplican. Prevé varias tomas dobles sobre la encimera, además de tomas independientes para el frigorífico, el lavavajillas, la lavadora, el horno y la campana. La normativa fija mínimos, pero conviene superarlos; consulta a un instalador autorizado.</p>
+
+        <h3>5. Pasillos demasiado estrechos</h3>
+        <p>Por debajo de 90 cm se hace incómodo cocinar y casi imposible que dos personas se crucen. Si añades una isla, repasa los pasillos con la <a href="#isla-barra">guía de islas y barras</a>.</p>
+
+        <h3>6. Iluminar solo con un punto central</h3>
+        <p>Una única luz en el techo deja sombras sobre la encimera. Combina luz general, de trabajo y ambiental, tal como se explica en la <a href="#iluminacion-cocina">guía de iluminación</a>.</p>
+
+        <h3>7. No medir bien el espacio</h3>
+        <p>Las paredes rara vez son perfectamente rectas, y los pilares, las ventanas o los radiadores recortan el espacio útil. En el configurador puedes ajustar el ángulo de la esquina entre 75° y 115° y añadir pilares para reproducir la habitación real antes de encargar nada.</p>
+
+        <h3>Lista de comprobación final</h3>
+        <ul>
+          <li>Todas las puertas y cajones abren por completo.</li>
+          <li>Hay encimera a ambos lados de la placa y junto al fregadero.</li>
+          <li>El frigorífico tiene ventilación y está alejado del calor.</li>
+          <li>Hay enchufes suficientes y bien situados.</li>
+          <li>Los pasillos miden al menos 90 cm.</li>
+          <li>La iluminación cubre todas las zonas de trabajo.</li>
+        </ul>
+      </article>
+
     </div>
     <p class="pt-2"><a href="#app" class="font-semibold text-teal-700 hover:underline">↑ Volver al configurador 3D</a></p>
   </div>
@@ -635,23 +950,92 @@ const C = {
   limits: { W: [3, 8], L: [2.4, 8], H: [2.3, 3.5], angle: [75, 115] }   // límites de la habitación
 };
 const COL = { plinth: 0x1f2326, dark: 0x2a2c30, tile: 0xe9eef0, wall: 0xf1efea };   // zócalo, negro base, salpicadero y paredes
+// ===== ENLACES DE AFILIADO DE AMAZON POR MODELO / ACABADO =====
+// Sustituye cada constante por tu enlace real. Si una constante queda vacía (''), el botón de compra de esa variante
+// se muestra desactivado ("Enlace de este modelo próximamente") en lugar de enviar al usuario a un producto equivocado.
+const URL_AMAZON_BASE_BLANCO = 'https://link.amazon/B0eSa7aND';
+const URL_AMAZON_BASE_ANTRACITA = '';
+const URL_AMAZON_BASE_ROBLE = '';
+const URL_AMAZON_WALL_BLANCO = 'https://link.amazon/B07XavuzJ';
+const URL_AMAZON_WALL_ANTRACITA = '';
+const URL_AMAZON_WALL_ROBLE = '';
+const URL_AMAZON_TALL_BLANCO = 'https://link.amazon/B01raTlAO';
+const URL_AMAZON_TALL_ANTRACITA = '';
+const URL_AMAZON_TALL_ROBLE = '';
+const URL_AMAZON_FRIGO_INOX = 'https://link.amazon/B06U5SJnb';
+const URL_AMAZON_FRIGO_NEGRO = '';
+const URL_AMAZON_FRIGO_BLANCO = '';
+const URL_AMAZON_PLACA_INOX = 'https://link.amazon/B0aRSwUhK';
+const URL_AMAZON_HORNO_INOX = 'https://link.amazon/B09cUMybv';
+const URL_AMAZON_PLACA_NEGRO = '';
+const URL_AMAZON_HORNO_NEGRO = '';
+const URL_AMAZON_PLACA_BRONCE = '';
+const URL_AMAZON_HORNO_BRONCE = '';
+const URL_AMAZON_CAMPANA_NEGRA = 'https://link.amazon/B0dJNySoI';
+const URL_AMAZON_CAMPANA_INOX = '';
+const URL_AMAZON_CAMPANA_BLANCA = '';
+
 // eur = precio estimado por unidad (módulo estándar)
 // url = enlace de afiliado de Amazon del producto (la placa + horno añade url_placa y url_horno); si falta, el botón usa '#'
 const TYPES = {
-  base: { code: 'MB', label: 'Mueble bajo con encimera (60 cm)', eur: 420, info: 'Mueble bajo modular de 60 cm con puertas en blanco y superficie de trabajo.', url: 'https://link.amazon/B0eSa7aND' },
-  wall: { code: 'MA', label: 'Módulo alto colgado (60 cm)', eur: 260, info: 'Armario alto de pared en blanco mate con apertura superior y balda central.', url: 'https://link.amazon/B07XavuzJ' },
-  tall: { code: 'DE', label: 'Columna despensero (180 cm)', eur: 780, info: 'Armario columna despensero auxiliar de gran capacidad para almacenamiento.', url: 'https://link.amazon/B01raTlAO' },
+  base: { code: 'MB', label: 'Mueble bajo con encimera (60 cm)', eur: 420, info: 'Mueble bajo modular de 60 cm con puertas en blanco y superficie de trabajo.', url: URL_AMAZON_BASE_BLANCO },
+  wall: { code: 'MA', label: 'Módulo alto colgado (60 cm)', eur: 260, info: 'Armario alto de pared en blanco mate con apertura superior y balda central.', url: URL_AMAZON_WALL_BLANCO },
+  tall: { code: 'DE', label: 'Columna despensero (180 cm)', eur: 780, info: 'Armario columna despensero auxiliar de gran capacidad para almacenamiento.', url: URL_AMAZON_TALL_BLANCO },
   trolley: { code: 'CA', label: 'Isla / Carrito Auxiliar (60 cm)', eur: 180, info: 'Carrito exento con ruedas, encimera de madera y cajones para almacenaje flexible.', url: 'https://link.amazon/B08pvKdqM' },
-  fridge: { code: 'FC', label: 'Frigorífico / Combi Inox', eur: 1500, info: 'Frigorífico combi No Frost en acabado acero inoxidable (60 × 200 cm).', url: 'https://link.amazon/B06U5SJnb' },
+  fridge: { code: 'FC', label: 'Frigorífico / Combi Inox', eur: 1500, info: 'Frigorífico combi No Frost en acabado acero inoxidable (60 × 200 cm).', url: URL_AMAZON_FRIGO_INOX },
   dishwasher: { code: 'LV', label: 'Lavavajillas Inox (60 cm)', eur: 900, info: 'Lavavajillas acero inoxidable antihuellas con programas de alta eficiencia.', url: 'https://link.amazon/B02C2dzGl' },
   washer: { code: 'LA', label: 'Lavadora Inox (60 cm)', eur: 1000, info: 'Lavadora bajo encimera en acabado metálico Inox con panel digital.', url: 'https://link.amazon/B0fvMcYqA' },
   sink: { code: 'FR', label: 'Módulo Fregadero con Escurridor', eur: 640, info: 'Fregadero de acero inoxidable con cubeta profunda y zona de escurrido.', url: 'https://link.amazon/B07Ja9Xmn' },
-  hood: { code: 'CE', label: 'Campana Extractora', eur: 350, info: 'Campana extractora inclinada en cristal negro mate con chimenea de acero.', url: 'https://link.amazon/B0dJNySoI' },
+  hood: { code: 'CE', label: 'Campana Extractora', eur: 350, info: 'Campana extractora inclinada en cristal negro mate con chimenea de acero.', url: URL_AMAZON_CAMPANA_NEGRA },
   oven: { code: 'HV', label: 'Placa de Inducción + Horno', eur: 1100, info: 'Conjunto de placa de inducción en cristal negro y horno multifunción Inox.',
-          url_placa: 'https://link.amazon/B0aRSwUhK', url_horno: 'https://link.amazon/B09cUMybv', url: 'https://link.amazon/B09cUMybv' },
+          url_placa: URL_AMAZON_PLACA_INOX, url_horno: URL_AMAZON_HORNO_INOX, url: URL_AMAZON_HORNO_INOX },
   corner: { code: 'ME', label: 'Módulo esquinero', eur: 500, info: 'Esquinero de dos brazos que une ambas paredes con encimera continua y se adapta al ángulo de la esquina.' },
+  pillar: { code: 'PI', label: 'Pilar / columna estructural', eur: 0, info: 'Prisma de suelo a techo con acabado neutro de yeso.' },
   gap: { code: 'HL', label: 'Hueco libre', eur: 0, info: 'Espacio vacío entre muebles.' }
 };
+
+
+// ===== MODELOS Y ACABADOS POR MUEBLE =====
+// Cada variante tiene su etiqueta y su enlace de afiliado independiente (url, o url_placa y url_horno en la placa + horno).
+// 'eur' es opcional: si una variante lo define, sustituye al precio base del tipo.
+const FINISH_LABELS = { blanco: 'Blanco Mate', antracita: 'Antracita', roble: 'Madera de Roble' };
+const CABINETS = ['base', 'wall', 'tall', 'corner'];   // muebles que usan el acabado global o uno propio
+const cabinetOptions = (blanco, antracita, roble) => ({
+  blanco: { label: FINISH_LABELS.blanco, url: blanco },
+  antracita: { label: FINISH_LABELS.antracita, url: antracita },
+  roble: { label: FINISH_LABELS.roble, url: roble }
+});
+const MODELS = {
+  base: { options: cabinetOptions(URL_AMAZON_BASE_BLANCO, URL_AMAZON_BASE_ANTRACITA, URL_AMAZON_BASE_ROBLE) },
+  wall: { options: cabinetOptions(URL_AMAZON_WALL_BLANCO, URL_AMAZON_WALL_ANTRACITA, URL_AMAZON_WALL_ROBLE) },
+  tall: { options: cabinetOptions(URL_AMAZON_TALL_BLANCO, URL_AMAZON_TALL_ANTRACITA, URL_AMAZON_TALL_ROBLE) },
+  corner: { options: cabinetOptions() },
+  fridge: { default: 'inox', options: {
+    inox: { label: 'Inox Antihuellas', url: URL_AMAZON_FRIGO_INOX },
+    negro: { label: 'Cristal Negro Azabache', url: URL_AMAZON_FRIGO_NEGRO },
+    blanco: { label: 'Blanco Elegante', url: URL_AMAZON_FRIGO_BLANCO } } },
+  oven: { default: 'inox', options: {
+    inox: { label: 'Inox + Cristal', url_placa: URL_AMAZON_PLACA_INOX, url_horno: URL_AMAZON_HORNO_INOX },
+    negro: { label: 'Todo Cristal Negro', url_placa: URL_AMAZON_PLACA_NEGRO, url_horno: URL_AMAZON_HORNO_NEGRO },
+    bronce: { label: 'Modelo Rústico / Bronce', url_placa: URL_AMAZON_PLACA_BRONCE, url_horno: URL_AMAZON_HORNO_BRONCE } } },
+  hood: { default: 'negra', options: {
+    negra: { label: 'Negra Mate', url: URL_AMAZON_CAMPANA_NEGRA },
+    inox: { label: 'Inox Cepillado', url: URL_AMAZON_CAMPANA_INOX },
+    blanca: { label: 'Cristal Blanco', url: URL_AMAZON_CAMPANA_BLANCA } } }
+};
+const validVariant = (type, v) => (type && MODELS[type] && MODELS[type].options[v] ? v : null);
+
+// Variante efectiva de un módulo: la suya, o el acabado global (muebles) o la variante por defecto (electrodomésticos)
+function resolveVariant(m) {
+  const model = MODELS[m.type];
+  if (!model) return null;
+  return validVariant(m.type, m.variant) || (CABINETS.includes(m.type) ? design.global : model.default);
+}
+// Enlaces de compra del módulo según su variante: [[etiqueta, url], ...] (la placa + horno devuelve dos)
+function buyTargets(m) {
+  const src = MODELS[m.type] ? MODELS[m.type].options[resolveVariant(m)] : TYPES[m.type];
+  return 'url_placa' in src || 'url_horno' in src ? [['Placa', src.url_placa], ['Horno', src.url_horno]] : [['', src.url]];
+}
 
 // Anchos estándar (m) con los que se añaden los muebles manualmente
 const STD = { base: 0.6, sink: 0.8, oven: 0.6, tall: 0.6, trolley: 0.6, fridge: 0.6, dishwasher: 0.6, washer: 0.6 };
@@ -742,8 +1126,21 @@ const FINISH = {
   blackMetal: () => mat(0x1b1d20, { roughness: 0.35, metalness: 0.5, envMapIntensity: 0.9 }), // negro metálico mate
   glassBlack: () => mat(0x08090b, { roughness: 0.06, metalness: 0.3, envMapIntensity: 1.3 }), // cristal negro azabache
   panelDark: () => mat(0x2b2e33, { roughness: 0.35, metalness: 0.4, envMapIntensity: 0.8 }), // paneles y mandos oscuros
-  plinth: () => mat(COL.plinth, { roughness: 0.7 })
+  plinth: () => mat(COL.plinth, { roughness: 0.7 }),
+  whiteGloss: () => mat(0xf4f4f1, { roughness: 0.25, metalness: 0.1, envMapIntensity: 0.9 }),    // blanco brillante (frigorífico)
+  whiteMetal: () => mat(0xf2f2ef, { roughness: 0.35, metalness: 0.4, envMapIntensity: 0.9 }),    // metal lacado en blanco
+  whiteGlass: () => mat(0xf6f6f4, { roughness: 0.06, metalness: 0.1, envMapIntensity: 1.2 }),    // cristal blanco
+  bronze: () => mat(0x8a6232, { roughness: 0.4, metalness: 0.8, envMapIntensity: 1 }),           // bronce envejecido
+  bronzeLight: () => mat(0xb07a3c, { roughness: 0.35, metalness: 0.85, envMapIntensity: 1 })     // bronce claro / latón
 };
+// Acabados de muebles (cuerpo y puertas): blanco mate, antracita o roble
+const CAB_FINISH = {
+  blanco: { body: () => FINISH.whiteBody(), door: () => FINISH.whiteMatte() },
+  antracita: { body: () => mat(0x2f3237, { roughness: 0.7 }), door: () => mat(0x3b3e44, { roughness: 0.6 }) },
+  roble: { body: () => mat(0xb98a58, { roughness: 0.6 }), door: () => mat(0xc79a62, { roughness: 0.55 }) }
+};
+// La encimera sigue el acabado global para que sea continua a lo largo de la cocina: roble cálido o cuarzo claro con muebles de roble
+const counterMat = () => (design.global === 'roble' ? mat(0xe8e6e1, { roughness: 0.3 }) : FINISH.oak());
 
 // Puertas frontales (n hojas) con tirador vertical
 function addDoors(g, w, d, yc, dh, n, doorMat, handleMat, hy) {
@@ -760,15 +1157,15 @@ function baseUnit(s, carcass) {
   const g = new THREE.Group(), bh = s.h - C.plinth - C.top;
   g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, FINISH.plinth()), 0, C.plinth / 2, -0.02));
   g.add(place(box(s.w, bh, s.d, carcass), 0, C.plinth + bh / 2, 0));
-  g.add(place(box(s.w, C.top, s.d + 0.03, FINISH.oak()), 0, s.h - C.top / 2, 0.015));
+  g.add(place(box(s.w, C.top, s.d + 0.03, counterMat()), 0, s.h - C.top / 2, 0.015));
   return g;
 }
 
 const BUILD = {
-  // Mueble bajo: blanco mate con encimera de roble y tiradores metálicos estilizados
+  // Mueble bajo: acabado por modelo (blanco mate, antracita o roble) con tiradores metálicos estilizados
   base(s) {
-    const g = baseUnit(s, FINISH.whiteBody()), bh = s.h - C.plinth - C.top;
-    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, s.w > 0.75 ? 2 : 1, FINISH.whiteMatte(), FINISH.brushed(), s.h - C.top - 0.1);
+    const f = CAB_FINISH[resolveVariant(s)], g = baseUnit(s, f.body()), bh = s.h - C.plinth - C.top;
+    addDoors(g, s.w, s.d, C.plinth + bh / 2, bh - 0.02, s.w > 0.75 ? 2 : 1, f.door(), FINISH.brushed(), s.h - C.top - 0.1);
     return g;
   },
   // Fregadero: cubeta profunda y escurridor acanalado en acero, con grifo en forma de L
@@ -791,53 +1188,61 @@ const BUILD = {
     g.add(stem, spout);
     return g;
   },
-  // Placa de inducción + horno: cristal negro azabache, frontal inox cepillado y tirador metálico
+  // Placa de inducción + horno por modelo: Inox + Cristal, Todo Cristal Negro o Rústico / Bronce
   oven(s) {
-    const g = baseUnit(s, FINISH.panelDark()), bh = s.h - C.plinth - C.top, fz = s.d / 2;
-    g.add(place(box(s.w - 0.02, bh - 0.02, 0.02, FINISH.brushed()), 0, C.plinth + bh / 2, fz + 0.01));            // frontal inox cepillado
-    g.add(place(box(s.w - 0.04, 0.07, 0.006, FINISH.glassBlack()), 0, C.plinth + bh - 0.06, fz + 0.023));        // panel de mandos de cristal
-    g.add(place(box(s.w - 0.1, bh * 0.42, 0.006, FINISH.glassBlack()), 0, C.plinth + bh * 0.46, fz + 0.023));    // ventana del horno
-    g.add(place(box(s.w * 0.7, 0.016, 0.03, FINISH.chrome()), 0, C.plinth + bh * 0.67 + 0.03, fz + 0.04));       // tirador metálico
-    g.add(place(box(s.w * 0.94, 0.008, s.d * 0.86, FINISH.glassBlack()), 0, s.h + 0.004, 0.02));                 // placa de cristal
-    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([i, j]) => {                                                   // zonas de cocción sutiles
-      const ring = new THREE.Mesh(new THREE.RingGeometry(0.062, 0.068, 40), mat(0x5a5f67, { roughness: 0.3, metalness: 0.4, envMapIntensity: 0.8 }));
+    const v = resolveVariant(s), g = baseUnit(s, FINISH.panelDark()), bh = s.h - C.plinth - C.top, fz = s.d / 2;
+    const front = v === 'negro' ? FINISH.glassBlack() : v === 'bronce' ? FINISH.bronze() : FINISH.brushed();
+    const windowMat = v === 'negro' ? mat(0x181b1f, { roughness: 0.04, metalness: 0.3, envMapIntensity: 1.3 }) : FINISH.glassBlack();
+    const grip = v === 'bronce' ? FINISH.bronzeLight() : FINISH.chrome();
+    const hob = v === 'bronce' ? mat(0x1c1b19, { roughness: 0.5, metalness: 0.3, envMapIntensity: 0.6 }) : FINISH.glassBlack();
+    g.add(place(box(s.w - 0.02, bh - 0.02, 0.02, front), 0, C.plinth + bh / 2, fz + 0.01));                      // frontal del horno
+    g.add(place(box(s.w - 0.04, 0.07, 0.006, FINISH.glassBlack()), 0, C.plinth + bh - 0.06, fz + 0.023));         // panel de mandos de cristal
+    g.add(place(box(s.w - 0.1, bh * 0.42, 0.006, windowMat), 0, C.plinth + bh * 0.46, fz + 0.023));               // ventana del horno
+    g.add(place(box(s.w * 0.7, 0.016, 0.03, grip), 0, C.plinth + bh * 0.67 + 0.03, fz + 0.04));                   // tirador
+    g.add(place(box(s.w * 0.94, 0.008, s.d * 0.86, hob), 0, s.h + 0.004, 0.02));                                  // placa
+    [[-1, -1], [1, -1], [-1, 1], [1, 1]].forEach(([i, j]) => {                                                    // zonas de cocción
+      const ring = new THREE.Mesh(new THREE.RingGeometry(0.062, 0.068, 40),
+        v === 'bronce' ? FINISH.bronzeLight() : mat(0x5a5f67, { roughness: 0.3, metalness: 0.4, envMapIntensity: 0.8 }));
       ring.rotation.x = -Math.PI / 2; ring.position.set(i * s.w * 0.22, s.h + 0.0085, 0.02 + j * s.d * 0.2);
       g.add(ring);
     });
     return g;
   },
-  // Módulo alto colgado: blanco mate con canto inferior de roble
+  // Módulo alto colgado: acabado por modelo con canto inferior de roble
   wall(s) {
-    const g = new THREE.Group();
-    g.add(place(box(s.w, s.h, s.d, FINISH.whiteBody()), 0, s.h / 2, 0));
-    addDoors(g, s.w, s.d, s.h / 2, s.h - 0.02, s.w > 0.75 ? 2 : 1, FINISH.whiteMatte(), FINISH.brushed(), 0.1);
+    const f = CAB_FINISH[resolveVariant(s)], g = new THREE.Group();
+    g.add(place(box(s.w, s.h, s.d, f.body()), 0, s.h / 2, 0));
+    addDoors(g, s.w, s.d, s.h / 2, s.h - 0.02, s.w > 0.75 ? 2 : 1, f.door(), FINISH.brushed(), 0.1);
     g.add(place(box(s.w, 0.012, s.d + 0.02, FINISH.oak()), 0, 0.006, 0.01));
     return g;
   },
-  // Campana: canopy negro metálico mate, cristal negro brillante inclinado y chimenea de acero hasta el techo
+  // Campana por modelo: Negra Mate (cristal negro inclinado), Inox Cepillado o Cristal Blanco; chimenea hasta el techo
   hood(s) {
-    const g = new THREE.Group(), w = s.w, depth = s.d, ch = 0.32, black = FINISH.blackMetal;
-    g.add(place(box(w, 0.012, depth, black()), 0, 0.006, 0));                                    // base inferior
-    g.add(place(box(w, 0.05, 0.012, black()), 0, 0.025, depth / 2 - 0.006));                    // canto frontal
-    g.add(place(box(w - 0.024, ch, 0.012, black()), 0, ch / 2, -depth / 2 + 0.006));            // trasera
-    const dz = 0.3, dy = ch - 0.05, len = Math.hypot(dz, dy);                                     // cristal: del canto frontal a la chimenea
-    const glass = place(box(w - 0.024, 0.012, len, FINISH.glassBlack()), 0, 0.05 + dy / 2, depth / 2 - dz / 2);
-    glass.rotation.x = Math.atan2(dy, dz);
-    g.add(glass);
+    const v = resolveVariant(s), g = new THREE.Group(), w = s.w, depth = s.d, ch = 0.32;
+    const canopy = v === 'inox' ? FINISH.brushed : v === 'blanca' ? FINISH.whiteMetal : FINISH.blackMetal;
+    const slope = v === 'inox' ? FINISH.brushed : v === 'blanca' ? FINISH.whiteGlass : FINISH.glassBlack;
+    g.add(place(box(w, 0.012, depth, canopy()), 0, 0.006, 0));                                    // base inferior
+    g.add(place(box(w, 0.05, 0.012, canopy()), 0, 0.025, depth / 2 - 0.006));                    // canto frontal
+    g.add(place(box(w - 0.024, ch, 0.012, canopy()), 0, ch / 2, -depth / 2 + 0.006));            // trasera
+    const dz = 0.3, dy = ch - 0.05, len = Math.hypot(dz, dy);                                     // panel: del canto frontal a la chimenea
+    const panel = place(box(w - 0.024, 0.012, len, slope()), 0, 0.05 + dy / 2, depth / 2 - dz / 2);
+    panel.rotation.x = Math.atan2(dy, dz);
+    g.add(panel);
     // Laterales triangulares: perfil (z, y) extruido a lo ancho
     const profile = new THREE.Shape([[-depth / 2, 0], [depth / 2, 0], [depth / 2, 0.05], [depth / 2 - dz, ch], [-depth / 2, ch]].map(([z, y]) => new THREE.Vector2(z, y)));
     const sideGeo = new THREE.ExtrudeGeometry(profile, { depth: 0.012, bevelEnabled: false });
     sideGeo.rotateY(-Math.PI / 2);                                                                // x de la forma -> z del mundo
-    [-w / 2 + 0.012, w / 2].forEach(x => { const side = new THREE.Mesh(sideGeo, black()); side.position.x = x; side.castShadow = true; g.add(side); });
+    [-w / 2 + 0.012, w / 2].forEach(x => { const side = new THREE.Mesh(sideGeo, canopy()); side.position.x = x; side.castShadow = true; g.add(side); });
     g.add(place(box(0.3, s.h - ch, 0.2, FINISH.brushed()), 0, ch + (s.h - ch) / 2, -depth / 2 + 0.1)); // chimenea metálica
     return g;
   },
+  // Módulo esquinero de ángulo variable. Origen en el vértice de las paredes (esquina izquierda):
   // Módulo esquinero de ángulo variable. Origen en el vértice de las paredes (esquina izquierda):
   // el brazo A sigue la pared trasera (+x) y el brazo B la pared lateral, que forma el ángulo s.angle con la trasera.
   corner(s) {
     const g = new THREE.Group(), A = C.corner, D = C.baseD, ov = 0.03, th = s.angle;
     const tx = Math.cos(th), tz = Math.sin(th), nx = Math.sin(th), nz = -Math.cos(th);   // tangente y normal de la pared lateral
-    const bh = s.h - C.plinth - C.top, door = FINISH.whiteMatte(), grip = FINISH.brushed();
+    const bh = s.h - C.plinth - C.top, f = CAB_FINISH[resolveVariant(s)], door = f.door(), grip = FINISH.brushed();
     // Contorno de la planta (x, z) para un fondo dado; el cruce de los dos frentes está en (fondo·cot(θ/2), fondo)
     const outline = depth => [[0, 0], [A, 0], [A, depth], [depth / Math.tan(th / 2), depth],
       [nx * depth + tx * A, nz * depth + tz * A], [tx * A, tz * A]];
@@ -850,8 +1255,8 @@ const BUILD = {
       return m;
     };
     g.add(prism(outline(D - 0.06), 0, C.plinth, FINISH.plinth()));                 // zócalo
-    g.add(prism(outline(D), C.plinth, bh, FINISH.whiteBody()));                    // cuerpo
-    g.add(prism(outline(D + ov), s.h - C.top, C.top, FINISH.oak()));               // encimera adaptable de roble
+    g.add(prism(outline(D), C.plinth, bh, f.body()));                              // cuerpo
+    g.add(prism(outline(D + ov), s.h - C.top, C.top, counterMat()));               // encimera adaptable
     // Una puerta en cada frente visible: del cruce X al final de cada brazo
     const [, , P2, X, P3] = outline(D);
     const addFace = (a, b, fnx, fnz) => {
@@ -868,16 +1273,19 @@ const BUILD = {
     addFace(X, P3, nx, nz);     // frente del brazo B (mira hacia el interior de la habitación)
     return g;
   },
-  // Frigorífico combi: columna inox antihuellas de 60 × 200 cm con puerta de congelador arriba y de frigorífico abajo
+  // Frigorífico combi de 60 × 200 cm por modelo: Inox Antihuellas, Cristal Negro Azabache o Blanco Elegante
   fridge(s) {
-    const g = new THREE.Group(), bh = s.h - C.plinth, lowerH = bh * 0.62, upperH = bh - lowerH, fz = s.d / 2;
+    const v = resolveVariant(s), g = new THREE.Group(), bh = s.h - C.plinth, lowerH = bh * 0.62, upperH = bh - lowerH, fz = s.d / 2;
+    const door = v === 'negro' ? FINISH.glassBlack : v === 'blanco' ? FINISH.whiteGloss : FINISH.inox;
+    const grip = v === 'negro' ? FINISH.chrome : FINISH.brushed;
+    const display = v === 'blanco' ? FINISH.glassBlack : FINISH.panelDark;
     g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, FINISH.plinth()), 0, C.plinth / 2, -0.02));
     g.add(place(box(s.w, bh, s.d, FINISH.panelDark()), 0, C.plinth + bh / 2, 0));
-    g.add(place(box(s.w - 0.02, lowerH - 0.01, 0.025, FINISH.inox()), 0, C.plinth + lowerH / 2, fz + 0.0125));            // puerta del frigorífico
-    g.add(place(box(s.w - 0.02, upperH - 0.01, 0.025, FINISH.inox()), 0, C.plinth + lowerH + upperH / 2, fz + 0.0125));   // puerta del congelador
-    g.add(place(box(0.02, 0.35, 0.03, FINISH.brushed()), s.w / 2 - 0.05, C.plinth + lowerH - 0.25, fz + 0.04));           // tiradores metálicos
-    g.add(place(box(0.02, 0.3, 0.03, FINISH.brushed()), s.w / 2 - 0.05, C.plinth + lowerH + 0.22, fz + 0.04));
-    g.add(place(box(0.12, 0.05, 0.006, FINISH.glassBlack()), -0.05, C.plinth + lowerH + upperH - 0.12, fz + 0.028));      // pantalla de mandos
+    g.add(place(box(s.w - 0.02, lowerH - 0.01, 0.025, door()), 0, C.plinth + lowerH / 2, fz + 0.0125));            // puerta del frigorífico
+    g.add(place(box(s.w - 0.02, upperH - 0.01, 0.025, door()), 0, C.plinth + lowerH + upperH / 2, fz + 0.0125));   // puerta del congelador
+    g.add(place(box(0.02, 0.35, 0.03, grip()), s.w / 2 - 0.05, C.plinth + lowerH - 0.25, fz + 0.04));              // tiradores metálicos
+    g.add(place(box(0.02, 0.3, 0.03, grip()), s.w / 2 - 0.05, C.plinth + lowerH + 0.22, fz + 0.04));
+    g.add(place(box(0.12, 0.05, 0.006, display()), -0.05, C.plinth + lowerH + upperH - 0.12, fz + 0.028));         // pantalla de mandos
     return g;
   },
   // Lavavajillas integrado: frontal inox antihuellas, panel de mandos negro y tirador horizontal
@@ -928,14 +1336,20 @@ const BUILD = {
     g.add(place(box(w, 0.03, d, FINISH.oak()), 0, h - 0.015, 0));                                                                                    // encimera de roble
     return g;
   },
-  // Columna despensero: blanco mate con banda de roble entre cuerpos y tiradores metálicos
+  // Columna despensero: acabado por modelo con banda de roble entre cuerpos y tiradores metálicos
   tall(s) {
-    const g = new THREE.Group(), bh = s.h - C.plinth, lower = 0.9, upper = bh - lower, door = FINISH.whiteMatte(), grip = FINISH.brushed();
+    const f = CAB_FINISH[resolveVariant(s)], g = new THREE.Group(), bh = s.h - C.plinth, lower = 0.9, upper = bh - lower, grip = FINISH.brushed();
     g.add(place(box(s.w - 0.02, C.plinth, s.d - 0.06, FINISH.plinth()), 0, C.plinth / 2, -0.02));
-    g.add(place(box(s.w, bh, s.d, FINISH.whiteBody()), 0, C.plinth + bh / 2, 0));
-    addDoors(g, s.w, s.d, C.plinth + lower / 2, lower - 0.02, 1, door, grip, C.plinth + lower - 0.12);
-    addDoors(g, s.w, s.d, C.plinth + lower + upper / 2, upper - 0.02, 1, FINISH.whiteMatte(), grip, C.plinth + lower + 0.12);
+    g.add(place(box(s.w, bh, s.d, f.body()), 0, C.plinth + bh / 2, 0));
+    addDoors(g, s.w, s.d, C.plinth + lower / 2, lower - 0.02, 1, f.door(), grip, C.plinth + lower - 0.12);
+    addDoors(g, s.w, s.d, C.plinth + lower + upper / 2, upper - 0.02, 1, f.door(), grip, C.plinth + lower + 0.12);
     g.add(place(box(s.w - 0.02, 0.02, 0.026, FINISH.oak()), 0, C.plinth + lower, s.d / 2 + 0.012));
+    return g;
+  },
+  // Pilar o columna estructural: prisma de suelo a techo con acabado neutro de yeso
+  pillar(s) {
+    const g = new THREE.Group();
+    g.add(place(box(s.w, s.h, s.d, mat(0xe7e4dd, { roughness: 0.95 })), 0, s.h / 2, 0));
     return g;
   }
 };
@@ -957,20 +1371,25 @@ const makeSlot = (type, w) => ({ w, lower: type, upper: upperFor(type) });
 const heightOf = (type, H) => (type === 'tall' ? Math.min(2.1, H - 0.05) : type === 'fridge' ? Math.min(2, H - 0.1) : type === 'trolley' ? 0.85 : C.baseH);
 const depthOf = type => (type === 'trolley' ? 0.45 : C.baseD);   // el carrito es más estrecho que un mueble bajo
 
-// Genera automáticamente una hilera con medidas estándar exactas (mueble bajo = 60 cm, nunca se estiran):
-// bases, fregadero, base, horno, bases; el sobrante queda como hueco libre y, si procede, la columna cierra la pared.
-function planRun(len, specials, withTall) {
-  const fixed = specials.reduce((a, t) => a + STD[t], 0) + (withTall ? STD.tall : 0);
+// Genera automáticamente una hilera con medidas estándar exactas (mueble bajo = 60 cm, nunca se estiran).
+// opts.fridge: 'start' | 'end' | null (frigorífico combi en un extremo), opts.sinkOven: fregadero y horno, opts.tall: columna final.
+// El sobrante queda como hueco libre visible antes de los elementos del extremo final.
+function planRun(len, opts) {
+  const { fridge = null, sinkOven = false, tall = false } = opts;
+  const fixed = (fridge ? STD.fridge : 0) + (sinkOven ? STD.sink + STD.oven : 0) + (tall ? STD.tall : 0);
   const n = Math.max(0, Math.floor((len - fixed) / STD.base + 1e-9));       // nº de muebles bajos de 60 cm
   const leftover = len - fixed - n * STD.base;                              // espacio sobrante
-  const left = Math.floor(n / 3), mid = specials.length > 1 && n >= 2 ? 1 : 0;
-  let types;
-  if (specials.length) types = [...Array(left).fill('base'), specials[0], ...Array(mid).fill('base'), specials[1], ...Array(n - left - mid).fill('base')];
-  else types = Array(n).fill('base');
-  const slots = types.map(t => makeSlot(t, STD[t]));
+  const bases = k => Array(k).fill('base');
+  let middle;
+  if (sinkOven) {
+    const b = n >= 1 ? 1 : 0, a = n >= 2 ? 1 : 0;   // un mueble entre fregadero y horno y otro antes del fregadero
+    middle = [...bases(a), 'sink', ...bases(b), 'oven', ...bases(n - a - b)];
+  } else middle = bases(n);
+  const head = fridge === 'start' ? ['fridge'] : [];
+  const tail = [...(fridge === 'end' ? ['fridge'] : []), ...(tall ? ['tall'] : [])];
+  const slots = [...head, ...middle].map(t => makeSlot(t, STD[t]));
   if (leftover > EPS) slots.push({ w: leftover, lower: null, upper: null });  // hueco libre visible
-  if (withTall) slots.push(makeSlot('tall', STD.tall));
-  return slots;
+  return [...slots, ...tail.map(t => makeSlot(t, STD[t]))];
 }
 
 // Vectores de la pared lateral: tangente (tx, tz) desde la esquina y normal (nx, nz) hacia el interior.
@@ -1000,13 +1419,24 @@ function wallFrames(d = design) {
 const usedSpace = key => design.walls[key].reduce((a, s) => a + s.w, 0);
 const freeSpace = key => Math.max(0, wallFrames()[key].len - usedSpace(key));
 
-// Crea el diseño inicial según distribución, pared lateral y ángulo
+// Crea el diseño inicial: el frigorífico combi aparece desde el primer segundo junto al fregadero y al horno
 function createDesign(W, L, H, layout, side, angle) {
   const isL = layout === 'L';
-  const d = { W, L, H, layout, side, angle: isL ? angle : 90, corner: isL, free: [], walls: { back: [], side: [] } };
-  const f = wallFrames(d);
-  d.walls.back = planRun(f.back.len, ['sink', 'oven'], !isL);
-  if (isL) d.walls.side = planRun(f.side.len, [], true);
+  const d = {
+    W, L, H, layout, side, angle: isL ? angle : 90, corner: isL, free: [], pillars: [],
+    global: 'blanco', cornerVariant: null, walls: { back: [], side: [] }
+  };
+  const f = wallFrames(d), core = STD.fridge + STD.sink + STD.oven;
+  if (!isL) {
+    // Lineal: frigorífico al inicio; la columna despensero solo si queda sitio para al menos un mueble bajo
+    const withTall = f.back.len - (core + STD.tall) >= STD.base - EPS;
+    d.walls.back = planRun(f.back.len, { fridge: 'start', sinkOven: true, tall: withTall });
+  } else {
+    // En L: el frigorífico va al extremo de la pared trasera más alejado de la esquina; si no cabe, al final de la lateral
+    const fits = f.back.len - core >= STD.base - EPS;
+    d.walls.back = planRun(f.back.len, { fridge: fits ? (side === 'left' ? 'end' : 'start') : null, sinkOven: true });
+    d.walls.side = planRun(f.side.len, fits ? { tall: true } : { fridge: 'end' });
+  }
   return d;
 }
 
@@ -1022,7 +1452,7 @@ function layoutSpecs() {
       const s = offset + slot.w / 2;
       offset += slot.w;
       const push = (part, type, d, h, y) => out.push({
-        type, part, slot, wall: key, w: slot.w, d, h, y,
+        type, part, slot, wall: key, w: slot.w, d, h, y, variant: (part === 'lower' ? slot.vLower : slot.vUpper) || null,
         x: f.ox + f.tx * s + f.nx * d / 2, z: f.oz + f.tz * s + f.nz * d / 2, rot: Math.atan2(f.nx, f.nz)
       });
       if (slot.lower) push('lower', slot.lower, depthOf(slot.lower), heightOf(slot.lower, H), 0);
@@ -1034,13 +1464,14 @@ function layoutSpecs() {
   // Carritos exentos: fila centrada frente a la hilera trasera, con 90 cm de paso libre
   const fb = frames.back, n = design.free.length, startX = fb.ox + fb.len / 2 - (n * 0.7 - 0.1) / 2;
   design.free.forEach((item, i) => out.push({
-    type: item.type, part: 'free', wall: 'free', item, w: STD[item.type], d: depthOf(item.type), h: heightOf(item.type, H), y: 0,
+    type: item.type, part: 'free', wall: 'free', item, variant: item.variant || null, w: STD[item.type], d: depthOf(item.type), h: heightOf(item.type, H), y: 0,
     x: startX + 0.3 + i * 0.7, z: -L / 2 + C.baseD + 0.9 + depthOf(item.type) / 2, rot: 0
   }));
+  design.pillars.forEach(p => out.push({ type: 'pillar', part: 'pillar', wall: 'pillar', item: p, w: p.w, d: p.d, h: H, y: 0, x: p.x, z: p.z, rot: 0 }));
   if (design.corner) out.push({
     type: 'corner', part: 'corner', wall: 'corner', w: C.corner, d: C.corner, h: C.baseH, y: 0,
     x: design.side === 'left' ? -W / 2 : W / 2, z: -L / 2, rot: 0, mirror: design.side === 'right',
-    angle: design.angle * Math.PI / 180
+    angle: design.angle * Math.PI / 180, variant: design.cornerVariant || null
   });
   return out;
 }
@@ -1085,11 +1516,11 @@ function slotAccepts(type, slot) {
 // Coloca el mueble en el hueco; si sobra ancho, el resto queda como nuevo hueco libre adyacente
 function occupy(type, key, slot) {
   if (UPPER_TYPES.includes(type)) {
-    slot.upper = type;
+    slot.upper = type; slot.vUpper = null;
     if (slot.lower === null && slot.w > 0.9) splitSlot(key, slot, 0.6);
     return 'upper';
   }
-  slot.lower = type;
+  slot.lower = type; slot.vLower = null;
   if (slot.w - STD[type] > EPS) splitSlot(key, slot, STD[type]);
   return 'lower';
 }
@@ -1192,14 +1623,76 @@ function addInGap(m, type = $('#addType').value) {
 // Elimina un mueble sin mover a ningún vecino: su hueco queda vacío (lower/upper = null) y los huecos
 // vacíos contiguos se fusionan. rebuildModules libera con dispose() las geometrías y materiales anteriores.
 function removeModule(m) {
-  if (m.part === 'corner') design.corner = false;
+  if (m.part === 'corner') { design.corner = false; design.cornerVariant = null; }
   else if (m.part === 'free') design.free = design.free.filter(it => it !== m.item);
+  else if (m.part === 'pillar') design.pillars = design.pillars.filter(p => p !== m.item);
   else {
     m.slot[m.part] = null;
+    m.slot[m.part === 'lower' ? 'vLower' : 'vUpper'] = null;
     mergeGaps(m.wall);
   }
   rebuildModules();
-  setAddMsg(`Eliminado: ${m.name}. Su hueco queda libre y los vecinos no se mueven.`, true);
+  setAddMsg(m.part === 'pillar' ? 'Pilar eliminado.' : `Eliminado: ${m.name}. Su hueco queda libre y los vecinos no se mueven.`, true);
+}
+
+/* ---------- Pilares / columnas estructurales ---------- */
+const PILLAR_LIMITS = [0.2, 1.0];   // ancho y fondo permitidos (m)
+const clampTo = (v, min, max) => Math.min(max, Math.max(min, v));
+
+// Límites en x de la zona de suelo para una franja z0..z1, teniendo en cuenta que la pared lateral puede estar inclinada
+function xBounds(d, z0, z1) {
+  const v = cornerVectors(d), slope = v.tx / v.tz;                      // desplazamiento en x por metro de avance en z
+  let left = -d.W / 2, right = d.W / 2;
+  if (d.layout !== 'L' || d.side === 'left') left = Math.max(-d.W / 2 + slope * (z0 + d.L / 2), -d.W / 2 + slope * (z1 + d.L / 2));
+  else right = Math.min(d.W / 2 + slope * (z0 + d.L / 2), d.W / 2 + slope * (z1 + d.L / 2));
+  return { left, right };
+}
+// Mantiene el pilar dentro del suelo y con medidas válidas
+function clampPillar(d, p) {
+  p.w = clampTo(p.w, PILLAR_LIMITS[0], PILLAR_LIMITS[1]);
+  p.d = clampTo(p.d, PILLAR_LIMITS[0], PILLAR_LIMITS[1]);
+  p.z = clampTo(p.z, -d.L / 2 + p.d / 2, d.L / 2 - p.d / 2);
+  const b = xBounds(d, p.z - p.d / 2, p.z + p.d / 2);
+  p.x = clampTo(p.x, b.left + p.w / 2, Math.max(b.left + p.w / 2, b.right - p.w / 2));
+  return p;
+}
+// Posición del centro del pilar según el anclaje elegido
+function anchorPosition(d, anchor, w, depth) {
+  const z = anchor.startsWith('back') ? -d.L / 2 + depth / 2 : d.L / 2 - depth / 2;
+  const b = xBounds(d, z - depth / 2, z + depth / 2);
+  if (anchor.endsWith('left')) return { x: b.left + w / 2, z };
+  if (anchor.endsWith('right')) return { x: b.right - w / 2, z };
+  return { x: 0, z };   // centro de la pared trasera
+}
+function setPilMsg(text, ok) {
+  const el = $('#pilMsg');
+  el.textContent = text;
+  el.className = 'text-xs min-h-[1rem] ' + (ok ? 'text-teal-700' : 'text-amber-700');
+}
+function addPillar() {
+  const w = parseFloat($('#pilW').value), depth = parseFloat($('#pilD').value), anchor = $('#pilAnchor').value;
+  const valid = v => v >= PILLAR_LIMITS[0] && v <= PILLAR_LIMITS[1];
+  if (!valid(w) || !valid(depth)) return setPilMsg('El ancho y el fondo deben estar entre 0,2 y 1 m.', false);
+  if (design.pillars.length >= 6) return setPilMsg('Puedes añadir como máximo 6 pilares.', false);
+  let pos;
+  if (anchor === 'custom') {
+    pos = { x: parseFloat($('#pilX').value), z: parseFloat($('#pilZ').value) };
+    if (!isFinite(pos.x) || !isFinite(pos.z)) return setPilMsg('Introduce las coordenadas X y Z en metros.', false);
+  } else pos = anchorPosition(design, anchor, w, depth);
+  const pillar = clampPillar(design, { w, d: depth, x: pos.x, z: pos.z });
+  design.pillars.push(pillar);
+  rebuildModules();
+  selectWhere(m => m.item === pillar);
+  setPilMsg('Pilar añadido. Puedes moverlo desde su ficha.', true);
+}
+// Desplaza un pilar a unas coordenadas (se ajusta a los límites del suelo) y lo deja seleccionado
+function movePillar(m, x, z) {
+  if (!isFinite(x) || !isFinite(z)) return;
+  const pillar = m.item;
+  pillar.x = x; pillar.z = z;
+  clampPillar(design, pillar);
+  rebuildModules();
+  selectWhere(sp => sp.item === pillar);
 }
 
 /* =====================================================================
@@ -1254,6 +1747,7 @@ function applyDesign(d, reframe = true) {
   }
 
   // Pared lateral solo disponible en distribución en L
+  $('#globalFinish').value = d.global;
   $('#addWall option[value="side"]').disabled = !isL;
   if (!isL) $('#addWall').value = 'back';
 
@@ -1274,6 +1768,29 @@ function buildGap(s) {
 }
 BUILD.gap = buildGap;
 
+// Recalcula el total del presupuesto (los huecos y los pilares no cuentan)
+function updateTotals() {
+  const real = modules.filter(m => m.type !== 'gap' && m.type !== 'pillar');
+  $('#summaryTotal').textContent = eur(real.reduce((a, m) => a + m.price, 0));
+}
+// Construye el modelo 3D de un módulo y lo coloca en la escena según su posición, giro y reflejo
+function mountModule(s) {
+  s.group = BUILD[s.type](s);
+  s.group.position.set(s.x, s.y, s.z);
+  s.group.rotation.y = s.rot;
+  if (s.mirror) s.group.scale.x = -1;   // esquinero reflejado cuando la pared lateral es la derecha
+  s.group.traverse(o => { o.userData.module = s; });
+  moduleGroup.add(s.group);
+}
+// Cambia el modelo/acabado de un solo módulo: libera el modelo anterior y construye el nuevo con otros materiales
+function refreshModule(m) {
+  const wasSelected = selected === m;
+  moduleGroup.remove(m.group);
+  disposeGroup(m.group);
+  mountModule(m);
+  if (wasSelected) setGlow(m.group, true);
+}
+
 // Reconstruye todos los módulos desde el modelo, liberando antes los anteriores
 function rebuildModules() {
   clearSelection();
@@ -1285,17 +1802,13 @@ function rebuildModules() {
     const t = TYPES[s.type];
     s.name = t.label; s.info = t.info; s.url = t.url;
     s.id = `${t.code}-${String(i + 1).padStart(2, '0')}`;
-    s.price = t.eur;   // precio por unidad del catálogo
-    s.group = BUILD[s.type](s);
-    s.group.position.set(s.x, s.y, s.z);
-    s.group.rotation.y = s.rot;
-    if (s.mirror) s.group.scale.x = -1;   // esquinero reflejado cuando la pared lateral es la derecha
-    s.group.traverse(o => { o.userData.module = s; });
-    moduleGroup.add(s.group);
+    const opt = MODELS[s.type] && MODELS[s.type].options[resolveVariant(s)];
+    s.price = opt && opt.eur !== undefined ? opt.eur : t.eur;   // precio por unidad (la variante puede definir el suyo)
+    mountModule(s);
   });
 
   // Presupuesto (los huecos no cuentan) y espacio libre por pared: huecos vacíos + final de la pared
-  const frames = wallFrames(), real = modules.filter(m => m.type !== 'gap'), gapCount = modules.length - real.length;
+  const frames = wallFrames(), real = modules.filter(m => m.type !== 'gap' && m.type !== 'pillar'), gapCount = modules.filter(m => m.type === 'gap').length;
   let overflow = false;
   const parts = Object.keys(frames).filter(k => frames[k]).map(k => {
     const end = frames[k].len - usedSpace(k);
@@ -1346,12 +1859,39 @@ function select(m) {
   scene.add(boxHelper);
   renderDetails(m);
 }
-// Botones de compra con su enlace de afiliado (la placa y el horno tienen enlace propio)
+// Botones de compra con el enlace de afiliado de la variante elegida (la placa y el horno tienen enlace propio)
 function buyButtons(m) {
-  const t = TYPES[m.type];
-  const link = (url, text, first) => `<a href="${esc(url || '#')}" target="_blank" rel="noopener noreferrer" class="${first ? 'mt-5' : 'mt-2'} block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">${text}</a>`;
-  if (t.url_placa && t.url_horno) return link(t.url_placa, 'Comprar placa de inducción en Amazon', true) + link(t.url_horno, 'Comprar horno en Amazon', false);
-  return link(m.url, m.url ? 'Comprar en Amazon' : 'Ver / Comprar en Tienda', true);
+  const targets = buyTargets(m);
+  const link = (url, text, first) => url
+    ? `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="${first ? 'mt-5' : 'mt-2'} block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">${text}</a>`
+    : `<span aria-disabled="true" class="${first ? 'mt-5' : 'mt-2'} block w-full rounded-lg bg-slate-200 text-slate-500 text-center font-semibold py-3">Enlace de este modelo próximamente</span>`;
+  if (targets.length === 2) return link(targets[0][1], 'Comprar placa de inducción en Amazon', true) + link(targets[1][1], 'Comprar horno en Amazon', false);
+  const url = targets[0][1];
+  if (url === undefined) return `<a href="#" target="_blank" rel="noopener noreferrer" class="mt-5 block w-full rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-center font-semibold py-3 shadow-sm transition-colors">Ver / Comprar en Tienda</a>`;
+  return link(url, 'Comprar en Amazon', true);
+}
+// Desplegable "Modelo / acabado" de la ficha (los muebles añaden la opción de seguir el acabado global)
+function variantSelectHtml(m) {
+  const model = MODELS[m.type];
+  if (!model) return '';
+  const cabinet = CABINETS.includes(m.type), current = cabinet ? (m.variant || '') : resolveVariant(m);
+  const opts = (cabinet ? [['', `Acabado global (${FINISH_LABELS[design.global]})`]] : []).concat(Object.entries(model.options).map(([k, o]) => [k, o.label]));
+  return `<label class="mt-4 flex flex-col gap-1 text-sm font-medium text-slate-700">Modelo / acabado
+    <select id="variantSelect" class="w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 font-normal">${opts.map(([v, l]) => `<option value="${v}"${v === current ? ' selected' : ''}>${l}</option>`).join('')}</select></label>`;
+}
+// Guarda la variante en el diseño, actualiza los materiales 3D en tiempo real y refresca el enlace de compra
+function setVariant(m, value) {
+  const v = value || null;
+  if (m.part === 'corner') design.cornerVariant = v;
+  else if (m.part === 'free') m.item.variant = v;
+  else m.slot[m.part === 'lower' ? 'vLower' : 'vUpper'] = v;
+  m.variant = v;
+  const opt = MODELS[m.type].options[resolveVariant(m)];
+  m.price = opt.eur !== undefined ? opt.eur : TYPES[m.type].eur;
+  refreshModule(m);
+  renderDetails(m);
+  updateTotals();
+  saveDesign();
 }
 // Ficha técnica en la barra lateral
 function renderDetails(m) {
@@ -1385,12 +1925,47 @@ function renderDetails(m) {
     showHint();
     return;
   }
+  if (m.type === 'pillar') {
+    const inputCls = 'w-full rounded-md border border-slate-300 px-3 py-1.5';
+    el.innerHTML = `
+      <div class="flex items-start justify-between gap-3">
+        <h3 class="text-base font-semibold leading-snug">${m.name}</h3>
+        <span class="shrink-0 rounded bg-teal-50 text-teal-800 text-xs font-medium px-2 py-0.5">${m.id}</span>
+      </div>
+      <p class="mt-1 text-sm text-slate-600">${m.info} Muévelo con las coordenadas o con las flechas.</p>
+      <dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
+        <dt class="text-slate-500">Ancho</dt><dd class="font-medium text-right">${cm(m.w)} cm</dd>
+        <dt class="text-slate-500">Fondo</dt><dd class="font-medium text-right">${cm(m.d)} cm</dd>
+        <dt class="text-slate-500">Alto</dt><dd class="font-medium text-right">${cm(m.h)} cm</dd>
+      </dl>
+      <div class="mt-4 grid grid-cols-2 gap-3">
+        <label class="flex flex-col gap-1 text-sm">X (m)<input id="pilEditX" type="number" step="0.05" value="${m.x.toFixed(2)}" class="${inputCls}"></label>
+        <label class="flex flex-col gap-1 text-sm">Z (m)<input id="pilEditZ" type="number" step="0.05" value="${m.z.toFixed(2)}" class="${inputCls}"></label>
+      </div>
+      <div class="mt-2 grid grid-cols-4 gap-2">
+        <button type="button" data-nudge="-1,0" aria-label="Mover a la izquierda" class="min-h-[40px] rounded-md border border-slate-300 bg-white font-semibold hover:bg-slate-100">←</button>
+        <button type="button" data-nudge="1,0" aria-label="Mover a la derecha" class="min-h-[40px] rounded-md border border-slate-300 bg-white font-semibold hover:bg-slate-100">→</button>
+        <button type="button" data-nudge="0,-1" aria-label="Acercar a la pared trasera" class="min-h-[40px] rounded-md border border-slate-300 bg-white font-semibold hover:bg-slate-100">↑</button>
+        <button type="button" data-nudge="0,1" aria-label="Alejar de la pared trasera" class="min-h-[40px] rounded-md border border-slate-300 bg-white font-semibold hover:bg-slate-100">↓</button>
+      </div>
+      <button id="btnDelete" type="button" class="mt-4 block w-full rounded-lg bg-red-600 hover:bg-red-700 text-white text-center font-semibold py-3 shadow-sm transition-colors">🗑️ Eliminar este pilar</button>`;
+    const applyEdit = () => movePillar(m, parseFloat($('#pilEditX').value), parseFloat($('#pilEditZ').value));
+    $('#pilEditX').addEventListener('change', applyEdit);
+    $('#pilEditZ').addEventListener('change', applyEdit);
+    el.querySelectorAll('[data-nudge]').forEach(b => b.addEventListener('click', () => {
+      const [dx, dz] = b.dataset.nudge.split(',').map(Number);
+      movePillar(m, m.x + dx * 0.1, m.z + dz * 0.1);
+    }));
+    $('#btnDelete').addEventListener('click', () => removeModule(m));
+    return;
+  }
   el.innerHTML = `
     <div class="flex items-start justify-between gap-3">
       <h3 class="text-base font-semibold leading-snug">${m.name}</h3>
       <span class="shrink-0 rounded bg-teal-50 text-teal-800 text-xs font-medium px-2 py-0.5">${m.id}</span>
     </div>
     <p class="mt-1 text-sm text-slate-600">${m.info}</p>
+    ${variantSelectHtml(m)}
     <dl class="mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
       <dt class="text-slate-500">Ancho</dt><dd class="font-medium text-right">${cm(m.w)} cm</dd>
       <dt class="text-slate-500">Fondo</dt><dd class="font-medium text-right">${cm(m.d)} cm</dd>
@@ -1403,6 +1978,8 @@ function renderDetails(m) {
     ${buyButtons(m)}
     <button id="btnDelete" type="button" class="mt-3 block w-full rounded-lg bg-red-600 hover:bg-red-700 text-white text-center font-semibold py-3 shadow-sm transition-colors">🗑️ Eliminar este mueble</button>`;
   $('#btnDelete').addEventListener('click', () => removeModule(m));
+  const variantSelect = $('#variantSelect');
+  if (variantSelect) variantSelect.addEventListener('change', () => setVariant(m, variantSelect.value));
 }
 
 const canvas = renderer.domElement;
@@ -1455,7 +2032,10 @@ $('#roomForm').addEventListener('submit', e => {
   const angle = clampAngle(angleNumber.value);
   angleNumber.value = angle; angleRange.value = angle;
   $('#formMsg').textContent = adjusted ? 'Algún valor se ajustó a los límites (ancho 3–8 m, largo 2,4–8 m, alto 2,3–3,5 m).' : '';
-  applyDesign(createDesign(W, L, H, layoutSelect.value, $('#inSide').value, angle));
+  const next = createDesign(W, L, H, layoutSelect.value, $('#inSide').value, angle);
+  next.global = design.global;                                          // conserva el acabado global
+  next.pillars = design.pillars.map(p => clampPillar(next, { ...p }));  // conserva los pilares dentro de la nueva habitación
+  applyDesign(next);
 });
 $('#btnAdd').addEventListener('click', () => addModule($('#addType').value, $('#addWall').value, $('#addSlot').value));
 $('#addWall').addEventListener('change', refreshSlotOptions);
@@ -1491,15 +2071,15 @@ if (coarse) {
   document.addEventListener('leave3d', () => setCamFree(false));
 }
 
-// Enlaces de compra de un módulo (clicables al guardar la hoja como PDF)
+// Enlaces de compra de un módulo según su modelo (clicables al guardar la hoja como PDF)
 function buyLinks(m) {
-  const t = TYPES[m.type];
-  const list = t.url_placa ? [['Placa', t.url_placa], ['Horno', t.url_horno]] : t.url ? [['', t.url]] : [];
-  return list.map(([label, url]) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="underline text-teal-700">${label ? label + ': ' : ''}${url.replace(/^https?:\/\//, '')}</a>`).join('<br>') || '—';
+  return buyTargets(m).filter(([, url]) => url)
+    .map(([label, url]) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer" class="underline text-teal-700">${label ? label + ': ' : ''}${url.replace(/^https?:\/\//, '')}</a>`)
+    .join('<br>') || '—';
 }
 // Rellena la hoja de impresión con los muebles del diseño, sus precios y el total
 function buildPrintSheet() {
-  const real = modules.filter(m => m.type !== 'gap');
+  const real = modules.filter(m => m.type !== 'gap' && m.type !== 'pillar');
   const wall = { back: 'Pared trasera', side: 'Pared lateral', corner: 'Esquina', free: 'Exento' };
   $('#printMeta').textContent = `Habitación ${design.W} × ${design.L} × ${design.H} m · `
     + (design.layout === 'L' ? `Cocina en L (esquina de ${design.angle}°)` : 'Cocina lineal')
@@ -1540,6 +2120,8 @@ function loadDesign() {
     const raw = localStorage.getItem(STORE_KEY);
     if (!raw) return null;
     const d = JSON.parse(raw).design;
+    // Los diseños guardados por versiones anteriores (sin acabado global) se descartan para mostrar el diseño inicial actualizado
+    if (!d || typeof d.global !== 'string') return null;
     const inRange = (v, [min, max]) => typeof v === 'number' && isFinite(v) && v >= min && v <= max;
     const LOWER = ['base', 'sink', 'oven', 'tall', 'fridge', 'dishwasher', 'washer', 'trolley'], UPPER = ['wall', 'hood'];
     if (!d || !inRange(d.W, C.limits.W) || !inRange(d.L, C.limits.L) || !inRange(d.H, C.limits.H)) return null;
@@ -1550,13 +2132,24 @@ function loadDesign() {
     const cleanRun = run => {
       if (!Array.isArray(run)) return null;
       const ok = run.every(sl => sl && inRange(sl.w, [0.05, 8]) && (sl.lower === null || LOWER.includes(sl.lower)) && (sl.upper === null || UPPER.includes(sl.upper)));
-      return ok ? run.map(sl => ({ w: sl.w, lower: sl.lower, upper: ['tall', 'fridge', 'trolley'].includes(sl.lower) ? null : sl.upper })) : null;
+      if (!ok) return null;
+      return run.map(sl => {
+        const upper = ['tall', 'fridge', 'trolley'].includes(sl.lower) ? null : sl.upper;
+        return { w: sl.w, lower: sl.lower, upper, vLower: validVariant(sl.lower, sl.vLower), vUpper: validVariant(upper, sl.vUpper) };
+      });
     };
     const restored = {
       W: d.W, L: d.L, H: d.H, layout: d.layout, side: d.side, angle, corner: isL && d.corner === true,
       free: Array.isArray(d.free) ? d.free.filter(it => it && it.type === 'trolley').map(() => ({ type: 'trolley' })) : [],
       walls: { back: cleanRun(d.walls.back), side: isL ? cleanRun(d.walls.side) : [] }
     };
+    restored.global = FINISH_LABELS[d.global] ? d.global : 'blanco';
+    restored.cornerVariant = validVariant('corner', d.cornerVariant);
+    const finite = v => typeof v === 'number' && isFinite(v);
+    restored.pillars = Array.isArray(d.pillars)
+      ? d.pillars.filter(p => p && inRange(p.w, PILLAR_LIMITS) && inRange(p.d, PILLAR_LIMITS) && finite(p.x) && finite(p.z))
+          .slice(0, 6).map(p => clampPillar(restored, { w: p.w, d: p.d, x: p.x, z: p.z }))
+      : [];
     if (!restored.walls.back || !restored.walls.side) return null;
     // La suma de anchos debe caber en cada pared
     const frames = wallFrames(restored);
@@ -1576,6 +2169,21 @@ function syncForm(d) {
   angleNumber.value = d.angle; angleRange.value = d.angle;
   syncLayoutControls();
 }
+
+/* =====================================================================
+   8d. ACABADO GLOBAL Y PILARES: controles de la barra lateral
+   ===================================================================== */
+$('#globalFinish').addEventListener('change', e => {
+  design.global = e.target.value;
+  rebuildModules();
+  setAddMsg(`Acabado global: ${FINISH_LABELS[design.global]}.`, true);
+});
+$('#pilAnchor').addEventListener('change', () => {
+  const custom = $('#pilAnchor').value === 'custom';
+  $('#pilCustom').classList.toggle('hidden', !custom);
+  $('#pilCustom').classList.toggle('grid', custom);
+});
+$('#btnAddPillar').addEventListener('click', addPillar);
 
 /* =====================================================================
    9. ARRANQUE Y BUCLE DE RENDER
